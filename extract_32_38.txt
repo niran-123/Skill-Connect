@@ -1,0 +1,228 @@
+37. Manage Skills & Rates
+Generate mobile screen for '37. Manage Skills & Rates' in SkillConnect Pro for electrician Arun Kumar.
+Design consistent with SkillConnect design system:
+- Header has back button and title 'Skills & Services'
+- Summary card: 'Primary Trade: Master Electrician' with ITI certified badge and '8 Active Services Offered'
+- Search bar: 'Search service or add custom skill...'
+- Categorized Services list with toggle switches and editable base rates:
+  - Category: 'Wiring & Power'
+    1. 'House Full Rewiring': Base rate '₹1,200 / visit + labor', Toggle ON, Experience: 6 yrs
+    2. 'Switchboard Repair & Modular Box': Base rate '₹199 / unit', Toggle ON, Experience: 6 yrs
+    3. 'MCB Tripping Diagnostic & DB Box': Base rate '₹350 / visit', Toggle ON, Experience: 5 yrs
+  - Category: 'Appliances & Fixtures'
+    4. 'Ceiling Fan Installation & Repair': Base rate '₹249 / unit', Toggle ON
+    5. 'Inverter & UPS Setup': Base rate '₹450 / setup', Toggle ON
+    6. 'Geyser Electrical Point Installation': Base rate '₹399 / unit', Toggle OFF (Inactive)
+- 'Add New Custom Skill' button with plus icon (e.g. Solar panel connection, EV home charger point)
+- Inspection & Callout Charge configuration section:
+  - First-time emergency callout fee: '₹249'
+  - Standard hourly diagnostic labor: '₹150 / hr'
+  - Transparent college project demo banner: '100% of customer payment is retained by Pro in demo mode (0% commission)'.
+- Bottom floating or sticky action bar: 'Save Service Rates' button.
+
+36. Pro Availability Calendar
+Generate mobile screen for '36. Pro Availability Calendar' (Availability & Schedule Manager) in SkillConnect Pro for electrician Arun Kumar.
+Design consistent with SkillConnect design system:
+- Header has back button and title 'Availability & Hours'
+- Master toggle at top: 'Accepting Instant Bookings' with toggle ON and pulse status indicator 'Online & Open for Direct Requests'
+- Weekly Schedule Matrix: 7-day pill/selector tabs (Mon, Tue, Wed, Thu, Fri, Sat [Active], Sun)
+- Daily working hours card:
+  - 'Active Working Window': Starts 08:00 AM to 07:00 PM with edit buttons
+  - Break time slot: 01:00 PM - 02:00 PM (Lunch break configured)
+- Day Status toggle: 'Working on Saturdays' toggle ON
+- Time Slots Allocation for selected day:
+  - 08:30 AM - 10:30 AM (Booked: #BK-78190 - Domestic wiring check) - soft blue tag
+  - 11:00 AM - 01:00 PM (Available - Instant dispatch ready) - green border/tag
+  - 01:00 PM - 02:00 PM (Break / Offline) - muted grey
+  - 02:30 PM - 04:30 PM (Booked: #BK-78210 - Fan regulator fix) - soft blue tag
+  - 05:00 PM - 07:00 PM (Available - Evening slot) - green border/tag
+- Quick Action: 'Apply this schedule to all weekdays (Mon-Fri)' button
+- Vacation / Time Off mode card: 'Set Vacation Dates / Pause Dispatch' with date range picker preview
+- Max daily jobs limit slider or stepper: 'Maximum 4 jobs per day' (Prevents overbooking)
+- Sticky bottom action button: 'Save Availability Changes' with checkmark icon.
+
+38. Document Verification & KYC
+Generate mobile screen for '38. Document Verification & KYC' in SkillConnect Pro for Arun Kumar.
+Design consistent with SkillConnect design system:
+- Header has back button and title 'Verification & KYC'
+- Compliance Status Hero Banner:
+  - Large green verified badge icon with title 'Level 2 Verified Professional'
+  - Subtitle: 'All mandatory government & trade verifications active. Re-check in 280 days.'
+  - Trust score indicator: 100% Compliance Score
+- Document Verification List:
+  1. 'Government ID: Aadhaar Card'
+     - Verified badge, Document Number: 'XXXX-XXXX-9412', Uploaded: '14 Jan 2024'
+     - Status: 'Biometric & OTP Authenticated' (Green check)
+     - Action: 'View Uploaded Document' (Eye icon)
+  2. 'Trade Qualification: National Trade Certificate (ITI Electrician)'
+     - Verified badge, Certificate No: 'NTC-TN-2018-84291'
+     - Verified by SkillConnect Trade Evaluation Panel (Score: Grade A+)
+     - Action: 'View Certificate'
+  3. 'Police Clearance Certificate (PCC)'
+     - Verified badge, Issued: 'Trichy City Police Dept'
+     - Status: 'Clean Record (No pending complaints)'
+     - Action: 'Renew or Replace'
+  4. 'Bank Account & UPI VPA Verification'
+     - Status: 'Active for Instant Payouts'
+     - Details: 'HDFC Bank •••• 4912 / arun.electrician@okhdfcbank'
+     - Status: Penny drop test passed (Verified)
+- Optional Additional Certifications section:
+  - 'SkillConnect Advanced Safety Protocol Badge' (Available to take test)
+  - 'Commercial High-Voltage Certificate' with 'Upload Document +' button
+- Help & Security notice: 'Documents are encrypted with 256-bit AES storage compliant with Digital Personal Data Protection Act.'
+- Bottom CTA: 'Request Re-verification or Update ID'.
+
+32. Job History
+Generate Screen 32: 'Job History' for SkillConnect Pro.
+Layout & Structure: Tabbed Pro layout with persistent 5-item Bottom Tab Navigation (Jobs active).
+Key sections & components:
+- Top Stats Banner / Summary Chips:
+  * Total Completed: 128 Jobs
+  * Completion Rate: 98.4%
+  * Total Demo Earnings: ₹14,850
+- Search & Filter Controls:
+  * Search bar: 'Search customer, booking ID, or trade...'
+  * Status Filter Tabs: 'Completed (128)' [Active], 'Cancelled (3)', 'Disputed (0)'
+  * Month/Date range dropdown: 'October 2024 (Current Month) ▾'
+- History Job Cards List:
+  * Card 1 (Completed Today):
+    - Booking #BK-78210 • 24 Oct, 3:30 PM
+    - Customer: Rahul Kumar • Thillai Nagar
+    - Service: Ceiling Fan Regulator Replacement
+    - Payout: ₹380 • Paid via UPI
+    - Rating: ★ 5.0 ("Excellent swift repair and clean work!")
+    - Status Badge: 'Completed ✓' (Emerald green)
+    - Action links: 'View Receipt', 'Customer Details'
+  * Card 2 (Completed Yesterday):
+    - Booking #BK-77984 • 23 Oct, 11:15 AM
+    - Customer: Priya Sundaram • Cantonment
+    - Service: MCB Breaker Tripping Diagnostic & Fix
+    - Payout: ₹520 • Paid Cash
+    - Rating: ★ 5.0
+    - Status Badge: 'Completed ✓'
+    - Action links: 'View Receipt'
+  * Card 3 (Completed 20 Oct):
+    - Booking #BK-77412 • 20 Oct, 4:00 PM
+    - Customer: Rajesh K • KK Nagar
+    - Service: Master Bedroom Inverter Line Rewiring
+    - Payout: ₹850 • Paid via UPI
+    - Rating: ★ 4.8
+    - Status Badge: 'Completed ✓'
+    - Action links: 'View Receipt'
+  * Card 4 (Cancelled Example / Preview):
+    - Booking #BK-76901 • 17 Oct
+    - Customer: Anand V • Woraiyur
+    - Service: Exhaust Fan Motor Replacement
+    - Status: 'Customer Cancelled (Prior to Arrival)' (Slate/amber badge)
+    - Payout: ₹0 (No cancellation penalty)
+- Empty state toggle preview trigger: 'Simulate No Jobs Found'
+Ensure consistent styling, 5-tab Pro bottom navigation with 'Jobs' tab highlighted.
+
+33. Demo Earnings
+Generate Screen 33: 'Earnings' for SkillConnect Pro.
+Layout & Structure: Tabbed Pro layout with persistent 5-item Bottom Tab Navigation.
+Key sections & components:
+- Demo Project Disclaimer Badge:
+  * Amber/Blue badge: "Simulated Earnings • SkillConnect College Project Demo"
+- Earnings Hero Card (Gradient or high-contrast card):
+  * Total Balance: ₹14,850
+  * Available for Instant Payout: ₹2,450
+  * This Month (Oct 2024): ₹8,920 (+18% vs last month)
+  * Dual Buttons: "Withdraw to Bank / UPI" (Primary white/blue) and "Statement PDF"
+- Period Filter Strip:
+  * 'This Week', 'This Month (Oct)' [Active], 'Last 30 Days', 'Custom Range'
+- Quick Financial Metrics Grid (4 cards):
+  * Total Jobs: 128
+  * Avg Payout / Job: ₹395
+  * Tips Received: ₹1,200 (100% passed to Pro)
+  * Platform Fee Paid: ₹0 (0% Commission Demo)
+- Weekly Performance Chart / Bar Graph:
+  * Visual bar chart representing daily earnings for the current week:
+    Mon: ₹650 | Tue: ₹850 | Wed: ₹1,200 | Thu: ₹780 | Fri: ₹1,450 | Sat: ₹1,900 | Sun: ₹1,200
+  * Highlight highest earning day (Saturday ₹1,900)
+- Recent Payouts & Transaction Ledger:
+  * Header: 'Recent Payouts & Transfers'
+  * Tx 1: 24 Oct • Fan Regulator Job #BK-78210 • +₹380 (Direct UPI Settlement) • Green success dot
+  * Tx 2: 23 Oct • MCB Breaker Job #BK-77984 • +₹520 (Cash Collected) • Blue dot
+  * Tx 3: 22 Oct • Weekly Bank Transfer to HDFC Bank (****4912) • -₹4,500 (Transferred) • Grey check
+  * Tx 4: 21 Oct • Customer Tip (Rahul K) • +₹100 (Direct Pro Tip) • Amber star
+- Bank & Payout Method Card:
+  * Linked UPI ID: arun.electrician@okhdfcbank (Verified ✓)
+  * Primary Bank: HDFC Bank • Acc ending 4912
+  * 'Manage Payout Methods' action link
+Ensure 5-tab Pro bottom navigation bar.
+
+35. Edit Pro Profile
+Generate Screen 35: 'Edit Pro Profile' for SkillConnect Pro.
+Layout & Structure: Stack screen with Back button, title 'Edit Pro Profile', and Top App Bar 'Save' CTA. NO bottom tab navigation.
+Key sections & components:
+- Profile Avatar Editor:
+  * Pro photo of Arun Kumar with circular camera edit icon ('Change Photo', max 5MB)
+- Basic Professional Info:
+  * Full Name: Arun Kumar (Locked / Verified with Aadhaar lock icon)
+  * Trade Business Name: Arun Electrical Works
+  * Primary Trade Category: Electrician (Dropdown selector)
+  * Years of Experience: 6+ Years (Dropdown)
+  * Professional Email: arun.electrician@example.com (Verified badge)
+  * Phone Number: +91 98421 54321 (OTP verified)
+- Professional Bio:
+  * Character counter: 148 / 300
+  * Text area prefilled: "Certified master electrician with 6+ years experience in commercial and residential wiring. Specialized in rapid fault diagnosis, MCB fixes, and fan regulator overhauls."
+- Skills & Services Management:
+  * Header: "Select Services Offered"
+  * Active chips (toggled on): [✓ House Wiring], [✓ MCB Repair], [✓ Fan Installation], [✓ Inverter Setup], [✓ Switchboard Repair]
+  * Inactive chips to add: [+ AC Installation], [+ Appliance Repair], [+ Solar Inverter]
+- Service Coverage & Hours:
+  * Coverage Radius: Slider set to 15 km
+  * Working Days selector: [M] [T] [W] [T] [F] [S] active, [S] inactive
+  * Daily Operating Window: 08:00 AM - 07:00 PM
+- Base Rates Configuration:
+  * Standard Inspection / Visit Fee: ₹249
+  * Hourly Labor Rate: ₹350
+- Document Verification Status:
+  * Aadhaar ID: `aadhar_card.pdf` (Verified ✓ - Re-upload disabled)
+  * ITI Trade Certificate: `iti_electrician_cert.pdf` (Verified ✓)
+- Action Buttons (Bottom Bar):
+  * "Save Changes" (Primary Blue CTA)
+  * "Cancel" (Subtle outline/text)
+Ensure crisp inputs, clean focus states, matching SkillConnect Mobile design guidelines.
+
+34. Professional Profile
+Generate Screen 34: 'Professional Profile' (Pro's own view of their public & verified profile) for SkillConnect Pro.
+Layout & Structure: Pro Tabbed layout with persistent 5-item Bottom Tab Navigation (Profile tab active).
+Key sections & components:
+- Top Pro Profile Card:
+  * Avatar photo of Arun Kumar (Master Electrician in uniform)
+  * Name: Arun Kumar
+  * Title: Certified Master Electrician & Wiring Specialist
+  * Badges: 'SkillConnect Verified Pro ✓', 'Top Tier Master Pro'
+  * Location: Thillai Nagar, Trichy • 15 km coverage radius
+  * "Edit Profile" outline button
+- Public Trust & Stats Grid (4 columns):
+  * Rating: ★ 4.9 (128 reviews)
+  * Experience: 6+ Years
+  * Jobs Done: 128
+  * On-Time Rate: 100%
+- Verification & Safety Badges Showcase:
+  * Government Photo ID (Aadhaar): Verified ✓
+  * Trade Certification (ITI Electrician): Verified ✓
+  * Police Clearance: Passed ✓
+  * SkillConnect Practical Trade Assessment: Grade A+
+- Work Capabilities & Primary Services:
+  * Service Tags: House Wiring, MCB Repair & Breaker Tripping, Ceiling Fan Installation & Repair, Inverter & UPS Setup, Appliance Servicing, Switchboard Replacements
+  * Standard Visit Fee: ₹249 inspection base
+- Service Radius & Operating Hours Card:
+  * Radius: 15 km around Trichy Urban & Semi-Urban
+  * Operating Hours: Mon - Sat • 8:00 AM - 7:00 PM
+  * Live status switch: "Accepting Direct Bookings" (Toggled ON)
+- Portfolio / Recent Work Showcase Gallery:
+  * 3 photo thumbnails: 1) Switchboard installation, 2) Clean breaker wiring box, 3) Ceiling fan hookup
+  * '+ Add Work Photo' button
+- Customer Testimonials Preview (Latest Reviews):
+  * Review by Rahul K (Today): ★ 5.0 "Fixed fan regulator cleanly in under 40 mins. Polite and knowledgeable."
+  * Review by Meena S: ★ 5.0 "Saved us from breaker outage. Highly recommend Arun!"
+- Settings & Switch Role Bar:
+  * "Switch to Customer Mode ⇄"
+  * "Log Out" link
+Ensure consistent SkillConnect design system with 5-tab Pro bottom navigation (Profile active).
+

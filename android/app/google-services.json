@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "235951078021",
+    "project_id": "skillconnect-a7c70",
+    "storage_bucket": "skillconnect-a7c70.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:235951078021:android:0557921576a8fdeaacc7ec",
+        "android_client_info": {
+          "package_name": "com.example.skill_connect"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "235951078021-0cqigmsa10jusdm2fmgqlv2l8c3smi5n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqom8DPYhKH0bANtqV67r6Xgn0EnlojAk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "235951078021-0cqigmsa10jusdm2fmgqlv2l8c3smi5n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:235951078021:android:3359da782f01df70acc7ec",
+        "android_client_info": {
+          "package_name": "com.skillconnect.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "235951078021-0cqigmsa10jusdm2fmgqlv2l8c3smi5n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqom8DPYhKH0bANtqV67r6Xgn0EnlojAk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "235951078021-0cqigmsa10jusdm2fmgqlv2l8c3smi5n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

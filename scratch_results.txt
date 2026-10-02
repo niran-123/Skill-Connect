@@ -1,0 +1,936 @@
+admin_screen.dart:17: onPressed: () => session.refreshUserModel(),
+  )
+  ],
+  ),
+forgot_password_screen.dart:30: onPressed: () => context.pop(),
+  ),
+  title: Text(
+  'Reset Password',
+forgot_password_screen.dart:98: onPressed: () {
+  setState(() {
+  _isSent = true;
+  });
+forgot_password_screen.dart:148: onPressed: () => context.pop(),
+  child: Text(
+  'Back to Login',
+  style: TextStyle(color: primary, fontSize: 14, fontWeight: FontWeight.w600, fontFamily: 'Inter'),
+login_screen.dart:67: onTap: () {
+  setState(() {
+  _isCustomer = !_isCustomer;
+  });
+login_screen.dart:107: _buildTab(title: 'Customer', icon: Icons.home, isSelected: _isCustomer, onTap: () => setState(() => _isCustomer = true)),
+  _buildTab(title: 'Professional', icon: Icons.handyman, isSelected: !_isCustomer, onTap: () => setState(() => _isCustomer = false)),
+  ],
+  ),
+login_screen.dart:108: _buildTab(title: 'Professional', icon: Icons.handyman, isSelected: !_isCustomer, onTap: () => setState(() => _isCustomer = false)),
+  ],
+  ),
+  ),
+login_screen.dart:182: onTap: () => context.push('/forgot-password'),
+  child: Text('Forgot Password?', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: primary)),
+  ),
+  ],
+login_screen.dart:203: onPressed: () {
+  setState(() {
+  _isPasswordVisible = !_isPasswordVisible;
+  });
+login_screen.dart:228: onPressed: auth.isLoading ? null : () => auth.signInWithEmail(_emailCtrl.text, _passCtrl.text),
+  style: ElevatedButton.styleFrom(
+  backgroundColor: primary,
+  foregroundColor: Colors.white,
+login_screen.dart:269: onPressed: () => auth.signInWithGoogle(),
+  style: ElevatedButton.styleFrom(
+  backgroundColor: surfaceContainerLowest,
+  foregroundColor: onSurface,
+login_screen.dart:304: onTap: () => context.push('/signup'),
+  child: Text('Sign Up', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: primary)),
+  ),
+  ],
+login_screen.dart:324: onPressed: () {
+  if (context.canPop()) {
+  context.pop();
+  }
+login_screen.dart:344: Widget _buildTab({required String title, required IconData icon, required bool isSelected, required VoidCallback onTap}) {
+  return Expanded(
+  child: GestureDetector(
+  onTap: onTap,
+login_screen.dart:347: onTap: onTap,
+  child: Container(
+  padding: const EdgeInsets.symmetric(vertical: 10),
+  decoration: BoxDecoration(
+pro_registration_screen.dart:28: context.go('/login');
+pro_registration_screen.dart:162: onPressed: _nextStep,
+  style: ElevatedButton.styleFrom(backgroundColor: primary, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
+  child: const Text('Next: Skill Details →', style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold)),
+  ),
+pro_registration_screen.dart:170: onPressed: () => context.go('/login'),
+  child: Text('Already registered as a pro? Login here', style: TextStyle(color: primary, fontSize: 14, fontWeight: FontWeight.w600)),
+  ),
+  ),
+pro_registration_screen.dart:234: onPressed: _prevStep,
+  style: OutlinedButton.styleFrom(side: const BorderSide(color: Colors.grey), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)), minimumSize: const Size(0, 48)),
+  child: const Text('Back', style: TextStyle(color: Colors.grey, fontSize: 16, fontWeight: FontWeight.bold)),
+  ),
+pro_registration_screen.dart:243: onPressed: _nextStep,
+  style: ElevatedButton.styleFrom(backgroundColor: primary, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)), minimumSize: const Size(0, 48)),
+  child: const Text('Next: Verification →', style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold)),
+  ),
+pro_registration_screen.dart:314: Checkbox(value: true, activeColor: primary, onChanged: (v) {}),
+  const Expanded(child: Text('I agree to SkillConnect Pro Guidelines and Service Standards', style: TextStyle(fontSize: 12))),
+  ],
+  ),
+pro_registration_screen.dart:323: onPressed: () {
+  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('🎉 Profile created successfully! Welcome to SkillConnect Pro.')));
+  _nextStep();
+  },
+pro_registration_screen.dart:366: leading: IconButton(icon: Icon(Icons.arrow_back, color: onSurface), onPressed: _prevStep),
+  title: Text('Pro Registration', style: TextStyle(color: onSurface, fontSize: 16, fontWeight: FontWeight.w600)),
+  centerTitle: true,
+  ),
+role_selection_screen.dart:26: context.push('/signup');
+role_selection_screen.dart:28: context.push('/pro-registration');
+role_selection_screen.dart:41: onTap: () {
+  setState(() {
+  _selectedRole = roleId;
+  });
+role_selection_screen.dart:78: onChanged: (val) {
+  setState(() => _selectedRole = val!);
+  },
+  ),
+role_selection_screen.dart:108: onPressed: _isLoading ? null : () => _selectRole(context, roleId),
+  style: ElevatedButton.styleFrom(
+  backgroundColor: primary,
+  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+role_selection_screen.dart:119: onPressed: () => setState(() => _selectedRole = roleId),
+  style: OutlinedButton.styleFrom(
+  side: BorderSide(color: primary),
+  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+role_selection_screen.dart:142: onPressed: () {},
+  ),
+  centerTitle: true,
+  title: Icon(Icons.handyman_rounded, color: primary), // Mini logo placeholder
+role_selection_screen.dart:188: onPressed: () => context.go('/login'),
+  child: RichText(
+  text: TextSpan(
+  text: 'Already have an account? ',
+signup_screen.dart:83: onPressed: () {
+  setState(() {
+  _isPasswordVisible = !_isPasswordVisible;
+  });
+signup_screen.dart:107: onPressed: () => context.pop(),
+  ),
+  title: Text(
+  'Create Customer Account',
+signup_screen.dart:197: onChanged: (val) {
+  setState(() {
+  _agreedToTerms = val ?? true;
+  });
+signup_screen.dart:222: onPressed: auth.isLoading
+  ? null
+  : () async {
+  final cred = await auth.signUpWithEmail(_emailCtrl.text, _passCtrl.text);
+signup_screen.dart:257: onPressed: () => context.go('/login'),
+  child: RichText(
+  text: TextSpan(
+  text: 'Already have an account? ',
+ai_analysis_screen.dart:16: onPressed: () => Navigator.pop(context),
+  ),
+  title: const Text(
+  'AI Problem Diagnosis',
+ai_analysis_screen.dart:185: onPressed: () {},
+  style: OutlinedButton.styleFrom(
+  foregroundColor: const Color(0xFF0F172A),
+  side: const BorderSide(color: Color(0xFFCBD5E1)),
+ai_analysis_screen.dart:196: onPressed: () => _showConfirmationModal(context),
+  style: ElevatedButton.styleFrom(
+  backgroundColor: const Color(0xFF1D4ED8),
+  foregroundColor: Colors.white,
+ai_analysis_screen.dart:276: onPressed: () {},
+  style: ElevatedButton.styleFrom(
+  backgroundColor: const Color(0xFF1D4ED8),
+  foregroundColor: Colors.white,
+ai_analysis_screen.dart:288: onPressed: () => Navigator.pop(context),
+  style: TextButton.styleFrom(
+  foregroundColor: const Color(0xFF475569),
+  minimumSize: const Size(double.infinity, 48),
+booking_details_screen.dart:22: onPressed: () => context.pop(),
+  ),
+  title: Text('Booking Details', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: onSurface)),
+  centerTitle: true,
+booking_details_screen.dart:27: IconButton(icon: Icon(Icons.share, color: onSurface), onPressed: () {}),
+  ],
+  ),
+  body: SingleChildScrollView(
+booking_details_screen.dart:81: onPressed: () {},
+  icon: Icon(Icons.phone, size: 16, color: primary),
+  label: Text('Call (+91 984...)', style: TextStyle(fontSize: 12, color: primary)),
+  style: OutlinedButton.styleFrom(side: BorderSide(color: primary), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+booking_details_screen.dart:90: onPressed: () {},
+  icon: Icon(Icons.chat_bubble_outline, size: 16, color: primary),
+  label: Text('Message', style: TextStyle(fontSize: 12, color: primary)),
+  style: OutlinedButton.styleFrom(side: BorderSide(color: primary), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+booking_details_screen.dart:178: onPressed: () {},
+  style: ElevatedButton.styleFrom(
+  backgroundColor: primary,
+  minimumSize: const Size(double.infinity, 48),
+booking_details_screen.dart:188: onPressed: () {},
+  child: const Text('Cancel Request', style: TextStyle(color: Colors.red)),
+  ),
+  ],
+booking_request_screen.dart:22: onPressed: () => context.pop(),
+  ),
+  title: Text('Book Professional', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: onSurface)),
+  centerTitle: true,
+booking_request_screen.dart:184: onPressed: () => context.go('/customer/booking-sent'),
+  style: ElevatedButton.styleFrom(
+  backgroundColor: primary,
+  minimumSize: const Size(double.infinity, 48),
+booking_sent_screen.dart:97: onPressed: () => context.go('/customer/bookings/BK-78210'),
+  style: ElevatedButton.styleFrom(
+  backgroundColor: primary,
+  minimumSize: const Size(double.infinity, 48),
+booking_sent_screen.dart:107: onPressed: () => context.go('/customer/bookings'),
+  style: OutlinedButton.styleFrom(
+  side: BorderSide(color: primary),
+  minimumSize: const Size(double.infinity, 48),
+booking_sent_screen.dart:117: onPressed: () => context.go('/customer/home'),
+  child: Text('Back to Home', style: TextStyle(color: onSurfaceVariant)),
+  ),
+  ],
+cancel_booking_screen.dart:32: onPressed: () => Navigator.pop(context),
+  ),
+  title: const Text('Cancel Booking Request', style: TextStyle(color: Color(0xFF0F172A), fontWeight: FontWeight.w600, fontSize: 18)),
+  ),
+cancel_booking_screen.dart:103: onPressed: () {},
+  icon: const Icon(LucideIcons.calendar),
+  label: const Text('Reschedule Appointment'),
+  style: OutlinedButton.styleFrom(
+cancel_booking_screen.dart:155: onPressed: () => Navigator.pop(context),
+  style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF1D4ED8), foregroundColor: Colors.white, minimumSize: const Size(double.infinity, 48), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)), elevation: 0),
+  child: const Text('Keep Booking', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16)),
+  ),
+cancel_booking_screen.dart:161: onPressed: _selectedReason == null ? null : () {},
+  style: TextButton.styleFrom(foregroundColor: const Color(0xFFDC2626), minimumSize: const Size(double.infinity, 48)),
+  child: const Text('Confirm Cancellation', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15)),
+  ),
+cancel_booking_screen.dart:174: onTap: () => setState(() => _selectedReason = reason),
+  child: Padding(
+  padding: const EdgeInsets.symmetric(vertical: 8),
+  child: Row(
+customer_bookings_screen.dart:80: onTap: (idx) {
+  if (idx == 0) context.go('/customer/home');
+  if (idx == 4) context.go('/customer/profile');
+  },
+customer_bookings_screen.dart:81: if (idx == 0) context.go('/customer/home');
+customer_bookings_screen.dart:82: if (idx == 4) context.go('/customer/profile');
+customer_bookings_screen.dart:157: onPressed: () => context.push('/customer/bookings/BK-78210'),
+  style: ElevatedButton.styleFrom(backgroundColor: primary, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+  child: const Text('View Live Details', style: TextStyle(color: Colors.white, fontSize: 12)),
+  ),
+customer_bookings_screen.dart:164: onPressed: () {},
+  icon: Icon(Icons.phone, color: primary),
+  style: IconButton.styleFrom(backgroundColor: const Color(0xFFDBEAFE), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+  )
+customer_bookings_screen.dart:200: onPressed: () {},
+  style: OutlinedButton.styleFrom(minimumSize: const Size(double.infinity, 36), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+  child: const Text('View Details'),
+  ),
+customer_bookings_screen.dart:240: onPressed: () {},
+  style: OutlinedButton.styleFrom(minimumSize: const Size(double.infinity, 36), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+  child: const Text('View Invoice / Re-Book'),
+  ),
+customer_home_screen.dart:47: onPressed: () {},
+  ),
+  Positioned(
+  right: 12,
+customer_home_screen.dart:114: onPressed: () => context.push('/customer/request'),
+  style: ElevatedButton.styleFrom(
+  backgroundColor: primary,
+  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+customer_home_screen.dart:179: onPressed: () => context.push('/customer/bookings'),
+  style: TextButton.styleFrom(padding: EdgeInsets.zero, minimumSize: const Size(50, 30)),
+  child: Text('Track →', style: TextStyle(color: primary, fontWeight: FontWeight.bold, fontSize: 13)),
+  ),
+customer_home_screen.dart:283: onPressed: () {},
+  style: OutlinedButton.styleFrom(
+  padding: const EdgeInsets.symmetric(horizontal: 12),
+  minimumSize: const Size(60, 32),
+customer_notifications_screen.dart:34: onPressed: () {},
+  child: Text('Mark All as Read', style: TextStyle(fontSize: 12, color: primary, fontWeight: FontWeight.bold)),
+  ),
+  IconButton(icon: Icon(Icons.filter_list, color: onSurfaceVariant), onPressed: () {}),
+customer_notifications_screen.dart:37: IconButton(icon: Icon(Icons.filter_list, color: onSurfaceVariant), onPressed: () {}),
+  ],
+  ),
+  body: Column(
+customer_notifications_screen.dart:122: onPressed: () {},
+  style: OutlinedButton.styleFrom(side: const BorderSide(color: Color(0xFFCBD5E1)), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+  child: const Text('Clear All Read Notifications', style: TextStyle(color: Color(0xFF64748B))),
+  ),
+customer_notifications_screen.dart:134: onTap: (idx) {
+  if (idx == 0) context.go('/customer/home');
+  if (idx == 2) context.go('/customer/bookings');
+  if (idx == 4) context.go('/customer/profile');
+customer_notifications_screen.dart:135: if (idx == 0) context.go('/customer/home');
+customer_notifications_screen.dart:136: if (idx == 2) context.go('/customer/bookings');
+customer_notifications_screen.dart:137: if (idx == 4) context.go('/customer/profile');
+customer_profile_screen.dart:29: IconButton(icon: Icon(Icons.settings, color: onSurfaceVariant), onPressed: () {}),
+  IconButton(icon: Icon(Icons.share, color: onSurfaceVariant), onPressed: () {}),
+  ],
+  ),
+customer_profile_screen.dart:30: IconButton(icon: Icon(Icons.share, color: onSurfaceVariant), onPressed: () {}),
+  ],
+  ),
+  body: SingleChildScrollView(
+customer_profile_screen.dart:66: onPressed: () => context.push('/customer/profile/edit'),
+  style: OutlinedButton.styleFrom(side: BorderSide(color: primary), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
+  child: Text('Edit Profile', style: TextStyle(color: primary, fontWeight: FontWeight.bold, fontSize: 12)),
+  ),
+customer_profile_screen.dart:108: onPressed: () => context.push('/customer/bookings/BK-78210'),
+  style: ElevatedButton.styleFrom(backgroundColor: primary, minimumSize: const Size(0, 32), padding: const EdgeInsets.symmetric(horizontal: 12), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+  child: const Text('Track #BK-78210 →', style: TextStyle(fontSize: 10, color: Colors.white, fontWeight: FontWeight.bold)),
+  ),
+customer_profile_screen.dart:120: _buildListTile(Icons.calendar_month, 'My Bookings', 'Active, upcoming, and past services', trailingWidget: _buildBadge('1 Active', const Color(0xFFDBEAFE), primary), onTap: () => context.go('/customer/bookings')),
+  _buildListTile(Icons.favorite, 'Saved Professionals', 'Your favorite certified tradespeople', trailingWidget: _buildBadge('2 saved', const Color(0xFFF1F5F9), onSurfaceVariant), onTap: () => context.push('/customer/saved-pros')),
+  _buildListTile(Icons.location_on, 'Service Addresses', 'Primary: 42, West Boulevard Rd, Trichy', onTap: () {}),
+  ],
+customer_profile_screen.dart:121: _buildListTile(Icons.favorite, 'Saved Professionals', 'Your favorite certified tradespeople', trailingWidget: _buildBadge('2 saved', const Color(0xFFF1F5F9), onSurfaceVariant), onTap: () => context.push('/customer/saved-pros')),
+  _buildListTile(Icons.location_on, 'Service Addresses', 'Primary: 42, West Boulevard Rd, Trichy', onTap: () {}),
+  ],
+  ),
+customer_profile_screen.dart:122: _buildListTile(Icons.location_on, 'Service Addresses', 'Primary: 42, West Boulevard Rd, Trichy', onTap: () {}),
+  ],
+  ),
+  const SizedBox(height: 24),
+customer_profile_screen.dart:130: _buildListTile(Icons.notifications_active, 'Notifications & Alerts', 'Push & SMS enabled', onTap: () {}),
+  _buildListTile(Icons.language, 'Language', 'English (Tamil supported)', onTap: () {}),
+  _buildListTile(Icons.dark_mode, 'App Theme', 'Light Mode', onTap: () {}),
+  ],
+customer_profile_screen.dart:131: _buildListTile(Icons.language, 'Language', 'English (Tamil supported)', onTap: () {}),
+  _buildListTile(Icons.dark_mode, 'App Theme', 'Light Mode', onTap: () {}),
+  ],
+  ),
+customer_profile_screen.dart:132: _buildListTile(Icons.dark_mode, 'App Theme', 'Light Mode', onTap: () {}),
+  ],
+  ),
+  const SizedBox(height: 24),
+customer_profile_screen.dart:140: _buildListTile(Icons.help_outline, 'Help & Support', '24/7 dedicated support & FAQs', onTap: () {}),
+  _buildListTile(Icons.shield, 'SkillConnect Guarantee', '30-day post-service warranty policy', onTap: () {}),
+  _buildListTile(Icons.description, 'Terms of Service & Privacy Policy', null, onTap: () {}),
+  ],
+customer_profile_screen.dart:141: _buildListTile(Icons.shield, 'SkillConnect Guarantee', '30-day post-service warranty policy', onTap: () {}),
+  _buildListTile(Icons.description, 'Terms of Service & Privacy Policy', null, onTap: () {}),
+  ],
+  ),
+customer_profile_screen.dart:142: _buildListTile(Icons.description, 'Terms of Service & Privacy Policy', null, onTap: () {}),
+  ],
+  ),
+  const SizedBox(height: 24),
+customer_profile_screen.dart:154: onTap: () {},
+  ),
+  const Divider(height: 1),
+  ListTile(
+customer_profile_screen.dart:160: onTap: () {
+  context.read<AuthProvider>().signOut();
+  context.go('/login');
+  },
+customer_profile_screen.dart:162: context.go('/login');
+customer_profile_screen.dart:179: onTap: (idx) {
+  if (idx == 0) context.go('/customer/home');
+  if (idx == 2) context.go('/customer/bookings');
+  if (idx == 3) context.go('/customer/notifications');
+customer_profile_screen.dart:180: if (idx == 0) context.go('/customer/home');
+customer_profile_screen.dart:181: if (idx == 2) context.go('/customer/bookings');
+customer_profile_screen.dart:182: if (idx == 3) context.go('/customer/notifications');
+customer_profile_screen.dart:220: Widget _buildListTile(IconData icon, String title, String? subtitle, {Widget? trailingWidget, required VoidCallback onTap}) {
+  return ListTile(
+  leading: Container(
+  padding: const EdgeInsets.all(8),
+customer_profile_screen.dart:236: onTap: onTap,
+  );
+  }
+  
+describe_problem_screen.dart:16: onPressed: () => Navigator.pop(context),
+  ),
+  title: Column(
+  crossAxisAlignment: CrossAxisAlignment.start,
+describe_problem_screen.dart:79: onChanged: (v) {},
+  ),
+  ),
+  ),
+describe_problem_screen.dart:121: onPressed: () {},
+  icon: const Icon(LucideIcons.mic, size: 16, color: Color(0xFF1D4ED8)),
+  label: const Text('Tap to Speak', style: TextStyle(color: Color(0xFF1D4ED8), fontWeight: FontWeight.w500)),
+  style: TextButton.styleFrom(
+describe_problem_screen.dart:249: onPressed: () {},
+  style: TextButton.styleFrom(padding: EdgeInsets.zero, minimumSize: Size.zero),
+  child: const Text('Change', style: TextStyle(color: Color(0xFF1D4ED8), fontWeight: FontWeight.w500)),
+  ),
+describe_problem_screen.dart:276: onPressed: () {},
+  style: ElevatedButton.styleFrom(
+  backgroundColor: const Color(0xFF1D4ED8),
+  foregroundColor: Colors.white,
+edit_customer_profile_screen.dart:22: onPressed: () => context.pop(),
+  ),
+  title: Text('Edit Profile', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: onSurface)),
+  centerTitle: true,
+edit_customer_profile_screen.dart:28: onPressed: () {
+  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Profile changes saved successfully.')));
+  context.pop();
+  },
+edit_customer_profile_screen.dart:138: onPressed: () {},
+  icon: Icon(Icons.my_location, size: 16, color: primary),
+  label: Text('Detect Current GPS Location', style: TextStyle(color: primary)),
+  style: OutlinedButton.styleFrom(minimumSize: const Size(double.infinity, 40), side: BorderSide(color: outline)),
+edit_customer_profile_screen.dart:158: onChanged: (v) {},
+  title: const Text('Receive real-time WhatsApp arrival alerts', style: TextStyle(fontSize: 12)),
+  activeColor: primary,
+  controlAffinity: ListTileControlAffinity.leading,
+edit_customer_profile_screen.dart:167: onChanged: (v) {},
+  title: const Text('Email summary of invoices', style: TextStyle(fontSize: 12)),
+  activeColor: primary,
+  controlAffinity: ListTileControlAffinity.leading,
+edit_customer_profile_screen.dart:190: onPressed: () => context.pop(),
+  style: OutlinedButton.styleFrom(minimumSize: const Size(0, 48), side: BorderSide(color: outline), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
+  child: Text('Cancel', style: TextStyle(color: onSurfaceVariant, fontWeight: FontWeight.bold)),
+  ),
+edit_customer_profile_screen.dart:199: onPressed: () {
+  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Profile changes saved successfully.')));
+  context.pop();
+  },
+filters_screen.dart:30: onPressed: () => Navigator.pop(context),
+  ),
+  title: const Text(
+  'Filters',
+filters_screen.dart:42: onPressed: () {},
+  style: TextButton.styleFrom(
+  foregroundColor: const Color(0xFF1D4ED8),
+  textStyle: const TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+filters_screen.dart:118: onChanged: (val) => setState(() => _distance = val),
+  ),
+  ),
+  _buildDivider(),
+filters_screen.dart:185: onChanged: (val) => setState(() => _verifiedOnly = val),
+  activeColor: Colors.white,
+  activeTrackColor: const Color(0xFF1D4ED8),
+  inactiveTrackColor: const Color(0xFFE2E8F0),
+filters_screen.dart:223: onPressed: () {},
+  style: OutlinedButton.styleFrom(
+  foregroundColor: const Color(0xFF0F172A),
+  side: const BorderSide(color: Color(0xFFCBD5E1)),
+filters_screen.dart:237: onPressed: () {},
+  style: ElevatedButton.styleFrom(
+  backgroundColor: const Color(0xFF1D4ED8),
+  foregroundColor: Colors.white,
+filters_screen.dart:285: onTap: () => onSelect(option),
+  child: Container(
+  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+  decoration: BoxDecoration(
+job_request_screen.dart:48: context.push('/customer/matches');
+job_request_screen.dart:99: onChanged: (_) {},
+  ),
+  ),
+  ),
+job_request_screen.dart:132: onPressed: () {},
+  icon: Icon(Icons.mic_none, size: 16, color: primary),
+  label: Text('Tap to Speak', style: TextStyle(color: primary, fontSize: 12, fontWeight: FontWeight.w600)),
+  style: OutlinedButton.styleFrom(
+job_request_screen.dart:264: onPressed: _isAnalyzing ? null : _analyze,
+  style: ElevatedButton.styleFrom(
+  backgroundColor: primary,
+  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+job_request_screen.dart:416: onPressed: () => setState(() => _analysisComplete = false),
+  icon: Icon(Icons.edit, size: 16, color: onSurfaceVariant),
+  label: Text('Edit Details', style: TextStyle(color: onSurfaceVariant, fontWeight: FontWeight.w600)),
+  ),
+job_request_screen.dart:426: onPressed: _confirmAndFindPros,
+  style: ElevatedButton.styleFrom(
+  backgroundColor: primary,
+  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+job_request_screen.dart:475: onPressed: () {
+  if (_analysisComplete) {
+  setState(() => _analysisComplete = false);
+  } else {
+media_upload_retry_screen.dart:16: onPressed: () => Navigator.pop(context),
+  ),
+  title: const Text('Media & Diagnosis', style: TextStyle(color: Color(0xFF0F172A), fontWeight: FontWeight.w600, fontSize: 18)),
+  ),
+media_upload_retry_screen.dart:86: onPressed: () {},
+  icon: const Icon(LucideIcons.shrink, size: 14),
+  label: const Text('Compress & Retry', style: TextStyle(fontSize: 12)),
+  style: TextButton.styleFrom(foregroundColor: const Color(0xFF1D4ED8), padding: EdgeInsets.zero, minimumSize: Size.zero, tapTargetSize: MaterialTapTargetSize.shrinkWrap),
+media_upload_retry_screen.dart:93: onPressed: () {},
+  icon: const Icon(LucideIcons.trash2, size: 14),
+  label: const Text('Remove File', style: TextStyle(fontSize: 12)),
+  style: TextButton.styleFrom(foregroundColor: const Color(0xFF64748B), padding: EdgeInsets.zero, minimumSize: Size.zero, tapTargetSize: MaterialTapTargetSize.shrinkWrap),
+media_upload_retry_screen.dart:185: onPressed: () {},
+  style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF1D4ED8), foregroundColor: Colors.white, minimumSize: const Size(double.infinity, 48), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)), elevation: 0),
+  child: const Text('Retry Failed Upload', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16)),
+  ),
+media_upload_retry_screen.dart:191: onPressed: () {},
+  style: OutlinedButton.styleFrom(foregroundColor: const Color(0xFF0F172A), side: const BorderSide(color: Color(0xFFCBD5E1)), minimumSize: const Size(double.infinity, 48), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
+  child: const Text('Continue Without Failed Photo', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15)),
+  ),
+no_pros_available_screen.dart:16: onPressed: () => Navigator.pop(context),
+  ),
+  title: Container(
+  height: 40,
+no_pros_available_screen.dart:87: Slider(value: 25, min: 15, max: 50, activeColor: const Color(0xFF1D4ED8), inactiveColor: const Color(0xFFE2E8F0), onChanged: (v) {}),
+  ],
+  ),
+  ),
+no_pros_available_screen.dart:111: onPressed: () {},
+  style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF1D4ED8), foregroundColor: Colors.white, minimumSize: const Size(double.infinity, 44), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)), elevation: 0),
+  child: const Text('Pre-Book Slot', style: TextStyle(fontWeight: FontWeight.w600)),
+  ),
+no_pros_available_screen.dart:137: Switch(value: false, onChanged: (v) {}, activeColor: Colors.white, activeTrackColor: const Color(0xFF1D4ED8)),
+  ],
+  ),
+  ),
+no_pros_available_screen.dart:166: onPressed: () {},
+  child: const Text('Modify Search Category', style: TextStyle(color: Color(0xFF1D4ED8), fontWeight: FontWeight.w600)),
+  ),
+  ],
+offline_mode_screen.dart:79: onPressed: () {},
+  icon: const Icon(LucideIcons.phone),
+  label: const Text('Call Technician via GSM Call'),
+  style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF16A34A), foregroundColor: Colors.white, minimumSize: const Size(double.infinity, 44), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)), elevation: 0),
+offline_mode_screen.dart:108: onPressed: () {},
+  icon: const Icon(LucideIcons.refreshCw),
+  label: const Text('Retry Connection', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16)),
+  style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF1D4ED8), foregroundColor: Colors.white, minimumSize: const Size(double.infinity, 52), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)), elevation: 0),
+offline_mode_screen.dart:115: onPressed: () {},
+  child: const Text('View Offline Cached Bookings', style: TextStyle(color: Color(0xFF475569), fontWeight: FontWeight.w600)),
+  ),
+  ],
+payment_failed_screen.dart:30: onPressed: () => Navigator.pop(context),
+  ),
+  title: const Text('Payment Status', style: TextStyle(color: Color(0xFF0F172A), fontWeight: FontWeight.w600, fontSize: 18)),
+  ),
+payment_failed_screen.dart:133: onPressed: () {},
+  style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF1D4ED8), foregroundColor: Colors.white, minimumSize: const Size(double.infinity, 48), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)), elevation: 0),
+  child: const Text('Retry UPI Payment (₹380)', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16)),
+  ),
+payment_failed_screen.dart:139: onPressed: () {},
+  style: OutlinedButton.styleFrom(foregroundColor: const Color(0xFF0F172A), side: const BorderSide(color: Color(0xFFCBD5E1)), minimumSize: const Size(double.infinity, 48), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
+  child: const Text('Switch to Cash on Delivery', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15)),
+  ),
+payment_failed_screen.dart:145: onPressed: () {},
+  child: const Text('Need help? Contact Payment Support', style: TextStyle(color: Color(0xFF64748B), fontSize: 13, decoration: TextDecoration.underline)),
+  ),
+  ],
+payment_failed_screen.dart:167: onTap: () => setState(() => _selectedMethod = title),
+  child: Container(
+  margin: const EdgeInsets.only(bottom: 12),
+  padding: const EdgeInsets.all(16),
+professional_detail_screen.dart:25: onPressed: () => context.pop(),
+  ),
+  actions: [
+  IconButton(icon: Icon(Icons.favorite_border, color: onSurfaceVariant), onPressed: () {}),
+professional_detail_screen.dart:28: IconButton(icon: Icon(Icons.favorite_border, color: onSurfaceVariant), onPressed: () {}),
+  IconButton(icon: Icon(Icons.share, color: onSurfaceVariant), onPressed: () {}),
+  ],
+  ),
+professional_detail_screen.dart:29: IconButton(icon: Icon(Icons.share, color: onSurfaceVariant), onPressed: () {}),
+  ],
+  ),
+  body: SingleChildScrollView(
+professional_detail_screen.dart:275: onPressed: () {
+  context.push('/customer/booking-request');
+  },
+  style: ElevatedButton.styleFrom(
+professional_detail_screen.dart:276: context.push('/customer/booking-request');
+professional_list_screen.dart:27: onPressed: () => context.pop(),
+  ),
+  title: Text('Matching Professionals', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: onSurface)),
+  centerTitle: true,
+professional_list_screen.dart:67: onPressed: () => _showFilters(context),
+  padding: EdgeInsets.zero,
+  constraints: const BoxConstraints(),
+  ),
+professional_list_screen.dart:123: onPressed: () {},
+  child: Text('Preview Empty State (No Pros Found)', style: TextStyle(color: onSurfaceVariant, fontSize: 12)),
+  ),
+  ),
+professional_list_screen.dart:303: onPressed: () => context.push('/customer/matches/mock_uid'),
+  style: ElevatedButton.styleFrom(
+  backgroundColor: isTopMatch ? primary : Colors.white,
+  foregroundColor: isTopMatch ? Colors.white : primary,
+professional_list_screen.dart:353: onPressed: () {},
+  child: const Text('Reset All', style: TextStyle(color: Color(0xFF1D4ED8), fontSize: 14)),
+  ),
+  IconButton(
+professional_list_screen.dart:358: onPressed: () => Navigator.pop(context),
+  ),
+  ],
+  ),
+professional_list_screen.dart:415: onChanged: (val) {},
+  ),
+  
+  const SizedBox(height: 16),
+professional_list_screen.dart:441: Switch(value: true, activeColor: const Color(0xFF1D4ED8), onChanged: (v) {}),
+  ],
+  ),
+  ],
+professional_list_screen.dart:457: onPressed: () {},
+  style: OutlinedButton.styleFrom(
+  side: const BorderSide(color: Color(0xFF1D4ED8)),
+  minimumSize: const Size(0, 48),
+professional_list_screen.dart:470: onPressed: () => Navigator.pop(context),
+  style: ElevatedButton.styleFrom(
+  backgroundColor: const Color(0xFF1D4ED8),
+  minimumSize: const Size(0, 48),
+review_screen.dart:35: onPressed: () => context.pop(),
+  ),
+  title: Text('Rate Your Professional', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: onSurface)),
+  centerTitle: true,
+review_screen.dart:87: onPressed: () => setState(() => _rating = index + 1),
+  padding: EdgeInsets.zero,
+  constraints: const BoxConstraints(),
+  );
+review_screen.dart:195: onPressed: () {},
+  style: ElevatedButton.styleFrom(
+  backgroundColor: Colors.white,
+  foregroundColor: primary,
+review_screen.dart:217: onPressed: () {
+  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Thank you! Your feedback has been published.')));
+  context.go('/customer/bookings');
+  },
+review_screen.dart:219: context.go('/customer/bookings');
+review_screen.dart:248: onTap: () {
+  setState(() {
+  if (isSelected) _selectedCompliments.remove(label);
+  else _selectedCompliments.add(label);
+saved_professionals_screen.dart:22: onPressed: () => context.pop(),
+  ),
+  title: Row(
+  mainAxisSize: MainAxisSize.min,
+saved_professionals_screen.dart:38: IconButton(icon: Icon(Icons.search, color: onSurfaceVariant), onPressed: () {}),
+  ],
+  ),
+  body: Column(
+saved_professionals_screen.dart:121: onPressed: () => context.go('/customer/home'),
+  style: OutlinedButton.styleFrom(side: BorderSide(color: outline), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+  child: const Text('Browse Recommended Pros'),
+  )
+saved_professionals_screen.dart:254: onPressed: () => context.push('/customer/matches/mock_uid'),
+  style: OutlinedButton.styleFrom(side: BorderSide(color: outline), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+  child: const Text('View Profile', style: TextStyle(color: Color(0xFF64748B))),
+  ),
+saved_professionals_screen.dart:262: onPressed: () => context.push('/customer/request'),
+  style: ElevatedButton.styleFrom(backgroundColor: primary, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+  child: const Text('Book Now', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+  ),
+search_professionals_screen.dart:58: onPressed: () {},
+  ),
+  ],
+  ),
+search_professionals_screen.dart:78: onPressed: () {},
+  ),
+  ),
+  Positioned(
+search_professionals_screen.dart:197: onPressed: () {},
+  style: TextButton.styleFrom(
+  foregroundColor: const Color(0xFF1D4ED8),
+  ),
+search_professionals_screen.dart:376: onPressed: () {},
+  style: ElevatedButton.styleFrom(
+  backgroundColor: const Color(0xFF1D4ED8),
+  foregroundColor: Colors.white,
+accept_request_confirmation_screen.dart:16: onPressed: () => Navigator.pop(context),
+  ),
+  title: const Text(
+  'Accept Request',
+accept_request_confirmation_screen.dart:94: onPressed: () {},
+  style: ElevatedButton.styleFrom(
+  backgroundColor: const Color(0xFF1D4ED8),
+  foregroundColor: Colors.white,
+accept_request_confirmation_screen.dart:106: onPressed: () => Navigator.pop(context),
+  style: TextButton.styleFrom(
+  foregroundColor: const Color(0xFF475569),
+  minimumSize: const Size(double.infinity, 48),
+accept_request_confirmation_screen.dart:143: onPressed: () {},
+  style: ElevatedButton.styleFrom(
+  backgroundColor: const Color(0xFF16A34A),
+  foregroundColor: Colors.white,
+demo_earnings_screen.dart:16: IconButton(icon: const Icon(LucideIcons.helpCircle, color: Color(0xFF0F172A)), onPressed: () {}),
+  ],
+  ),
+  body: SingleChildScrollView(
+demo_earnings_screen.dart:90: onPressed: () {},
+  style: ElevatedButton.styleFrom(
+  backgroundColor: Colors.white,
+  foregroundColor: const Color(0xFF1D4ED8),
+demo_earnings_screen.dart:104: onPressed: () {},
+  style: OutlinedButton.styleFrom(
+  foregroundColor: Colors.white,
+  side: const BorderSide(color: Colors.white54),
+demo_earnings_screen.dart:227: onPressed: () {},
+  style: TextButton.styleFrom(padding: EdgeInsets.zero, minimumSize: Size.zero, tapTargetSize: MaterialTapTargetSize.shrinkWrap),
+  child: const Text('Manage', style: TextStyle(color: Color(0xFF1D4ED8), fontWeight: FontWeight.w500, fontSize: 13)),
+  ),
+document_verification_screen.dart:16: onPressed: () => Navigator.pop(context),
+  ),
+  title: const Text('Verification & KYC', style: TextStyle(color: Color(0xFF0F172A), fontWeight: FontWeight.w600, fontSize: 18)),
+  ),
+document_verification_screen.dart:128: onPressed: () {},
+  style: OutlinedButton.styleFrom(
+  foregroundColor: const Color(0xFF0F172A),
+  side: const BorderSide(color: Color(0xFFCBD5E1)),
+document_verification_screen.dart:172: onPressed: () {},
+  icon: Icon(icon, size: 16),
+  label: Text(actionText),
+  style: TextButton.styleFrom(
+edit_pro_profile_screen.dart:16: onPressed: () => Navigator.pop(context),
+  ),
+  title: const Text('Edit Pro Profile', style: TextStyle(color: Color(0xFF0F172A), fontWeight: FontWeight.w600, fontSize: 18)),
+  actions: [
+edit_pro_profile_screen.dart:21: onPressed: () {},
+  child: const Text('Save', style: TextStyle(color: Color(0xFF1D4ED8), fontWeight: FontWeight.w600, fontSize: 16)),
+  ),
+  ],
+edit_pro_profile_screen.dart:140: Slider(value: 15, min: 5, max: 50, activeColor: const Color(0xFF1D4ED8), inactiveColor: const Color(0xFFE2E8F0), onChanged: (v) {}),
+  const SizedBox(height: 16),
+  const Text('Working Days', style: TextStyle(fontWeight: FontWeight.w500, color: Color(0xFF0F172A), fontSize: 14)),
+  const SizedBox(height: 8),
+edit_pro_profile_screen.dart:192: onPressed: () => Navigator.pop(context),
+  style: TextButton.styleFrom(minimumSize: const Size(0, 48), foregroundColor: const Color(0xFF475569)),
+  child: const Text('Cancel', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16)),
+  ),
+edit_pro_profile_screen.dart:200: onPressed: () {},
+  style: ElevatedButton.styleFrom(
+  backgroundColor: const Color(0xFF1D4ED8), foregroundColor: Colors.white, minimumSize: const Size(0, 48),
+  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)), elevation: 0,
+edit_pro_profile_screen.dart:288: onChanged: (v) {},
+  ),
+  ),
+  ),
+job_execution_screen.dart:65: onPressed: () => _updateStatus('rejected'),
+  child: const Text('Reject', style: TextStyle(color: Colors.white)),
+  ),
+  ElevatedButton(
+job_execution_screen.dart:70: onPressed: () => _updateStatus('accepted'),
+  child: const Text('Accept', style: TextStyle(color: Colors.white)),
+  ),
+  ],
+job_execution_screen.dart:77: onPressed: () => _updateStatus('onTheWay'),
+  child: const Text('Mark as On The Way'),
+  )
+  ] else if (b.status == 'onTheWay') ...[
+job_execution_screen.dart:82: onPressed: () => _updateStatus('arrived'),
+  child: const Text('Mark as Arrived'),
+  )
+  ] else if (b.status == 'arrived') ...[
+job_execution_screen.dart:87: onPressed: () => _updateStatus('inProgress'),
+  child: const Text('Start Work (In Progress)'),
+  )
+  ] else if (b.status == 'inProgress') ...[
+job_execution_screen.dart:99: onPressed: _completeJob,
+  )
+  ] else ...[
+  const Center(child: Text('This job is closed or completed.', style: TextStyle(color: Colors.grey))),
+job_history_screen.dart:21: onPressed: () {},
+  ),
+  ],
+  ),
+job_history_screen.dart:174: onPressed: () {},
+  child: const Text('Simulate No Jobs Found', style: TextStyle(color: Color(0xFF64748B))),
+  ),
+  ),
+job_history_screen.dart:344: onPressed: () {},
+  child: const Text('View Receipt', style: TextStyle(color: Color(0xFF1D4ED8), fontWeight: FontWeight.w600, fontSize: 13)),
+  ),
+  if (statusColor == const Color(0xFF10B981)) // Completed
+job_history_screen.dart:349: onPressed: () {},
+  child: const Text('Customer Details', style: TextStyle(color: Color(0xFF475569), fontWeight: FontWeight.w500, fontSize: 13)),
+  ),
+  ],
+manage_skills_rates_screen.dart:16: onPressed: () => Navigator.pop(context),
+  ),
+  title: const Text('Skills & Services', style: TextStyle(color: Color(0xFF0F172A), fontWeight: FontWeight.w600, fontSize: 18)),
+  ),
+manage_skills_rates_screen.dart:101: onPressed: () {},
+  icon: const Icon(LucideIcons.plus, size: 18),
+  label: const Text('Add New Custom Skill'),
+  style: OutlinedButton.styleFrom(
+manage_skills_rates_screen.dart:154: onPressed: () {},
+  style: ElevatedButton.styleFrom(
+  backgroundColor: const Color(0xFF1D4ED8), foregroundColor: Colors.white, minimumSize: const Size(double.infinity, 48),
+  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)), elevation: 0,
+manage_skills_rates_screen.dart:191: Switch(value: isOn, onChanged: (v) {}, activeColor: Colors.white, activeTrackColor: const Color(0xFF10B981)),
+  ],
+  ),
+  if (isOn) ...[
+professional_dashboard.dart:46: IconButton(icon: Icon(Icons.settings, color: onSurfaceVariant), onPressed: () => context.push('/professional/settings')),
+  IconButton(icon: Icon(Icons.logout, color: onSurfaceVariant), onPressed: () => session.refreshUserModel()),
+  ],
+  ),
+professional_dashboard.dart:47: IconButton(icon: Icon(Icons.logout, color: onSurfaceVariant), onPressed: () => session.refreshUserModel()),
+  ],
+  ),
+  body: SafeArea(
+professional_dashboard.dart:118: onChanged: (val) {
+  setState(() {
+  _isAvailable = val;
+  });
+professional_dashboard.dart:177: onPressed: () {},
+  style: ElevatedButton.styleFrom(
+  backgroundColor: primary,
+  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+professional_dashboard.dart:371: onPressed: () {},
+  style: OutlinedButton.styleFrom(
+  side: const BorderSide(color: Colors.grey),
+  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+professional_dashboard.dart:383: onPressed: () {},
+  style: ElevatedButton.styleFrom(
+  backgroundColor: primary,
+  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+professional_settings_screen.dart:67: onChanged: (val) => setState(() => _available = val),
+  ),
+  TextField(
+  controller: _radiusCtrl,
+professional_settings_screen.dart:86: onPressed: () {
+  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Certificate uploaded (simulated)')));
+  },
+  ),
+professional_settings_screen.dart:92: onPressed: _save,
+  child: const Text('Save Settings'),
+  )
+  ],
+pro_availability_calendar_screen.dart:16: onPressed: () => Navigator.pop(context),
+  ),
+  title: const Text('Availability & Hours', style: TextStyle(color: Color(0xFF0F172A), fontWeight: FontWeight.w600, fontSize: 18)),
+  ),
+pro_availability_calendar_screen.dart:52: Switch(value: true, onChanged: (v) {}, activeColor: Colors.white, activeTrackColor: const Color(0xFF1D4ED8)),
+  ],
+  ),
+  ),
+pro_availability_calendar_screen.dart:88: Switch(value: true, onChanged: (v) {}, activeColor: Colors.white, activeTrackColor: const Color(0xFF10B981)),
+  ],
+  ),
+  const Divider(height: 32, color: Color(0xFFE2E8F0)),
+pro_availability_calendar_screen.dart:97: onPressed: () {},
+  style: OutlinedButton.styleFrom(
+  foregroundColor: const Color(0xFF0F172A),
+  side: const BorderSide(color: Color(0xFFCBD5E1)),
+pro_availability_calendar_screen.dart:171: Slider(value: 4, min: 1, max: 10, divisions: 9, activeColor: const Color(0xFF1D4ED8), inactiveColor: const Color(0xFFE2E8F0), onChanged: (v) {}),
+  ],
+  ),
+  ),
+pro_availability_calendar_screen.dart:185: onPressed: () {},
+  icon: const Icon(LucideIcons.check),
+  label: const Text('Save Availability Changes', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16)),
+  style: ElevatedButton.styleFrom(
+pro_notifications_screen.dart:16: IconButton(icon: const Icon(LucideIcons.checkCheck, color: Color(0xFF1D4ED8)), onPressed: () {}),
+  IconButton(icon: const Icon(LucideIcons.settings, color: Color(0xFF0F172A)), onPressed: () {}),
+  ],
+  ),
+pro_notifications_screen.dart:17: IconButton(icon: const Icon(LucideIcons.settings, color: Color(0xFF0F172A)), onPressed: () {}),
+  ],
+  ),
+  body: Column(
+pro_notifications_screen.dart:98: onPressed: () {},
+  style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF1D4ED8), foregroundColor: Colors.white, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)), elevation: 0),
+  child: const Text('Accept Lead', style: TextStyle(fontWeight: FontWeight.w600)),
+  ),
+pro_notifications_screen.dart:106: onPressed: () {},
+  style: OutlinedButton.styleFrom(foregroundColor: const Color(0xFF0F172A), side: const BorderSide(color: Color(0xFFCBD5E1)), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+  child: const Text('View Details'),
+  ),
+pro_profile_view_screen.dart:16: IconButton(icon: const Icon(LucideIcons.settings, color: Color(0xFF0F172A)), onPressed: () {}),
+  ],
+  ),
+  body: SingleChildScrollView(
+pro_profile_view_screen.dart:73: onPressed: () {},
+  style: OutlinedButton.styleFrom(
+  foregroundColor: const Color(0xFF1D4ED8),
+  side: const BorderSide(color: Color(0xFF1D4ED8)),
+pro_profile_view_screen.dart:176: Switch(value: true, onChanged: (v) {}, activeColor: Colors.white, activeTrackColor: const Color(0xFF10B981)),
+  ],
+  ),
+  ],
+pro_profile_view_screen.dart:199: onPressed: () {},
+  icon: const Icon(LucideIcons.plus, size: 16),
+  label: const Text('Add Work Photo'),
+  style: TextButton.styleFrom(foregroundColor: const Color(0xFF1D4ED8)),
+pro_profile_view_screen.dart:217: TextButton(onPressed: () {}, child: const Text('View All Reviews', style: TextStyle(color: Color(0xFF1D4ED8)))),
+  ],
+  ),
+  ),
+pro_profile_view_screen.dart:225: onPressed: () {},
+  icon: const Icon(LucideIcons.arrowRightLeft, size: 18),
+  label: const Text('Switch to Customer Mode', style: TextStyle(fontWeight: FontWeight.w600)),
+  style: ElevatedButton.styleFrom(
+pro_profile_view_screen.dart:238: onPressed: () {},
+  child: const Text('Log Out', style: TextStyle(color: Color(0xFFEF4444), fontWeight: FontWeight.w600, fontSize: 15)),
+  ),
+  const SizedBox(height: 32),
+pro_verification_pending_screen.dart:16: onPressed: () => Navigator.pop(context),
+  ),
+  title: const Text('Account Verification', style: TextStyle(color: Color(0xFF0F172A), fontWeight: FontWeight.w600, fontSize: 18)),
+  ),
+pro_verification_pending_screen.dart:119: onPressed: () {},
+  icon: const Icon(LucideIcons.messageCircle, size: 16),
+  label: const Text('Contact Support'),
+  style: OutlinedButton.styleFrom(
+pro_verification_pending_screen.dart:141: onPressed: () {},
+  icon: const Icon(LucideIcons.refreshCw, size: 18),
+  label: const Text('Refresh Verification Status', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16)),
+  style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF1D4ED8), foregroundColor: Colors.white, minimumSize: const Size(double.infinity, 48), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)), elevation: 0),
+pro_verification_pending_screen.dart:148: onPressed: () {},
+  style: OutlinedButton.styleFrom(foregroundColor: const Color(0xFF0F172A), side: const BorderSide(color: Color(0xFFCBD5E1)), minimumSize: const Size(double.infinity, 48), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
+  child: const Text('Edit Uploaded Documents', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15)),
+  ),
+service_requests_screen.dart:21: onPressed: () {},
+  ),
+  Stack(
+  alignment: Alignment.center,
+service_requests_screen.dart:28: onPressed: () {},
+  ),
+  Positioned(
+  top: 10,
+service_requests_screen.dart:343: onPressed: () {},
+  style: OutlinedButton.styleFrom(
+  foregroundColor: const Color(0xFF475569),
+  side: const BorderSide(color: Color(0xFFCBD5E1)),
+service_requests_screen.dart:357: onPressed: () {},
+  style: ElevatedButton.styleFrom(
+  backgroundColor: const Color(0xFF1D4ED8),
+  foregroundColor: Colors.white,
+service_requests_screen.dart:373: onPressed: () {},
+  child: const Text('View Full Details →', style: TextStyle(color: Color(0xFF1D4ED8), fontWeight: FontWeight.w500, fontSize: 14)),
+  ),
+  ),
+service_request_details_screen.dart:16: onPressed: () => Navigator.pop(context),
+  ),
+  title: const Text(
+  'Request #REQ-4091',
+service_request_details_screen.dart:25: onPressed: () {},
+  ),
+  ],
+  ),
+service_request_details_screen.dart:91: onPressed: null,
+  icon: const Icon(LucideIcons.phone, size: 16),
+  label: const Text('Call'),
+  style: ElevatedButton.styleFrom(
+service_request_details_screen.dart:106: onPressed: null,
+  icon: const Icon(LucideIcons.messageSquare, size: 16),
+  label: const Text('Message'),
+  style: ElevatedButton.styleFrom(
+service_request_details_screen.dart:276: onPressed: () {},
+  style: ElevatedButton.styleFrom(
+  backgroundColor: const Color(0xFFFEF2F2),
+  foregroundColor: const Color(0xFFDC2626),
+service_request_details_screen.dart:291: onPressed: () {},
+  style: ElevatedButton.styleFrom(
+  backgroundColor: const Color(0xFF1D4ED8),
+  foregroundColor: Colors.white,
+onboarding_screen.dart:30: onPressed: () => context.go('/role-selection'),
+  child: Text('Skip', style: TextStyle(color: onSurfaceVariant, fontSize: 14, fontWeight: FontWeight.w600, fontFamily: 'Inter')),
+  ),
+  ),
+onboarding_screen.dart:77: onPressed: () {
+  if (_currentIndex < 2) {
+  _pageController.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+  } else {
+onboarding_screen.dart:81: context.go('/role-selection');

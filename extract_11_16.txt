@@ -1,0 +1,136 @@
+--- 11. Search Professionals ---
+Create Screen 11: Search Professionals for SkillConnect.
+Title in header or top bar: 'Find a Professional'.
+Top search bar: Search field with value 'Electrician' or placeholder 'Search service, trade or skill...', clear button, and an active filter button with badge '2'.
+Filter quick chips: 'Within 5 km (active)', 'Top Rated ★4.5+', 'Available Today', 'Verified Only'.
+List of matching professional result cards:
+1. Arun Kumar - Primary: Master Electrician. ★ 4.9 (128 jobs) • 2.4 km • Verified Pro badge (with checkmark). Tags: House Wiring, MCB Repair, Inverter Setup. 'Available Now' green indicator. 'View Profile' button.
+2. Praveen R - Primary: AC & Electrical Tech. ★ 4.8 (84 jobs) • 4.1 km • Verified Pro badge. Tags: Split AC Wiring, Electrical Repair. 'Next slot: 2:00 PM'. 'View Profile' button.
+3. Suresh M - Primary: Appliance & Electrician. ★ 4.7 (65 jobs) • 5.0 km • Verified Pro badge. Tags: Switchboard Repair, Geyser Installation. 'View Profile' button.
+Also include a subtle expandable section or toggle showing the empty state design preview: 'No professionals found. Try broadening your location radius or changing filters.' with a 'Reset Filters' secondary button.
+Consistent royal blue theme, clean cards with soft shadows, customer bottom nav has 'Search' active.
+
+--- 12. Filters ---
+Create Screen 12: Filters for SkillConnect.
+Top bar: 'Filters' with Close (X) button and 'Reset All' text link.
+Filter sections with clean inputs:
+1. Service Category: Horizontal pill selectors (All, Electrician [selected], Plumber, AC Repair, Carpentry, Painting, Cleaning).
+2. Specialized Skills: Multi-select chips (House Wiring [checked], MCB Repair [checked], Appliance Repair, Inverter, Fan Installation).
+3. Distance Radius: Slider with current value 'Within 10 km' (range 1 km to 30 km).
+4. Minimum Experience: Radio or segmented pill (Any, 3+ Years, 5+ Years [selected], 8+ Years).
+5. Minimum Customer Rating: Star pills (Any, 4.0+ ★, 4.5+ ★ [selected], 4.8+ ★).
+6. Availability: Checkboxes / chips ('Available Today', 'Available within 2 hours', 'Weekend Available').
+7. Trust & Verification: Toggle switch 'Verified Professionals Only' (switched ON with verified badge icon).
+8. Service Charge Range: Segmented control or slider ('Budget Friendly', 'Standard Rates', 'Any').
+Sticky bottom action bar: 'Reset' secondary button and 'Apply Filters (14 Pros Found)' primary Royal Blue button (#1D4ED8).
+Consistent design tokens, 16px corner radius, clean labels.
+
+--- 13. Describe Problem ---
+Create Screen 13: Describe Your Problem for SkillConnect.
+Top bar: Back button, title 'Describe Your Problem', step indicator 'Step 1 of 2: AI Diagnostic'.
+Content:
+- Friendly intro banner: '💡 Speak or write freely. Our AI identifies the right trade skills and matches proven specialists.'
+- Service Category selector: Dropdown / selector with pre-selected 'Plumbing & Pipe Repair' (or Electrician).
+- Specific Skill (Optional): dropdown/input 'e.g. Leak Detection, Tap Replacement'.
+- Large Problem Description Text Box:
+  Contains realistic demo input: 'Kitchen sink pipe is leaking under the basin cabinet whenever the tap is turned on. Water is pooling on the wooden floor and seems to come from the U-trap joint.'
+  Character counter: 168 / 500.
+  Microphone button (Royal blue outline) with label 'Tap to Speak' for voice input.
+- Media Attachment Strip: 'Add Photos or Video (Helps accurate AI diagnosis)'. Shows 1 uploaded image thumbnail 'sink_leak.jpg' with remove badge and '+ Add Photo/Video' dashed upload tile.
+- Preferred Date & Time:
+  Two columns: Date picker 'Today, 24 Oct' and Time slot picker 'Evening (4 PM - 7 PM)'.
+- Service Location:
+  Auto-detected pill: '📍 42, West Boulevard Rd, Thillai Nagar, Trichy' with 'Change' link.
+- Additional Notes: input field 'e.g. Guard at gate, call before arriving'.
+- Primary CTA: Royal Blue button 'Analyze Problem with AI ✨' (min-height 48px).
+- Below CTA: A subtle demo banner showing the 'Analyzing your problem...' pulsing state with loading indicator and 'Analyzing problem severity & matching required skills...'.
+
+--- 15. Matching Professionals ---
+Generate screen "15. Matching Professionals".
+Design requirements:
+- Subtitle: "Based on your service request: Kitchen Sink Pipe Leakage (#SC-9042)"
+- Summary prompt chip: "Problem: Leakage at U-trap joint • Priority: Medium"
+- Filter and sort header: "3 Best Fit Professionals Found", Sorted by AI Compatibility Score
+- Card 1 (TOP MATCH / Best Match badge in Royal Blue & Gold gradient accent):
+  - Pro: "Vijay Kumar", Title: "Certified Plumber & Pipe Specialist"
+  - Verified Pro Badge with checkmark
+  - Photo / avatar with online/available status indicator
+  - Overall Compatibility Score Ring: "96% Match" (circular SVG progress ring with primary #1D4ED8)
+  - Compatibility Breakdown bar or pill metrics: Skill Match 98%, Experience 95%, Availability 100% (Available in 1 hr), Distance 92% (3.1 km away)
+  - Rating: ★ 4.8 (98 completed jobs)
+  - Trade skills chips: "PVC Pipe Fitting", "Joint Seal Replacement", "Basin Traps"
+  - Standard demo rate: "₹199 / visit inspection"
+  - Primary button: "View Profile & Book"
+- Card 2:
+  - Pro: "Karthik S", Title: "Sanitary & General Plumbing Expert"
+  - Compatibility Score Ring: "89% Match"
+  - Breakdown: Skill Match 90%, Experience 88%, Availability 90% (Slots Today 4 PM), Distance 86% (4.2 km away)
+  - Rating: ★ 4.7 (74 jobs)
+  - Trade chips: "Leak Diagnosis", "Sanitary Fixtures"
+  - Button: "View Profile"
+- Card 3:
+  - Pro: "Arun Kumar", Title: "Multi-Trade Master Technician"
+  - Compatibility Score Ring: "82% Match"
+  - Breakdown: Skill Match 80%, Experience 96%, Availability 85%, Distance 98% (2.4 km)
+  - Rating: ★ 4.9 (128 jobs)
+  - Trade chips: "Emergency Plumbing", "Fixture Repair"
+  - Button: "View Profile"
+- Include an expandable or bottom sheet trigger: "Preview Empty State (No Professionals Found)" showing friendly empty graphic, "No professionals found matching all criteria. Try expanding search distance or relaxing required skills."
+- Adhere strictly to the design system: light theme, #1D4ED8 primary, Inter typography, 16px rounded cards, clean spacing.
+
+--- 16. Professional Profile ---
+Generate screen "16. Professional Profile (customer view)".
+Design requirements:
+- Professional: Vijay Kumar, Certified Plumber & Pipe Specialist
+- Verified Pro badge ("SkillConnect Verified Identity & Skills")
+- Large pro photo with trade uniform and tools, location "Cantonment, Trichy • 3.1 km away"
+- Key stats grid (4 items):
+  - Rating: ★ 4.8 (98 reviews)
+  - Experience: 7+ Years
+  - Completed Jobs: 112 Jobs
+  - Avg Response: ~12 Mins
+- "Why we recommend Vijay" highlighted card:
+  - 96% AI match for Kitchen Sink Joint Leakage
+  - 100% job success rate in Sanitary Plumbing
+  - Available today in 1 hour
+  - Background verified ID & Skill Certificate on file
+- Tab navigation or clear sections:
+  1. About: Short professional bio: "Specialized in residential plumbing, rapid leak detection, U-trap and pipeline replacements. Committed to clean, punctual, and transparent service."
+  2. Skills & Trade Expertise: chips with checkmarks ("PVC Pipe Fitting", "Joint Seal Replacement", "Leak Diagnosis", "Basin Traps", "Pressure Testing", "Bathroom Fixtures")
+  3. Services Offered: Standard Visit & Diagnosis (₹199), Leak Repair & Sealing (₹350 - ₹500 demo rate), Pipe Replacement (Custom Quote)
+  4. Availability: "Available Today • Next slot: In 1 hour (2:30 PM - 4:00 PM)"
+  5. Reviews (2 recent reviews with star ratings, customer name, date, and comment):
+     - "Fixed our kitchen sink pipe within 30 minutes. Very polite and tidy work!" - Priya S. (★ 5.0)
+     - "Punctual and diagnosed the issue immediately. Highly recommended." - Murugan K. (★ 5.0)
+  6. "Trusted Professional" badge list: Verified Identity, Verified Skills, Completed Jobs, Customer Reviews, Experience Guarantee.
+- Sticky Bottom CTA Bar:
+  - Price indicator: "₹199 / visit"
+  - Button: "Request Service / Book Now" (Royal Blue, min 48px height, rounded corners)
+- Cohesive styling with design system: Inter, clean card shadows, light background.
+
+--- 14. AI Analysis ---
+Create Screen 14: AI Analysis for SkillConnect.
+Top bar: Back button, title 'AI Problem Diagnosis'.
+Header badge: '✨ AI Analysis Complete • Verified Diagnostic Model'.
+Hero title: 'Here is what we understood from your description'
+Diagnostic Breakdown Cards:
+1. Detected Service & Trade: 'Plumbing & Sanitary' with icon and confidence tag '98% Confidence'.
+2. Identified Problem Type: 'Drainage Pipe Joint Leakage (U-trap Failure)'.
+3. Required Skills Identified (Chips with checkmarks):
+   - 'PVC Pipe Fitting'
+   - 'Joint Seal Replacement'
+   - 'Leak Diagnosis'
+   - 'Sanitary Fixtures'
+4. Severity Assessment: Badge '🟠 Medium Severity' (Water pooling hazard detected; urgent repair recommended to prevent cabinetry damage).
+5. Estimated Service Duration: '⏱️ 45 - 60 Minutes'.
+6. Estimated Standard Labor Range: '₹350 - ₹500 (Demo estimate, final agreed with pro)'.
+
+Action Section:
+- 'Edit Details' secondary button (allows adjusting skills or description).
+- Primary CTA: Royal Blue button 'Confirm & Find Matching Pros →'
+- Confirmation preview modal/bottom card:
+  'Request ID: #SC-9042 • Status: Ready to Match'
+  'Service: Kitchen Sink Pipe Leakage • Location: Thillai Nagar, Trichy'
+  Buttons: 'View 5 Matched Professionals' and 'Go to Home'.
+Consistent light surface styling, 16px radius cards, royal blue theme.
+

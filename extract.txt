@@ -1,0 +1,93 @@
+=== 26. Professional Dashboard ===
+Screen 26: Professional Dashboard for SkillConnect.
+User: Arun Kumar, Master Electrician in Trichy, Tamil Nadu.
+Header context in shell has SkillConnect Pro branding.
+Content to include:
+1. Top Greeting & Availability Card:
+   - "Good Morning, Arun 👋"
+   - Location: "Thillai Nagar, Trichy" with online indicator (pulsing green dot)
+   - Large prominent toggle switch: "Available for Jobs" with green active state badge ("Online • Receiving Requests") and subtext "You are visible to nearby customers within 15 km".
+2. Metric / Summary Cards Grid (2x2):
+   - "New Requests": 4 (with "+2 new" badge in blue)
+   - "Active Jobs": 1 (with "In Progress" badge)
+   - "Completed Jobs": 128 (with "★ 4.9 Rating")
+   - "Demo Earnings": "₹14,850" (labelled explicitly with "Demo Earnings • This Month" badge, note: "All figures simulated for college project")
+3. Quick Action Banner:
+   - "Current Active Job": "Kitchen Sink Pipe Joint Leakage" for Rahul Kumar, "On the Way • Arriving in 10 mins" with direct button "Open Active Job Tracker →"
+4. Section Header: "New Service Requests (4)" with "View All (4)" link
+5. Request Cards List:
+   - Card 1:
+     - Customer: Rahul Kumar (Thillai Nagar, 2.4 km away)
+     - Service: "Electrical Fan Regulator Replacement"
+     - Problem: "Fan running at single speed only, regulator spark noted"
+     - Match Score: 98% Skill Match badge (blue chip)
+     - Schedule: Today, 3:30 PM (Immediate window)
+     - Distance: 2.4 km away
+     - Est. Demo Payout: ₹250 - ₹350
+     - CTA buttons: "Reject" (outlined neutral) and "View Request" (primary blue)
+   - Card 2:
+     - Customer: Meena S (Cantonment, 3.8 km away)
+     - Service: "MCB Trip Diagnosis & Distribution Box"
+     - Problem: "Main breaker tripping repeatedly when water heater turned on"
+     - Match Score: 95% Skill Match
+     - Schedule: Tomorrow, 10:00 AM
+     - Est. Demo Payout: ₹450 - ₹600
+     - CTA button: "View Request"
+6. Performance & Trust Summary card:
+   - "SkillConnect Pro Standing": 98% Acceptance Rate, 100% On-Time arrival, Verified Trade Partner badge.
+Adhere strictly to design system tokens: Inter font, #1D4ED8 primary, rounded corners (12-16px), 48px buttons, clean shadows. Professional bottom nav with Dashboard tab active.
+
+=== 5. Customer Sign Up ===
+Create the Customer Sign Up screen for SkillConnect (Screen 5):
+- Top app bar with back navigation and title "Create Customer Account"
+- Subheader: "Join SkillConnect to find and book certified local trade professionals"
+- Form fields with clean 12px rounded input boxes, floating or crisp labels:
+  1. Full Name: input with user icon, placeholder "e.g. Rahul Kumar"
+  2. Email Address: input with mail icon, placeholder "e.g. rahul@example.com"
+  3. Phone Number: input with phone icon and '+91' country code prefix, placeholder "98765 43210"
+  4. City / Location: input with pin icon, value "Trichy, Tamil Nadu"
+  5. Password: input with lock icon, password strength indicator bar (3/4 green bars)
+  6. Confirm Password: input with lock icon
+- Checkbox terms agreement: "I agree to the Terms and Conditions and Privacy Policy" (custom blue checkbox checked)
+- Primary CTA button: "Create Account" (Royal Blue #1D4ED8, min 48px height)
+- Footer: "Already have an account? Login" in font-semibold royal blue.
+- Clean mobile layout with 360-390px width styling.
+
+=== 4. Login ===
+Create the Dual Login screen for SkillConnect (Screen 4):
+- Top bar with back arrow and small role pill badge: "Customer Account" (with option to switch to "Professional Login")
+- Heading: "Welcome Back"
+- Subtitle: "Enter your credentials to access your SkillConnect account"
+- Interactive role toggle tabs at the top: [ Customer (Active) | Professional ]
+- Form inputs:
+  1. Email field: Label "Email Address", input field with email icon, value "rahul.kumar@example.com", inline validation checkmark
+  2. Password field: Label "Password", input with lock icon, masked value "••••••••", eye show/hide toggle icon
+- "Forgot Password?" link right-aligned in #1D4ED8 font-semibold text-sm
+- Primary CTA: "Login" button (Royal Blue #1D4ED8, 48px height, font-semibold text-white)
+- OR divider with "OR CONTINUE WITH" text
+- Social login button: "Continue with Google" (clean white card with Google 'G' icon and subtle border)
+- Inline validation notice preview showing:
+  * Red warning state demo pill: "Invalid email or password demonstration"
+- Footer: "Don't have an account? Sign Up" with link in royal blue.
+
+=== 10. Customer Home ===
+Create Screen 10: Customer Home for SkillConnect.
+User: Rahul Kumar, Trichy, Tamil Nadu.
+Header elements: Greeting 'Good Morning, Rahul 👋', Current location pill '📍 Trichy, Tamil Nadu' with edit icon, Notification bell with unread dot indicator.
+Main hero search: A clean search bar with placeholder 'What service do you need today?' and search icon.
+Prominent CTA card: Large high-priority card 'Describe Your Problem' with subtitle 'Tell us in your own words — our AI diagnoses your issue and matches verified specialists', with a prominent Royal Blue button 'Describe Problem →' with magic/spark icon.
+Popular Services section: Horizontal scrollable chips or grid of service categories with clean iconography:
+- Electrician
+- Plumber
+- Carpenter
+- AC Repair
+- Mechanic
+- Cleaner
+- Painter
+- Appliance Repair
+Recommended Professionals section: High-trust cards:
+1. Arun Kumar (Electrician) - ★ 4.9 (124 jobs) • 2.4 km away • Available Today • Verified badge • 'View Profile' button
+2. Vijay Kumar (Plumber) - ★ 4.8 (98 jobs) • 3.1 km away • Available in 1 hr • Verified badge • 'View Profile' button
+Recent Bookings banner/card: 'Active: Fan Regulator Replacement with Arun Kumar • Today, 3:30 PM • [Track Booking →]'.
+Adhere strictly to the SkillConnect Design System: Royal blue #1D4ED8 primary, light blue #DBEAFE badge accents, clean slate dark typography, rounded 16px cards with soft shadows, 48px buttons. Customer bottom nav has 'Home' active.
+

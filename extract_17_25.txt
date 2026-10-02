@@ -1,0 +1,306 @@
+--- 25. Saved Professionals ---
+Screen: 25. Saved Professionals
+Context: Customer list of bookmarked and favorite verified trade professionals in Trichy.
+Layout & Elements:
+- Top App Bar: Back arrow, Title "Saved Professionals", Right count badge ("3 Saved"), Search icon.
+- Filter / Category Strip:
+  - "All (3)" [Selected Pill]
+  - "Plumbers (1)"
+  - "Electricians (1)"
+  - "AC Repair (1)"
+- Saved Pros Cards List (high-trust detailed cards):
+  1. Card 1: Vijay Kumar
+     - Avatar/photo of Vijay Kumar, Master Plumber
+     - SkillConnect Verified badge with blue shield ✓
+     - Rating: ★ 4.8 (98 reviews) • 7+ yrs experience
+     - Service Area: Cantonment, Trichy (3.1 km away)
+     - Top skills: "Drainage Repairs", "PVC Fitting", "Leak Diagnosis"
+     - Availability pill: "Available Today • In 1 hr" (Green badge)
+     - Heart Bookmark Icon: Active filled Red/Pink heart (toggle to remove)
+     - Actions: "Book Now" (Royal Blue button) and "View Profile" (Subtle outline button)
+  2. Card 2: Arun Kumar
+     - Avatar/photo of Arun Kumar, Master Electrician
+     - SkillConnect Verified badge
+     - Rating: ★ 4.9 (128 reviews) • 6+ yrs experience
+     - Service Area: Anna Nagar, Trichy (2.4 km away)
+     - Top skills: "House Wiring", "MCB Replacement", "Inverter Setup"
+     - Availability pill: "Available Tomorrow 10 AM" (Blue badge)
+     - Heart Bookmark: Active filled Red heart
+     - Actions: "Book Now" and "View Profile"
+  3. Card 3: Praveen R
+     - Avatar/photo of Praveen R, AC & Refrigeration Specialist
+     - SkillConnect Verified badge
+     - Rating: ★ 4.8 (84 reviews) • 5+ yrs experience
+     - Service Area: Cantonment, Trichy (4.1 km away)
+     - Top skills: "Split AC Gas Refill", "Compressor Servicing"
+     - Availability pill: "Available Today 4:00 PM"
+     - Heart Bookmark: Active filled Red heart
+     - Actions: "Book Now" and "View Profile"
+- Bottom Empty State Container Preview (Accordion or preview toggle):
+  - Illustrative bookmark/heart graphic
+  - Heading: "No saved professionals yet"
+  - Subtitle: "Tap the heart icon on any professional's profile or search card to quickly rebook them here."
+  - Action button: "Browse Recommended Pros"
+- Responsive, clean card shadows, 12-16px border-radii, Inter font.
+
+--- 20. Booking Details ---
+Generate screen "20. Booking Details (with Live Timeline)".
+Design requirements:
+- Top Header: Back button, Title "Booking Details", Share icon, Booking ID badge "#BK-78210"
+- Current Status Banner: Emerald green badge with check icon: "Job In Progress • Professional On Site"
+- Professional Contact Card:
+  - Vijay Kumar (Master Plumber) • ★ 4.8 (98 jobs)
+  - Pro avatar with verified checkmark
+  - Direct Action buttons: "Call (+91 98421...)" with phone icon, and "Message / Chat"
+- 5-Stage Live Timeline Tracker (Crucial Requirement):
+  - Stage 1: "Request Created" - Completed (Today, 1:15 PM) • Checkmark icon in solid royal blue
+  - Stage 2: "Professional Accepted" - Completed (Today, 1:22 PM • Accepted in 7 mins) • Checkmark icon
+  - Stage 3: "Professional Arrived" - Completed (Today, 2:35 PM • On-site verified) • Checkmark icon
+  - Stage 4: "Job Started" - Active / In-Progress (Today, 2:40 PM • Repairing sink U-trap joint) • Pulsing active indicator ring
+  - Stage 5: "Job Completed" - Upcoming / Pending • Light gray circle with outline
+- Service Information Section:
+  - Category: Plumbing & Pipe Repair
+  - Identified Issue: Drainage Pipe Joint Leakage (U-trap gasket)
+  - Date & Time: Today, 24 Oct • 2:30 PM - 4:00 PM
+  - Service Location: 42, West Boulevard Rd, Thillai Nagar, Trichy - 620018
+  - Attached Photo preview thumbnail (`sink_leak.jpg`)
+- Payment & Demo Estimate Card:
+  - Inspection & Repair Estimate: ₹350 - ₹500
+  - Payment Method: Direct Cash / UPI to Professional on completion (Demo)
+  - Security note: "SkillConnect Guarantee: Verified trade quality"
+- Dynamic Action Button footer (depending on status):
+  - Primary button: "View Job Status / Live Updates" (or "Give Feedback" if completed)
+  - Secondary button: "Cancel Request" (disabled or shows policy warning) or "Contact Support"
+- Strictly matches SkillConnect design system: Inter font, Royal blue #1D4ED8, clean card styling.
+
+--- 19. My Bookings ---
+Generate screen "19. My Bookings".
+Design requirements:
+- Shell: mobile_tab with top app bar "My Bookings" and Customer 5-tab Bottom Navigation (Home, Search, Bookings [ACTIVE], Alerts, Profile)
+- Tabs Bar: "Active (1)", "Upcoming (1)", "Completed (3)", "Cancelled (0)"
+- Active / Upcoming Booking Cards:
+  - Card 1 (Active / In-Progress):
+    - Booking ID: #BK-78210
+    - Status Badge: Emerald green pill "Active • Pro Arrived" with pulse dot
+    - Professional: Vijay Kumar (Certified Plumber) with photo avatar
+    - Service: Kitchen Sink Pipe Leakage
+    - Scheduled: Today, 24 Oct • 2:30 PM (Arrived at 2:35 PM)
+    - Location: Thillai Nagar, Trichy
+    - Action buttons: "View Live Details" (primary #1D4ED8) and "Call Pro" (phone icon button)
+  - Card 2 (Upcoming / Scheduled):
+    - Booking ID: #BK-76492
+    - Status Badge: Amber pill "Confirmed • Scheduled"
+    - Professional: Arun Kumar (Electrician)
+    - Service: Ceiling Fan Regulator Replacement
+    - Scheduled: Tomorrow, 25 Oct • 10:00 AM
+    - Action button: "View Details"
+- Completed Booking Card (Collapsed preview):
+  - Booking ID: #BK-72109
+  - Status Badge: Slate/Blue pill "Completed"
+  - Professional: Suresh M (Appliance Tech)
+  - Service: Washing Machine Drum Repair
+  - Rating given: ★ 5.0
+  - Button: "View Invoice / Re-Book"
+- Empty State toggle/preview block: "No bookings yet. Your service bookings will appear here." with a "Find a Professional" CTA button.
+- Strictly adhere to SkillConnect design tokens and bottom tab nav.
+
+--- 23. Customer Profile ---
+Screen: 23. Customer Profile
+Context: Customer main account and profile hub.
+Layout & Elements:
+- Top App Bar: Title "My Profile", Settings gear icon, Share icon.
+- Profile Header Card:
+  - User avatar/photo of Rahul Kumar (friendly smiling profile) with edit badge
+  - User Name: "Rahul Kumar"
+  - Customer Badge: "SkillConnect Member since Sep 2023" • Verified Phone badge ✓
+  - Contact Details: "rahul.kumar@example.com" • "+91 98765 43210"
+  - Location: "Thillai Nagar, Trichy, Tamil Nadu"
+  - Quick action: "Edit Profile" button (outlined Royal Blue)
+- Customer Activity Quick Stats (3-column metrics card):
+  - "4" Total Bookings
+  - "2" Saved Pros
+  - "3" Reviews Given
+- Quick Shortcut Card:
+  - "Active Booking in Progress" banner with quick button "Track #BK-78210 →"
+- Main Menu Sections (Grouped lists with icons, titles, subtitle/badges, and right chevron):
+  - Section 1: Manage Services
+    - "My Bookings" (Subtext: "Active, upcoming, and past services", badge: "1 Active")
+    - "Saved Professionals" (Subtext: "Your favorite certified tradespeople", count: "2 saved")
+    - "Service Addresses" (Subtext: "Primary: 42, West Boulevard Rd, Trichy")
+  - Section 2: Preferences & Communication
+    - "Notifications & Alerts" (Toggle preview or subtext: "Push & SMS enabled")
+    - "Language" (Subtext: "English (Tamil supported)")
+    - "App Theme" (Subtext: "Light Mode")
+  - Section 3: Trust & Legal
+    - "Help & Support" (Subtext: "24/7 dedicated support & FAQs")
+    - "SkillConnect Guarantee" (Subtext: "30-day post-service warranty policy")
+    - "Terms of Service & Privacy Policy"
+  - Danger Zone:
+    - "Switch to Professional Account" (Link with swap icon)
+    - "Log Out" (Destructive red action button with logout icon)
+- Version footer: "SkillConnect v1.4.2 (College Project Build)"
+- Persistent Customer Bottom Navigation: Profile tab active.
+
+--- 21. Rate Your Professional ---
+Screen: 21. Rate Your Professional
+Context: Customer rating Vijay Kumar after completed plumbing job (Kitchen sink pipe repair #BK-78210).
+Layout & Elements:
+- Header: Back/Close button, Title "Rate Your Professional"
+- Pro Summary Card: Vijay Kumar, Master Plumber, SkillConnect Verified badge, thumbnail photo/avatar, "Completed: Kitchen Sink Pipe Leakage", Job ID #BK-78210
+- Main Star Rating Hero Section:
+  - Heading: "How was your experience?"
+  - Subtitle: "Your rating helps local homeowners find the right craftsman and rewards top trade talent."
+  - 5 Large Interactive Gold Stars (4 or 5 stars selected, e.g. 5 stars highlighted with label "Excellent Service!")
+- Detailed Evaluation Sliders / Star sub-metrics (clean pill/card rows):
+  - Professionalism & Conduct: ★★★★★ (5.0)
+  - Workmanship & Skill Quality: ★★★★★ (5.0)
+  - Communication & Transparency: ★★★★☆ (4.0)
+  - Punctuality & Timeliness: ★★★★★ (5.0)
+- Compliment Chips (Selectable tag pills):
+  - "Fixed Right First Time" [Selected]
+  - "Clean Work Area" [Selected]
+  - "Polite & Courteous" [Selected]
+  - "Fair Pricing"
+  - "On Time" [Selected]
+  - "Explained Problem Well"
+- Feedback Text Area:
+  - Label: "Write your feedback (Optional)"
+  - Textarea prefilled/placeholder: "Vijay arrived right on schedule, quickly identified the worn U-trap gasket under my kitchen sink, replaced it neatly, and tested the line twice before leaving. Very respectful and skilled!"
+  - Character counter: 184 / 500
+- Add Before / After Photos (Optional toggle with upload button and 1 preview thumbnail of fixed leak)
+- Tip Professional prompt (Demo mode disclaimer: "Direct UPI tipping enabled")
+- Primary Action: Large Royal Blue button "Submit Review"
+- Success State Card/Toast preview at bottom: "Thank you! Your feedback has been published and added to Vijay's verified credentials."
+Design style matches SkillConnect (Royal blue #1D4ED8, rounded-2xl cards, Inter font, 48px touch targets).
+
+--- 17. Booking Request ---
+Generate screen "17. Booking Request".
+Design requirements:
+- Header: "Book Professional"
+- Selected Professional Card at top:
+  - Vijay Kumar (Certified Plumber)
+  - Rating ★ 4.8 • 3.1 km away • Verified Pro
+  - Thumbnail photo
+- Form Fields:
+  1. Service Required: "Kitchen Sink Pipe Joint Leakage" (prefilled with change option)
+  2. Schedule Date & Time:
+     - Date selector chips: "Today, 24 Oct (Selected)", "Tomorrow, 25 Oct", "Pick Date"
+     - Time slot selector: "Immediate (Within 1 hr)", "2:30 PM - 4:00 PM (Selected)", "5:00 PM - 6:30 PM", "Evening (7-8 PM)"
+  3. Service Location:
+     - "42, West Boulevard Rd, Thillai Nagar, Trichy - 620018" with "Change Address" link and GPS icon
+  4. Problem Description / Special Instructions:
+     - Prefilled textarea: "Kitchen sink pipe is leaking under the basin cabinet whenever the tap is turned on. Need U-trap gasket fix."
+     - Photos attached thumbnail preview (1 photo attached with remove option)
+  5. Price Estimation & Demo Pricing Card:
+     - Standard Inspection & Visit: ₹199
+     - Estimated Labor (Leak repair): ₹350 - ₹500
+     - Platform Safety Fee: ₹0 (Free college demo)
+     - Total Estimated: ₹350 - ₹500 (Pay directly to professional after job completion)
+     - Notice: "Demo Pricing — No online payment required"
+- Bottom Fixed CTA:
+  - "Send Booking Request" button (primary #1D4ED8, prominent, with right arrow)
+- Design system consistency: 48px buttons, 16px radius cards, #1D4ED8 royal blue.
+
+--- 18. Booking Sent ---
+Generate screen "18. Booking Sent".
+Design requirements:
+- Layout: mobile_blank clean full-screen confirmation layout.
+- Hero visual / success illustration: Large green animated checkmark/celebration icon circle (#10B981) with subtle blue glow.
+- Heading: "Booking Request Sent!"
+- Subtitle: "Your service request has been transmitted directly to Vijay Kumar. You'll receive a response within 10 minutes."
+- Status Badge: Amber/Blue pill with clock icon: "Status: Pending Professional Acceptance"
+- Booking Summary Card:
+  - Booking ID: #BK-78210
+  - Service: Kitchen Sink Pipe Leakage
+  - Professional: Vijay Kumar (Plumber)
+  - Date & Time: Today, 24 Oct • 2:30 PM - 4:00 PM
+  - Address: Thillai Nagar, Trichy
+  - Estimated Rate: ₹350 - ₹500 (Demo)
+- Real-time expectation card:
+  - "What happens next?"
+  - 1. Professional reviews your problem photos and address
+  - 2. You get an instant notification when Vijay confirms
+  - 3. Track live location when the pro is on the way
+- Action Buttons:
+  - Primary button: "Track Booking / View Details" (leads to Screen 20)
+  - Secondary outline button: "Go to My Bookings" (leads to Screen 19)
+  - Tertiary link: "Back to Home"
+- Style strictly matching SkillConnect: Royal Blue #1D4ED8 accents, Slate text, 16px radius cards.
+
+--- 22. Customer Notifications ---
+Screen: 22. Customer Notifications
+Context: Customer notification inbox with categorized alerts, booking updates, and pro interactions.
+Layout & Elements:
+- Top App Bar: Title "Notifications", unread count badge ("3 New"), "Mark All as Read" text button, and Filter icon.
+- Filter Tabs:
+  - "All (8)" [Active/Pill selected]
+  - "Bookings (4)"
+  - "Pro Updates (3)"
+  - "System (1)"
+- Notifications List (rich cards with icons, timestamps, status indicator):
+  1. Unread Item: "Technician Arrived at Location"
+     - Icon: Navigation/Map Pin icon in Blue circle
+     - Body: "Vijay Kumar has arrived at your address (42, West Boulevard Rd) for Kitchen Sink Repair #BK-78210."
+     - Time: "12 mins ago" • Unread Blue Dot
+     - Action button chip: "View Live Status"
+  2. Unread Item: "Job Started & Diagnosis Confirmed"
+     - Icon: Wrench/Tools icon in Amber circle
+     - Body: "Work is underway on your drainage pipe joint repair. Est. completion in 35 mins."
+     - Time: "28 mins ago" • Unread Blue Dot
+  3. Unread Item: "Booking Request Accepted"
+     - Icon: Checkmark badge in Green circle
+     - Body: "Arun Kumar accepted your Electrical Fan Regulator booking for Tomorrow, 10:00 AM."
+     - Time: "2 hours ago" • Unread Blue Dot
+     - Action button chip: "View Booking"
+  4. Read Item: "Rate Your Recent Service"
+     - Icon: Star icon in Purple circle
+     - Body: "How was your experience with Suresh M for Washing Machine Drum Repair? Leave a review to earn reward points."
+     - Time: "Yesterday"
+     - Action chip: "Give Feedback"
+  5. Read Item: "Specialist Skill Match Update"
+     - Icon: Sparkles/AI icon in Blue circle
+     - Body: "2 new certified plumbers are now available within 3 km of Thillai Nagar."
+     - Time: "2 days ago"
+- Bottom Utility Section: "Clear All Read Notifications" button
+- Preview Card: "Empty State Preview" container toggle showing what it looks like when cleared: "You're all caught up! No unread notifications."
+- Persistent Bottom Tab Navigation: Alerts tab active.
+
+--- 24. Edit Customer Profile ---
+Screen: 24. Edit Customer Profile
+Context: Screen for Rahul Kumar editing personal information, contact methods, and home service locations.
+Layout & Elements:
+- Top App Bar: Back Arrow, Title "Edit Profile", Right Action "Save" in bold Royal Blue.
+- Avatar Edit Section:
+  - Centered circular avatar photo of Rahul Kumar with a prominent camera overlay button ("Change Photo")
+  - "Upload JPG or PNG, max 5MB" helper caption
+- Form Fields Section:
+  - Full Name:
+    - Label: "Full Name *"
+    - Input: Pre-filled with "Rahul Kumar"
+    - Clear icon / checkmark
+  - Email Address:
+    - Label: "Email Address *"
+    - Input: "rahul.kumar@example.com"
+    - Status: "Verified" green badge
+  - Phone Number:
+    - Label: "Mobile Phone Number *"
+    - Input with country prefix: "+91 98765 43210"
+    - Helper: "Used for SMS booking updates and technician arrival OTP"
+  - Primary Service Address:
+    - Label: "Default Service Address *"
+    - Address Line 1: "Flat 302, Sri Krishna Apts"
+    - Address Line 2: "42, West Boulevard Road"
+    - Area / Locality: "Thillai Nagar"
+    - City & State: "Trichy, Tamil Nadu - 620018"
+    - "Detect Current GPS Location" button with location target icon
+    - Landmark: "Near Apollo Pharmacy"
+  - Emergency / Alternative Contact (Optional):
+    - Name & phone input for alternate gate contact
+  - Notification Preferences:
+    - Checkbox: "Receive real-time WhatsApp arrival alerts" [Checked]
+    - Checkbox: "Email summary of invoices" [Checked]
+- Bottom Action Buttons:
+  - Secondary button: "Cancel"
+  - Primary button: "Save Changes" (Royal blue, 48px height)
+- Success Toast Preview: "Profile changes saved successfully."
+

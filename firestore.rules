@@ -1,0 +1,112 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    function signedIn() {
+      return request.auth != null;
+    }
+    
+    function isOwner(uid) {
+      return signedIn() && request.auth.uid == uid;
+    }
+    
+    function role() {
+      // It's safer to get the role from the custom claims, but we store it in users/{uid}
+      // Assuming users/uid contains the role field
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role;
+    }
+    
+    function isAdmin() {
+      return signedIn() && role() == 'admin';
+    }
+
+    match /users/{uid} {
+      allow read: if isOwner(uid) || isAdmin();
+      allow create: if isOwner(uid) && request.resource.data.role in ['customer', 'professional', 'admin'];
+      allow update: if isOwner(uid) && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['role']);
+      allow delete: if false;
+    }
+
+    match /professionals/{uid} {
+      allow read: if signedIn();
+      allow create: if isOwner(uid);
+      allow update: if (isOwner(uid) && 
+                      (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['stats', 'skillStats', 'verificationNote']) &&
+                       (request.resource.data.verificationStatus == resource.data.verificationStatus || 
+                        (resource.data.verificationStatus in ['unsubmitted', 'rejected'] && request.resource.data.verificationStatus == 'pending'))
+                      )) || isAdmin() || 
+                      // allow customer to update stats during review
+                      (signedIn() && role() == 'customer' && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['stats', 'skillStats', 'updatedAt']));
+      allow delete: if false;
+    }
+
+    match /jobs/{jobId} {
+      allow read, write: if signedIn() && isOwner(resource.data.customerId) || (request.method == 'create' && isOwner(request.resource.data.customerId));
+    }
+
+    function validTransition(old, newVal, byRole) {
+      return (old == 'pending' && newVal == 'accepted' && byRole == 'professional') ||
+             (old == 'pending' && newVal == 'rejected' && byRole == 'professional') ||
+             (old == 'pending' && newVal == 'cancelled' && byRole == 'customer') ||
+             (old == 'accepted' && newVal == 'onTheWay' && byRole == 'professional') ||
+             (old == 'accepted' && newVal == 'cancelled' && (byRole == 'customer' || byRole == 'professional')) ||
+             (old == 'onTheWay' && newVal == 'arrived' && byRole == 'professional') ||
+             (old == 'arrived' && newVal == 'inProgress' && byRole == 'professional') ||
+             (old == 'inProgress' && newVal == 'completed' && byRole == 'professional');
+    }
+
+    match /bookings/{bookingId} {
+      allow create: if signedIn() && isOwner(request.resource.data.customerId) && request.resource.data.status == 'pending';
+      allow read: if signedIn() && (isOwner(resource.data.customerId) || isOwner(resource.data.professionalId) || isAdmin());
+      allow update: if signedIn() && (
+        (isOwner(resource.data.customerId) && 
+         // Customer can cancel or review
+         ((request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'updatedAt', 'statusHistory']) && validTransition(resource.data.status, request.resource.data.status, 'customer')) ||
+          (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['reviewed', 'updatedAt']) && request.resource.data.reviewed == true && resource.data.status == 'completed'))
+        ) ||
+        (isOwner(resource.data.professionalId) &&
+         // Professional can transition status and add completion details
+         request.resource.data.diff(resource.data).affectedKeys().hasAny(['status', 'updatedAt', 'statusHistory', 'workSummary', 'finalCharge', 'completionImageId', 'completionNotes']) &&
+         validTransition(resource.data.status, request.resource.data.status, 'professional')
+        )
+      );
+      allow delete: if false;
+    }
+
+    match /reviews/{bookingId} {
+      allow read: if signedIn();
+      allow create: if signedIn() && 
+                    isOwner(request.resource.data.customerId) &&
+                    getAfter(/databases/$(database)/documents/bookings/$(bookingId)).data.reviewed == true;
+      allow update, delete: if false;
+    }
+
+    match /notifications/{notificationId} {
+      allow create: if signedIn() && isOwner(request.resource.data.fromUid);
+      allow read: if signedIn() && isOwner(resource.data.toUid);
+      allow update: if signedIn() && isOwner(resource.data.toUid) && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['read']);
+      allow delete: if signedIn() && isOwner(resource.data.toUid);
+    }
+
+    match /images/{imageId} {
+      allow create: if signedIn() && isOwner(request.resource.data.ownerId) && request.resource.data.base64.size() < 280000; // ~200KB base64
+      allow read: if signedIn() && (
+        resource.data.purpose == 'avatar' || 
+        (resource.data.purpose == 'certificate' && (isOwner(resource.data.ownerId) || isAdmin())) ||
+        ((resource.data.purpose == 'jobPhoto' || resource.data.purpose == 'completion') && 
+          (
+            isOwner(resource.data.ownerId) || 
+            (resource.data.bookingId != null && 
+              (isOwner(get(/databases/$(database)/documents/bookings/$(resource.data.bookingId)).data.customerId) || 
+               isOwner(get(/databases/$(database)/documents/bookings/$(resource.data.bookingId)).data.professionalId)))
+          )
+        )
+      );
+      allow update, delete: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

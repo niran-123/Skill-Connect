@@ -1,0 +1,120 @@
+=== 7. Professional Registration Step 1 ===
+Create Professional Registration Step 1 of 3 (Screen 7):
+- Top app bar with back navigation and title "Pro Registration"
+- Multi-step progress indicator at top:
+  * 3 segmented steps with labels: "1. Account" (Active, filled Royal Blue #1D4ED8), "2. Skills" (Inactive, grey #CBD5E1), "3. Verify" (Inactive, grey #CBD5E1)
+  * Badge: "STEP 1 OF 3 • BASIC ACCOUNT"
+- Title: "Create Your Pro Profile"
+- Subtitle: "Enter your personal contact details to start offering your trade services"
+- Form fields:
+  1. Full Name: input with user icon, "Arun Kumar"
+  2. Professional Email: input with email icon, "arun.electrician@example.com"
+  3. Phone Number: input with phone icon and '+91' prefix, "98421 54321"
+  4. Password: input with lock icon, filled "••••••••••••", strength "Strong" (green)
+  5. Confirm Password: input with lock icon, filled "••••••••••••"
+- Helper note: "Your phone number will be used for two-factor authentication and urgent job alerts."
+- Primary CTA: "Next: Skill Details →" button (Royal Blue #1D4ED8, min 48px height)
+- Footer: "Already registered as a pro? Login here".
+
+=== 9. Professional Registration Step 3 ===
+Create Professional Registration Step 3 of 3 (Screen 9):
+- Top app bar with back navigation and title "Pro Registration"
+- Multi-step progress indicator:
+  * Steps: "1. Account" (Completed), "2. Skills" (Completed), "3. Verify" (Active, filled Royal Blue #1D4ED8)
+  * Badge: "STEP 3 OF 3 • VERIFICATION & BIO"
+- Form fields:
+  1. Short Professional Bio: textarea with placeholder "e.g. Certified master electrician with 6+ years experience in commercial and residential wiring...", showing live count (128/300 chars)
+  2. Service Radius: slider or pill selector showing "15 km radius around Trichy"
+  3. Available Days: day pills [M, T, W, T, F, S] selected in blue, [S] unselected
+  4. Working Hours: "08:00 AM – 07:00 PM"
+- Verification & Document Upload Section:
+  * Note: "SkillConnect Internal Verification (Trust & Safety only — not government affiliation)"
+  * Upload Card 1: "Government Photo ID (Aadhaar / Voter ID / Driving License)" with green badge "Uploaded: aadhar_card.pdf (Verified)"
+  * Upload Card 2: "Trade Skill Certificate / Apprenticeship Proof" with blue badge "Uploaded: iti_electrician_cert.pdf"
+- Terms agreement checkbox: "I agree to SkillConnect Pro Guidelines and Service Standards"
+- Primary CTA: "Create Professional Account" (Royal Blue #1D4ED8, min 48px height)
+- Instant Success Toast/Card preview at bottom: "🎉 Profile created successfully! Welcome to SkillConnect Pro. Redirecting to Dashboard...".
+
+=== 2. Onboarding Carousel ===
+Create the Onboarding Carousel screen for SkillConnect (Screen 2):
+- Top right "Skip" button in 14px font-semibold text-slate-500
+- Center visual carousel card featuring 3 swipeable slides:
+  * Slide 1 (Active): Visual illustration or card with icon representing local skilled trades (wrench, lightning bolt, hammer). Title: "Find Skilled Professionals", description: "Connect with trusted local professionals for everyday service needs in minutes."
+- Slide pagination dot indicators (3 dots: active dot is elongated pill in #1D4ED8, other 2 are subtle grey circles #CBD5E1)
+- Feature highlights preview chips: "⚡ Rapid Matching", "🛡️ Verified Pros", "💬 Direct Connect"
+- Primary action button (minimum 48px height): "Next" in royal blue (#1D4ED8) with right arrow icon
+- Sub-text showing "Slide 1 of 3 — Or explore as guest"
+- Full mobile responsiveness adhering to 360-390px width.
+
+=== 8. Professional Registration Step 2 ===
+Create Professional Registration Step 2 of 3 (Screen 8):
+- Top app bar with back navigation and title "Pro Registration"
+- Multi-step progress indicator:
+  * Steps: "1. Account" (Completed with checkmark), "2. Skills" (Active, filled Royal Blue #1D4ED8), "3. Verify" (Inactive, grey)
+  * Badge: "STEP 2 OF 3 • SKILLS & TRADE"
+- Profile photo upload avatar circle:
+  * Circular placeholder with camera icon and "Upload Photo" badge (recommends crisp professional trade photo)
+- Form fields:
+  1. Trade Name / Business Name: input with brief case icon, "Arun Electrical Works"
+  2. Years of Experience: dropdown selector showing "6+ Years"
+  3. Primary Service Category: dropdown selector showing "Electrician"
+  4. Multi-select Skill Chips section with label "Select Your Verified Skills":
+     * Chips with icons: "⚡ Electrical Repair" (selected), "🔌 House Wiring" (selected), "❄️ AC Installation" (selected), "💡 Inverter & Battery" (selected), "🔧 Fan & Appliance Repair" (selected), "🪚 Carpentry" (unselected), "🚿 Plumbing" (unselected), "🎨 Painting" (unselected)
+  5. City and Primary Area: input with location pin icon, "Trichy — Thillai Nagar, Cantonment"
+- Action buttons row:
+  * Secondary button: "Back"
+  * Primary button: "Next: Verification →" (Royal Blue #1D4ED8, min 48px height).
+
+=== 3. Choose Your Role ===
+Create the Choose Your Role screen for SkillConnect (Screen 3):
+- Header section: Top app bar with back arrow and SkillConnect mini logo {{DATA:IMAGE:IMAGE_2}}
+- Headline: "How do you want to use SkillConnect?" (24px font-bold text-slate-900)
+- Subtitle: "Choose your account type to customize your experience" (14px text-slate-500)
+- Two large interactive selection role cards with 16px rounded borders and soft shadows:
+  1. Customer Card (Selected with active royal blue border, soft blue tint #EFF6FF, radio checked):
+     - Icon: 👤 Home & user badge
+     - Role Title: "I'm a Customer"
+     - Tagline: "Find and book skilled professionals for repairs, installations, and maintenance."
+     - Highlights: "AI problem diagnosis", "Compare matched quotes", "Verified background"
+     - CTA Button: "Continue as Customer" (Royal Blue filled, 48px height)
+  2. Professional Card (Secondary card with clean white background and subtle border #E2E8F0):
+     - Icon: 🛠️ Trade tools & badge
+     - Role Title: "I'm a Professional"
+     - Tagline: "Offer your skills, receive matched local service requests, and grow your trade business."
+     - Highlights: "Skill-ranked leads", "Manage availability", "Zero listing fees"
+     - CTA Outline Button: "Continue as Professional" (Royal Blue border & text, 48px height)
+- Bottom helper text: "You can switch roles later from your settings."
+## Available Images
+You MUST include the following images in this design. You must reference them
+by putting their exact placeholder IDs in `src` attributes or CSS
+`background-image` rules. Do NOT use external URLs or generate new
+placeholders. Preserve these IDs exactly as written. Read each image's
+Description to understand its subject, intended section, and visual role.
+
+- {{DATA:IMAGE:IMAGE_2}}
+  Alt Text: SkillConnect Logo
+  Description: Brand logo. - Primary color: #1d4ed8
+- Font: inter
+- Mode: light
+- Roundness: rounded-md
+
+  Dimensions: 128x128
+  Aspect Ratio: 1.00
+  Colors: #1D4ED8, #2563EB, #60A5FA, #DBEAFE, #FCD34D, #FFFFFF
+
+
+=== 6. Forgot Password ===
+Create the Forgot Password screen for SkillConnect (Screen 6):
+- Top app bar with back navigation and title "Reset Password"
+- Header icon: Key / Shield lock icon in soft blue circle background
+- Headline: "Forgot Password?"
+- Instruction text: "Enter your registered email address and we'll send you a secure link to reset your password."
+- Input field: Email Address with mail icon, prefilled with "rahul.kumar@example.com"
+- Primary CTA: "Send Reset Link" button (Royal Blue #1D4ED8, 48px height)
+- Success notification state card preview beneath:
+  * Green border & soft green background #ECFDF5
+  * Green checkmark icon
+  * "Password reset link sent successfully! Check your inbox for instructions to reset your password."
+  * Resend counter: "Didn't receive email? Resend in 45s"
+- Footer link: "Back to Login" in font-semibold royal blue #1D4ED8.
+

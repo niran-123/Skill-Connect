@@ -1,0 +1,212 @@
+41. No Pros Available
+Screen 41: No Pros Available in Your Area (Search & Matching Fallback).
+Shell: {{DATA:SHELL:SHELL_84}}
+Screen title: 41. No Pros Available
+
+Design a high-fidelity empty/fallback state screen when a customer searches or requests a trade specialist (e.g., 'Emergency Gas Pipe Repair' or 'High-Voltage Inverter Line' in Thillai Nagar, Trichy) and no verified professionals are currently online or within the 15 km coverage radius.
+
+Layout & Content:
+- Search bar at top showing the query: 'Emergency Gas Pipe Repair • Thillai Nagar' with a clear button.
+- Hero Illustration/Visual container: A friendly, polished empty-state visual with a stylized radar dish or search magnifier with an amber/subtle blue pulse badge showing '0 Active Pros Online in 15 km'.
+- Heading: 'No Trade Specialists Available Nearby'
+- Subtext: 'All certified gas and pipeline specialists in Thillai Nagar are currently engaged on active jobs or outside operating hours.'
+- Actionable Solution Cards:
+  1. 'Expand Search Radius': Card with a slider or switch to increase search distance to 25 km (Surrounding Trichy Suburbs: Cantonment, KK Nagar, Srirangam). Shows '+3 pros reachable in 45 mins'.
+  2. 'Schedule for Later / Tomorrow': Card with 'First available slot: Tomorrow, 8:30 AM with Vijay Kumar (★4.8)' and a 'Pre-Book Slot' primary button.
+  3. 'Notify Me When a Pro Goes Online': Push notification alert toggle switch with 'Instant ping via WhatsApp or SMS as soon as a technician opens their dispatch radar'.
+- Emergency Assistance Hotline: Dedicated emergency card for gas/water leaks: 'Need Immediate Urgent Dispatch? Call SkillConnect Emergency Dispatch Helpline 1800-SKILL (Toll-Free 24/7)'.
+- Secondary Action: 'Modify Search Category' or 'Browse All Available Trades'.
+Follow the established typography (Inter), rounded cards (ROUND_EIGHT), consistent color palette (#1d4ed8 primary, clean neutral backgrounds, soft borders).
+
+45. Media Upload Retry
+Screen 45: Problem Photo Upload Failed & AI Scan Retry (Media Error Recovery).
+Shell: {{DATA:SHELL:SHELL_89}}
+Screen title: 45. Media Upload Retry
+
+Design a media upload retry and error handling screen when a customer attempts to upload a photo of their broken appliance or leak, but the upload times out, exceeds file limits, or fails AI classification.
+
+Layout & Content:
+- Step tracker at top: 'Step 2 of 4: Problem Diagnosis & Media'
+- Hero Error Alert Card:
+  - Warning badge: 'Upload Interrupted • 1 of 2 Photos Failed'
+  - Explanatory title: 'Could Not Upload "switchboard_damage.heic"'
+  - Reason tag: 'Connection timed out while analyzing image with SkillConnect AI Engine'
+- Interactive File Status Gallery:
+  - Item 1 (Failed):
+    - Red border card with thumbnail showing broken switchboard photo with a red exclamation badge.
+    - File details: 'switchboard_damage.heic (8.4 MB)'
+    - Error message: 'File size exceeds 5MB limit or network slow'
+    - Direct actions: 'Compress & Retry' button and 'Remove File' trash icon.
+  - Item 2 (Success):
+    - Green checkmark card with thumbnail: 'u_trap_leak.jpg (1.8 MB)'
+    - Status: '✓ Uploaded & AI Diagnostics matched (PVC Drainage)'
+- Built-in Fix Options:
+  1. 'Auto-Compress & Retry': Automatically downsamples image to optimal 1080p resolution (<1.5MB) for quick upload.
+  2. 'Take a Fresh Photo': Instant camera shutter trigger with built-in flash & guidance frame.
+  3. 'Skip Photo & Describe in Text': Option to proceed without photo by giving a 20-word voice/text description instead so the user is never blocked.
+- Tips for Clear Photos:
+  - Quick tips list: 'Ensure good lighting', 'Show both the defect and model label', 'Avoid extreme blurry close-ups'.
+- Bottom Actions:
+  - Primary CTA: 'Retry Failed Upload' (blue button)
+  - Secondary: 'Continue Without Failed Photo' (outline button)
+Clean, modern, accessible design with precise hierarchy.
+
+46. Pro Verification Pending
+Screen 46: Pro Verification Pending & Compliance Under Review (Pro Edge State).
+Shell: {{DATA:SHELL:SHELL_90}}
+Screen title: 46. Pro Verification Pending
+
+Design an engaging, transparent professional verification review status screen for newly registered or re-verifying tradespeople whose background check and trade certificates are under manual or automated evaluation.
+
+Layout & Content:
+- Top bar with Back button and title 'Account Verification'.
+- Header Profile Card:
+  - Pro Avatar: 'Arun Kumar'
+  - Trade: 'Master Electrician • Partner Application #TN-8921'
+  - Status Pill: '⏳ Under Review • Typically takes 2-4 hours'
+- Verification Roadmap / Milestone Progress Tracker:
+  - 1. 'Application & Profile Submitted' (Completed ✓ Today, 10:15 AM)
+  - 2. 'Government ID (Aadhaar/PAN) Authenticated' (Completed ✓ Instant DigiLocker check passed)
+  - 3. 'Trade Certificate & Experience Audit' (Active In-Progress 🟡 — Expert trade board reviewing ITI Electrician license credentials)
+  - 4. 'Police Background Verification' (Pending ⚪ — City jurisdiction check underway)
+  - 5. 'Dispatch Radar Activation' (Final ⚪ — Account ready to receive leads)
+- What Can You Do While Waiting? (Pro Engagement Cards):
+  1. 'Complete Onboarding Academy (10 mins)': Interactive card 'Watch 3 quick video modules on SkillConnect customer etiquette, safety protocols, and surge pricing'. Unlocks '+15% match priority on launch'.
+  2. 'Configure Your Availability & Service Rates': Card allowing pro to pre-configure their calendar, hourly rates, and coverage radius so they hit the ground running upon approval.
+  3. 'Test Mock Booking Demo': Practice accepting a simulated emergency call.
+- Support & Priority Verification Card:
+  - 'Need Urgent Fast-Track Review? If you have an active commercial trade license or trade association membership, contact our Pro Onboarding Desk via WhatsApp (+91 94421 99000) or phone.'
+- Bottom Action:
+  - Primary button: 'Refresh Verification Status 🔄'
+  - Secondary button: 'Edit Uploaded Documents'
+Designed with high trust, encouraging tone, and strict consistency with SkillConnect theme tokens.
+
+44. Payment Failed
+Screen 44: Payment & Settlement Failed (Transaction Error Recovery).
+Shell: {{DATA:SHELL:SHELL_88}}
+Screen title: 44. Payment Failed
+
+Design an elegant, reassuring payment failure and retry screen following an unsuccessful UPI or in-app settlement attempt.
+
+Layout & Content:
+- Top bar with Back arrow and title 'Payment Status'.
+- Error Hero Card:
+  - Large red/amber warning icon in a soft pastel circular badge.
+  - Heading: 'Payment Could Not Be Processed'
+  - Subtext: 'Your UPI transaction of ₹380 for Job #BK-78210 was declined by your issuing bank (HDFC Bank) or timed out.'
+  - Transaction Reference: 'Ref: TXN-9028192 • Error Code: UPI_EXP_TIMEOUT'
+- Security & Assurance Note:
+  - Shield icon banner: 'Zero Risk Guarantee: If money was debited from your account, it will automatically reverse within 24-48 business hours per RBI guidelines.'
+- Unsettled Invoice Breakdown Card:
+  - Service: 'Ceiling Fan Regulator Replacement'
+  - Professional: 'Arun Kumar (Master Electrician)'
+  - Labor Charge: ₹250
+  - Replacement Part: ₹130
+  - Total Outstanding: '₹380'
+- Alternative Payment Options & Quick Retry:
+  - 🔘 'Instant UPI Intent (Google Pay / PhonePe / Paytm)' — [Selected]
+  - 🔘 'Scan Pro's Direct QR Code' (Technician Vijay/Arun carries a personal UPI badge)
+  - 🔘 'Pay Cash at Doorstep' (Hand ₹380 physical cash directly to the technician with instant digital OTP receipt)
+  - 🔘 'Credit/Debit Card or Net Banking'
+- Bottom Fixed Action:
+  - Primary button: 'Retry UPI Payment (₹380)'
+  - Secondary button: 'Switch to Cash on Delivery'
+  - Helpline shortcut: 'Need help? Contact Payment Support'
+Adheres strictly to the SkillConnect design system with clean card elevated styling.
+
+43. Cancel Booking
+Screen 43: Booking Cancellation Flow & Policy (Cancellation Reason & Terms).
+Shell: {{DATA:SHELL:SHELL_89}}
+Screen title: 43. Cancel Booking
+
+Design a comprehensive booking cancellation screen with transparent policy communication, reason selection, and mitigation hooks to prevent unnecessary churn.
+
+Layout & Content:
+- Top bar with Back button and title 'Cancel Booking Request'.
+- Booking Context Header Card:
+  - Job ID: '#BK-78210'
+  - Service: 'Ceiling Fan Regulator Replacement'
+  - Assigned Pro: 'Arun Kumar (Master Electrician)'
+  - Scheduled Slot: 'Today, 3:30 PM (in 45 minutes)'
+- Cancellation Policy & Fee Notice:
+  - Alert banner: 'Free Cancellation Available' (with a green check shield).
+  - Clear breakdown: 'Cancelling more than 30 minutes before the arrival window is 100% FREE. If cancelled after technician dispatch/arrival, a nominal ₹100 travel convenience fee applies to compensate the pro.'
+- Cancellation Reason Questionnaire (Single-select radio chips/options):
+  - 🔘 'Problem already resolved / Fixed myself'
+  - 🔘 'Technician running late / Need service sooner'
+  - 🔘 'Found alternative local professional'
+  - 🔘 'Scheduled wrong date or time slot'
+  - 🔘 'Change in personal schedule / Not at home'
+  - 🔘 'Other reasons' (with expandable optional note textarea: 'Help us improve our service...')
+- Retention / Alternative Offers Card:
+  - 'Wait! Would you rather Reschedule instead?'
+  - 'Keep your assigned pro Arun Kumar and move your appointment to this evening (6:00 PM) or tomorrow without losing your slot.'
+  - 'Reschedule Appointment' secondary button.
+- Bottom Action Buttons:
+  - Destructive Action: 'Confirm Cancellation' (soft red tinted button with clear warning)
+  - Primary Retention: 'Keep Booking' (prominent blue solid button)
+Consistent with SkillConnect UI tokens and Inter typography.
+
+42. Offline Mode
+Screen 42: Offline & Network Disconnected Mode (No Internet Connection).
+Shell: {{DATA:SHELL:SHELL_91}}
+Screen title: 42. Offline Mode
+
+Design a full-screen graceful offline experience when the user loses mobile data / Wi-Fi connectivity while using SkillConnect.
+
+Layout & Content:
+- Clean full-screen presentation with no broken components or jarring errors.
+- Top status indicator: subtle floating pill banner 'Offline Mode • Local Cache Active'.
+- Hero illustration/icon container: A modern stylized cloud-off or disconnected signal tower icon with soft slate/blue concentric ripple waves.
+- Large clear heading: 'You're Currently Offline'
+- Descriptive body: 'SkillConnect couldn't establish a secure connection to the live dispatch network. Don't worry—your active booking details and emergency contacts are saved locally on this device.'
+- Cached Offline Data Card:
+  - Header: 'Cached Active Job Details'
+  - Shows active booking '#BK-78210: Kitchen Sink Pipe Leakage'
+  - Assigned Pro: 'Vijay Kumar (Master Plumber)'
+  - Direct Phone Call Trigger (telecom bypass that works without internet): 'Call Technician via GSM Call (+91 98421 54321)' with a green call icon.
+  - Service Address: '42, West Boulevard Rd, Thillai Nagar'
+  - Technician OTP: 'Code 7419 (Ready for verification)'
+- Troubleshooting & Auto-Reconnect steps:
+  - '1. Check your Wi-Fi or cellular network settings'
+  - '2. Turn Airplane mode ON and OFF'
+- Primary Action Button: 'Retry Connection 🔄' (with a pulsing touch state)
+- Secondary Action: 'View Offline Cached Bookings'
+Design with utmost craft, clean spacing, high readability, and supportive UX tone.
+
+39. Pro Alerts & Notifications
+Generate mobile screen for '39. Pro Alerts & Notifications' in SkillConnect Pro for electrician Arun Kumar.
+Design consistent with SkillConnect design system:
+- Shell has top bar titled 'Pro Notifications' and bottom 5-tab Pro bar (Dashboard, Requests, Jobs, Alerts [ACTIVE], Profile).
+- Notification category filter pills: 'All (6)', 'Urgent Leads (2)', 'Job Updates (2)', 'Payouts (2)'
+- Radar Live Banner: 'Instant Job Dispatch Radar: Active (15 km Trichy sector)' with pulse dot
+- Notification Feed:
+  1. Urgent Lead Alert (High priority):
+     - Blue badge 'Urgent Lead • 98% Match'
+     - Title: 'Kitchen Sink Fan Regulator Replacement'
+     - Customer: Rahul Kumar (2.4 km away, Thillai Nagar)
+     - Time: '4 mins ago'
+     - CTA buttons inside card: 'Accept Lead' (Blue button) and 'View Details'
+  2. Payout Settled Alert:
+     - Green money icon badge
+     - Title: '₹380 Deposited to UPI Account'
+     - Text: 'Payout for Ceiling Fan Replacement #BK-78210 settled instantly to HDFC Bank.'
+     - Time: '1 hour ago'
+  3. Customer Review Alert:
+     - Gold star icon badge
+     - Title: 'New 5.0 Star Rating from Rahul K.'
+     - Text: '"Excellent swift repair and clean work! Very polite."'
+     - Time: '2 hours ago'
+  4. Radar Surge Alert:
+     - Orange spark icon badge
+     - Title: 'High Demand in KK Nagar'
+     - Text: 'Electrical repair requests are 3x higher today due to grid fluctuations. Switch on instant dispatch.'
+     - Time: '5 hours ago'
+  5. System Compliance Notice:
+     - Shield icon badge
+     - Title: 'KYC Re-verification Not Needed'
+     - Text: 'Your profile remains 100% compliant for next 9 months.'
+     - Time: '1 day ago'
+- Bottom controls: 'Mark all as read' and 'Notification Settings' shortcuts.
+- Matches active shell 5-tab bar with Alerts highlighted.
+

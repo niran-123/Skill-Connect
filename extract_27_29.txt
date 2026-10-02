@@ -1,0 +1,104 @@
+28. Service Request Details
+Screen 28: Service Request Details for SkillConnect Pro.
+Pro view inspecting an incoming request from customer Rahul Kumar.
+Shell: mobile_pro_stack (Top Bar with back button '< Back to Requests', title 'Request Details #REQ-4091', and phone/support icon).
+Content to include:
+1. Customer Profile Card:
+   - Photo/Avatar of Rahul Kumar, "Rahul Kumar", "Verified Customer", Member since Sep 2023
+   - Location: "Flat 302, 42 West Boulevard Rd, Thillai Nagar, Trichy (2.4 km away)"
+   - Call & Message Customer quick buttons (disabled until accepted, with tooltip "Available upon acceptance")
+2. AI Match Compatibility Panel (High-fidelity highlight card):
+   - Large Ring / Score: "98% Compatibility Fit"
+   - Skill Match: 100% (Matches: Fan Repair, Switchboard Wiring, Voltage Testing)
+   - Experience Match: 96% (Requires 3+ yrs, Arun has 6+ yrs)
+   - Distance Score: 98% (2.4 km within 15 km service radius)
+   - AI Reasoning: "Arun's verified trade credentials in domestic electrical wiring and 98 completed repair jobs make him the optimal match."
+3. Job Details Section:
+   - Requested Service: "Ceiling Fan Regulator Replacement"
+   - Problem Description: "Kitchen ceiling fan regulator is cracked and stuck at highest speed. Emits buzzing sound and slight spark when rotating. Looking for a clean replacement with standard 5-step anchor regulator."
+   - Attached Photos (Customer reference):
+     - Thumbnail 1: Switchboard photo showing burnt regulator knob
+     - Thumbnail 2: Model label photo
+4. Scheduling & Location:
+   - Preferred Slot: "Today, 24 Oct • 3:30 PM - 5:00 PM (Window confirmed)"
+   - Service Address: 42 West Boulevard Rd, Thillai Nagar, Trichy - 620018
+   - Landmark: Near Apollo Pharmacy (Gate Code: Gate 2 Security)
+5. Demo Estimate & Terms:
+   - Estimated Demo Fee: ₹300 - ₹450
+   - Platform Cut: ₹0 (Zero Commission College Project demo)
+   - Payment Mode: Direct UPI / Cash upon completion
+6. Sticky Bottom Action Bar:
+   - Two equal action buttons:
+     - "Decline Request" (border-red-300 text-red-600 bg-red-50 hover:bg-red-100)
+     - "Accept Request" (bg-blue-600 text-white font-semibold flex-1)
+Adhere strictly to design system tokens: Inter, #1D4ED8 primary, rounded corners (12-16px), 48px buttons.
+
+27. Service Requests
+Screen 27: Service Requests for SkillConnect Pro.
+Pro user: Arun Kumar.
+Content to include:
+1. Header / Top Bar in shell: Title "Service Requests", search icon, filter trigger with badge.
+2. Filter Tabs (Horizontal scrollable pill tabs):
+   - "New (4)" [Active Tab, filled blue]
+   - "Accepted (1)"
+   - "Active (1)"
+   - "Completed (128)"
+   - "Rejected (3)"
+3. Pro Availability & Dispatch Radar Bar:
+   - "Dispatch Radar Active" • Searching within 15 km Trichy radius.
+4. Request Cards List under "New (4)":
+   - Card 1:
+     - Header: Urgency badge "⚡ High Match (98%)" and Distance "2.4 km • Thillai Nagar"
+     - Customer: Rahul Kumar (4.9 customer rating, Verified Resident)
+     - Service: "Ceiling Fan Regulator Replacement"
+     - Problem Description: "Kitchen ceiling fan knob broke and regulator is stuck at speed 5. Spark observed when switching on."
+     - Required Skills Matched: [Fan Repair] [Switchboard] [Wiring Check]
+     - Date & Time: Today, 24 Oct • 3:30 PM - 5:00 PM
+     - Est. Demo Compensation: ₹300 - ₹450 (Demo Earnings)
+     - Action Buttons: "Reject" (secondary/outline) and "Accept Request" (primary royal blue) plus link "View Full Details →"
+   - Card 2:
+     - Header: "Match: 95%" and Distance "3.8 km • Cantonment"
+     - Customer: Meena Sundaram (5.0 customer rating)
+     - Service: "MCB Breaker Tripping Investigation"
+     - Problem: "Tripping when geyser is switched on. Need immediate safety test."
+     - Date & Time: Today, 24 Oct • 5:30 PM - 7:00 PM
+     - Est. Demo Compensation: ₹450 - ₹650
+     - Action Buttons: "Reject" and "Accept Request"
+   - Card 3:
+     - Header: "Match: 91%" and Distance "5.1 km • KK Nagar"
+     - Customer: Dr. V. Swaminathan
+     - Service: "Inverter Backup Line Rewiring"
+     - Date & Time: Tomorrow, 25 Oct • 9:00 AM
+     - Est. Demo Compensation: ₹750 - ₹1,000
+     - Action Buttons: "Reject" and "Accept Request"
+5. Empty State Demonstration Preview Card / Drawer:
+   - Clean subtle collapsible/preview banner: "Empty State Preview: 'No new requests right now. You don't have any pending service requests in your queue. Keep Availability toggled ON to receive broadcasts.'"
+Strict design system styling, Inter typography, 48px touch targets, #1D4ED8 primary, Professional bottom nav with Requests tab active.
+
+29. Accept Request Confirmation
+Screen 29: Accept Request Confirmation for SkillConnect Pro.
+Modal Dialog / Confirmation state over the Request Details backdrop.
+Shell: mobile_pro_stack with title 'Accept Request'.
+Content to include:
+1. Centered Confirmation Modal Card (clean, focused, mobile modal overlay style):
+   - Icon: Blue circular badge with checkmark or handshake icon (w-16 h-16 bg-blue-100 text-blue-700)
+   - Title: "Accept this service request?"
+   - Subtitle: "By accepting, you commit to arriving at the scheduled time with the necessary trade equipment."
+2. Job Recap Container:
+   - Customer: Rahul Kumar (Thillai Nagar • 2.4 km)
+   - Service: Ceiling Fan Regulator Replacement
+   - Scheduled Slot: Today, 24 Oct • 3:30 PM - 5:00 PM
+   - Address: 42 West Boulevard Rd, Thillai Nagar
+   - Est. Demo Earnings: ₹300 - ₹450
+3. Pro Responsibilities Checklist:
+   - ✓ Arrive within designated arrival window (3:30 PM)
+   - ✓ Carry safety tools and standard replacement parts
+   - ✓ Wear SkillConnect trade partner uniform or ID badge
+4. Action Buttons:
+   - Primary: "Confirm & Accept Job" (bg-blue-600 text-white w-full h-12 rounded-xl font-medium shadow-md)
+   - Secondary: "Cancel / Go Back" (text-slate-600 w-full text-center py-2 font-medium)
+5. Success State Toast / Banner Preview (Integrated directly below for completeness):
+   - Green banner: "🎉 Service Request Accepted! Dispatched notifications sent to customer Rahul Kumar. Job added to Active Jobs."
+   - Direct button: "Proceed to Active Job Tracker →"
+Strict design system tokens, Inter, #1D4ED8 primary, 48px touch targets.
+
