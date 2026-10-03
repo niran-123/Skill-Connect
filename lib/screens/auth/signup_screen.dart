@@ -17,6 +17,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final _nameCtrl = TextEditingController();
   final _emailCtrl = TextEditingController();
   final _phoneCtrl = TextEditingController();
+  final _fullAddressCtrl = TextEditingController();
   String? _selectedCity;
   final List<String> _tnDistricts = [
     'Coimbatore', 'Madurai', 'Tiruchirappalli', 'Salem', 'Tirunelveli', 'Erode',
@@ -43,6 +44,7 @@ class _SignupScreenState extends State<SignupScreen> {
     required IconData prefixIcon,
     bool isPassword = false,
     Widget? prefix,
+    int maxLines = 1,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,6 +62,7 @@ class _SignupScreenState extends State<SignupScreen> {
         TextField(
           controller: controller,
           obscureText: isPassword && !_isPasswordVisible,
+          maxLines: maxLines,
           decoration: InputDecoration(
             hintText: placeholder,
             hintStyle: TextStyle(color: outline.withValues(alpha: 0.5), fontSize: 14),
@@ -161,6 +164,7 @@ class _SignupScreenState extends State<SignupScreen> {
           email: session.authUser!.email ?? email,
           phone: _phoneCtrl.text.trim(),
           address: _selectedCity,
+          fullAddress: _fullAddressCtrl.text.trim(),
         ),
       );
       if (mounted) {
@@ -179,6 +183,7 @@ class _SignupScreenState extends State<SignupScreen> {
             email: email,
             phone: _phoneCtrl.text.trim(),
             address: _selectedCity,
+            fullAddress: _fullAddressCtrl.text.trim(),
           ),
         );
         if (mounted) {
@@ -252,6 +257,14 @@ class _SignupScreenState extends State<SignupScreen> {
                 _selectedCity,
                 _tnDistricts,
                 (val) => setState(() => _selectedCity = val),
+              ),
+              const SizedBox(height: 16),
+              _buildTextField(
+                controller: _fullAddressCtrl,
+                labelText: 'Full Address',
+                placeholder: 'e.g. 123 Main St, Apartment 4B',
+                prefixIcon: Icons.home_outlined,
+                maxLines: 3,
               ),
               const SizedBox(height: 16),
               if (!isGoogleAuth) _buildTextField(

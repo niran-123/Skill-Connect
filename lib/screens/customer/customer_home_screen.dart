@@ -131,9 +131,9 @@ class CustomerHomeScreen extends StatelessWidget {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("Active: \${b.jobSnapshot['analysis']?['category'] ?? 'Service'}", style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: onSurface)),
+                                  Text("Active: ${b.jobSnapshot['analysis']?['category'] ?? 'Service'}", style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: onSurface)),
                                   const SizedBox(height: 4),
-                                  Text('\${b.professionalName} • \${b.status}', style: TextStyle(fontSize: 12, color: onSurfaceVariant)),
+                                  Text('${b.professionalName} • ${b.status}', style: TextStyle(fontSize: 12, color: onSurfaceVariant)),
                                 ],
                               ),
                             ),

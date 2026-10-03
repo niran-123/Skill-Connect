@@ -59,7 +59,9 @@ class CustomerProfileScreen extends StatelessWidget {
                   const SizedBox(height: 12),
                   Text(user?.email ?? 'rahul.kumar@example.com', style: TextStyle(fontSize: 12, color: onSurface)),
                   const SizedBox(height: 2),
-                  Text(user?.address ?? 'Add your address', style: TextStyle(fontSize: 12, color: onSurfaceVariant)),
+                  Text(user?.phone ?? 'Add your mobile number', style: TextStyle(fontSize: 12, color: onSurfaceVariant)),
+                  const SizedBox(height: 2),
+                  Text(user?.fullAddress?.isNotEmpty == true ? user!.fullAddress! : (user?.address ?? 'Add your address'), style: TextStyle(fontSize: 12, color: onSurfaceVariant), textAlign: TextAlign.center,),
                   const SizedBox(height: 16),
                   OutlinedButton(
                     onPressed: () => context.pushNamed('customer-profile-edit'),

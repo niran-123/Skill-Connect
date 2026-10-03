@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../providers/job_provider.dart';
 
 class BookingDetailsScreen extends StatelessWidget {
@@ -85,7 +86,13 @@ class BookingDetailsScreen extends StatelessWidget {
                       children: [
                         Expanded(
                           child: OutlinedButton.icon(
-                            onPressed: () {},
+                            onPressed: () async {
+                              // We'll use a dummy number for the professional if none exists in the model
+                              final Uri telUri = Uri.parse('tel:+919876543210');
+                              if (await canLaunchUrl(telUri)) {
+                                await launchUrl(telUri);
+                              }
+                            },
                             icon: Icon(Icons.phone, size: 16, color: primary),
                             label: Text('Call', style: TextStyle(fontSize: 12, color: primary)),
                             style: OutlinedButton.styleFrom(side: BorderSide(color: primary), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
@@ -94,7 +101,12 @@ class BookingDetailsScreen extends StatelessWidget {
                         const SizedBox(width: 12),
                         Expanded(
                           child: OutlinedButton.icon(
-                            onPressed: () {},
+                            onPressed: () async {
+                              final Uri smsUri = Uri.parse('sms:+919876543210');
+                              if (await canLaunchUrl(smsUri)) {
+                                await launchUrl(smsUri);
+                              }
+                            },
                             icon: Icon(Icons.chat_bubble_outline, size: 16, color: primary),
                             label: Text('Message', style: TextStyle(fontSize: 12, color: primary)),
                             style: OutlinedButton.styleFrom(side: BorderSide(color: primary), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
@@ -139,7 +151,7 @@ class BookingDetailsScreen extends StatelessWidget {
                   const SizedBox(height: 12),
                   _buildInfoRow('Identified Issue', booking.jobSnapshot['analysis']?['problemType'] ?? 'Unknown Issue', onSurface, onSurfaceVariant),
                   const SizedBox(height: 12),
-                  _buildInfoRow('Date & Time', 'Requested Recently', onSurface, onSurfaceVariant),
+                  _buildInfoRow('Date & Time', booking.scheduledDate != null ? '${booking.scheduledDate} • ${booking.timeSlot ?? ''}' : 'Requested Recently', onSurface, onSurfaceVariant),
                   const SizedBox(height: 12),
                   _buildInfoRow('Description', booking.jobSnapshot['description'] ?? 'No Description', onSurface, onSurfaceVariant),
                 ],
@@ -192,12 +204,40 @@ class BookingDetailsScreen extends StatelessWidget {
                   child: const Text('Leave Review', style: TextStyle(fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold)),
                 ),
               if (booking.status == 'pending' || booking.status == 'accepted')
-                TextButton(
-                  onPressed: () {
-                    // Update status to cancelled logic here
-                    context.pop();
-                  },
-                  child: const Text('Cancel Request', style: TextStyle(color: Colors.red)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextButton(
+                      onPressed: () async {
+                        // Update status to cancelled logic here
+                        try {
+                          await context.read<JobProvider>().updateBookingStatus(booking.id, 'cancelled', booking.customerId, isCustomer: true);
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Booking Cancelled')));
+                            context.pop();
+                          }
+                        } catch (e) {
+                          if (context.mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Failed to cancel')));
+                        }
+                      },
+                      child: const Text('Cancel Request', style: TextStyle(color: Colors.red)),
+                    ),
+                    const SizedBox(width: 16),
+                    ElevatedButton(
+                      onPressed: () async {
+                        try {
+                          await context.read<JobProvider>().updateBookingStatus(booking.id, 'arrived', booking.customerId, isCustomer: true);
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Professional Marked as Arrived')));
+                          }
+                        } catch (e) {
+                          if (context.mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Failed to update')));
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF10B981)),
+                      child: const Text('Arrived', style: TextStyle(color: Colors.white)),
+                    ),
+                  ],
                 ),
             ],
           ),

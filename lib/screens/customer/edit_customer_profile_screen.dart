@@ -19,6 +19,7 @@ class _EditCustomerProfileScreenState extends State<EditCustomerProfileScreen> {
   late TextEditingController _nameController;
   late TextEditingController _emailController;
   late TextEditingController _phoneController;
+  late TextEditingController _fullAddressController;
   String? _selectedCity;
   final List<String> _tnDistricts = [
     'Coimbatore', 'Madurai', 'Tiruchirappalli', 'Salem', 'Tirunelveli', 'Erode',
@@ -37,6 +38,7 @@ class _EditCustomerProfileScreenState extends State<EditCustomerProfileScreen> {
     _nameController = TextEditingController(text: user?.name ?? '');
     _emailController = TextEditingController(text: user?.email ?? '');
     _phoneController = TextEditingController(text: user?.phone ?? '');
+    _fullAddressController = TextEditingController(text: user?.fullAddress ?? '');
     _selectedCity = user?.address;
     if (_selectedCity != null && !_tnDistricts.contains(_selectedCity)) {
       _selectedCity = null;
@@ -48,6 +50,7 @@ class _EditCustomerProfileScreenState extends State<EditCustomerProfileScreen> {
     _nameController.dispose();
     _emailController.dispose();
     _phoneController.dispose();
+    _fullAddressController.dispose();
     super.dispose();
   }
 
@@ -81,6 +84,7 @@ class _EditCustomerProfileScreenState extends State<EditCustomerProfileScreen> {
         'name': _nameController.text.trim(),
         'phone': _phoneController.text.trim(),
         'address': _selectedCity ?? '',
+        'fullAddress': _fullAddressController.text.trim(),
       };
       if (avatarUrl != null) {
         updateData['avatarThumb'] = avatarUrl;
@@ -247,6 +251,19 @@ class _EditCustomerProfileScreenState extends State<EditCustomerProfileScreen> {
                       }).toList(),
                       onChanged: (val) => setState(() => _selectedCity = val),
                       validator: (v) => v == null || v.isEmpty ? 'Required' : null,
+                    ),
+                    const SizedBox(height: 16),
+                    
+                    _buildFieldLabel('Full Address', onSurface),
+                    const SizedBox(height: 8),
+                    TextFormField(
+                      controller: _fullAddressController,
+                      maxLines: 3,
+                      decoration: InputDecoration(
+                        isDense: true,
+                        hintText: 'e.g. 123 Main St, Apartment 4B',
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide(color: outline)),
+                      ),
                     ),
                   ],
                 ),

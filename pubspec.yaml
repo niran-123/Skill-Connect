@@ -52,6 +52,7 @@ dependencies:
   cached_network_image: ^4.0.3
   flutter_lucide: ^1.49.0
   firebase_storage: ^13.6.0
+  url_launcher: ^6.3.3
 dev_dependencies:
   flutter_test:
     sdk: flutter

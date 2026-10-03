@@ -15,7 +15,6 @@ import '../screens/auth/pro_registration_screen.dart';
 
 import '../screens/customer/customer_shell.dart';
 import '../screens/customer/customer_home_screen.dart';
-import '../screens/customer/search_professionals_screen.dart';
 import '../screens/customer/job_request_screen.dart';
 import '../screens/customer/professional_list_screen.dart';
 import '../screens/customer/professional_detail_screen.dart';
@@ -203,15 +202,6 @@ class AppRouter {
                     builder: (context, state) => const BookingSentScreen(),
                   ),
                 ]
-              ),
-            ],
-          ),
-          StatefulShellBranch(
-            routes: [
-              GoRoute(
-                name: 'customer-search',
-                path: '/customer/search',
-                builder: (context, state) => const SearchProfessionalsScreen(),
               ),
             ],
           ),

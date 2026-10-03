@@ -11,6 +11,7 @@ class UserModel {
   final double? lng;
   final String? avatarThumb;
   final String? avatarImageId;
+  final String? fullAddress;
   final List<String> savedProfessionalIds;
   final DateTime? createdAt;
   final DateTime? updatedAt;
@@ -26,6 +27,7 @@ class UserModel {
     this.lng,
     this.avatarThumb,
     this.avatarImageId,
+    this.fullAddress,
     this.savedProfessionalIds = const [],
     this.createdAt,
     this.updatedAt,
@@ -43,6 +45,7 @@ class UserModel {
       lng: (data['lng'] as num?)?.toDouble(),
       avatarThumb: data['avatarThumb'],
       avatarImageId: data['avatarImageId'],
+      fullAddress: data['fullAddress'],
       savedProfessionalIds: List<String>.from(data['savedProfessionalIds'] ?? []),
       createdAt: (data['createdAt'] as Timestamp?)?.toDate(),
       updatedAt: (data['updatedAt'] as Timestamp?)?.toDate(),
@@ -60,6 +63,7 @@ class UserModel {
       'lng': lng,
       'avatarThumb': avatarThumb,
       'avatarImageId': avatarImageId,
+      'fullAddress': fullAddress,
       'savedProfessionalIds': savedProfessionalIds,
       'createdAt': createdAt != null ? Timestamp.fromDate(createdAt!) : FieldValue.serverTimestamp(),
       'updatedAt': FieldValue.serverTimestamp(),

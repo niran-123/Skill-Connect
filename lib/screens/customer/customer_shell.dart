@@ -25,7 +25,6 @@ class CustomerShell extends StatelessWidget {
         unselectedItemColor: const Color(0xFF475569),
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
           BottomNavigationBarItem(icon: Icon(Icons.list_alt), label: 'Bookings'),
           BottomNavigationBarItem(icon: Icon(Icons.notifications), label: 'Alerts'),
           BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: 'Profile'),

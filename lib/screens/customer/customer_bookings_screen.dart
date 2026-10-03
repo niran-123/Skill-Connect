@@ -112,7 +112,7 @@ class _CustomerBookingsScreenState extends State<CustomerBookingsScreen> {
     
     final isArrived = booking.status == 'arrived';
     final statusColor = isArrived ? const Color(0xFF10B981) : const Color(0xFF1D4ED8);
-    final statusText = isArrived ? 'Active • Pro Arrived' : 'Active • \${booking.status.toUpperCase()}';
+    final statusText = isArrived ? 'Active • Pro Arrived' : 'Active • ${booking.status.toUpperCase()}';
 
     return Container(
       decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16), border: Border.all(color: const Color(0xFFCBD5E1).withValues(alpha: 0.5)), boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.03), blurRadius: 8, offset: const Offset(0, 2))]),
@@ -123,7 +123,7 @@ class _CustomerBookingsScreenState extends State<CustomerBookingsScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('#\${booking.id.substring(0,8).toUpperCase()}', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: onSurfaceVariant)),
+              const SizedBox.shrink(), // ID removed
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(color: statusColor.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(12)),
@@ -203,7 +203,7 @@ class _CustomerBookingsScreenState extends State<CustomerBookingsScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('#\${booking.id.substring(0,8).toUpperCase()}', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: onSurfaceVariant)),
+              const SizedBox.shrink(), // ID removed
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(color: const Color(0xFFF1F5F9), borderRadius: BorderRadius.circular(12)),
@@ -246,7 +246,7 @@ class _CustomerBookingsScreenState extends State<CustomerBookingsScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('#\${booking.id.substring(0,8).toUpperCase()}', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: onSurfaceVariant)),
+              const SizedBox.shrink(), // ID removed
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(color: const Color(0xFFFEE2E2), borderRadius: BorderRadius.circular(12)),
