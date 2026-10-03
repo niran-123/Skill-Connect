@@ -33,6 +33,24 @@ class BookingRepo {
     });
   }
 
+  Stream<List<BookingModel>> streamCustomerBookings(String customerId, {int limit = 20}) {
+    return _db.collection('bookings')
+        .where('customerId', isEqualTo: customerId)
+        .orderBy('createdAt', descending: true)
+        .limit(limit)
+        .snapshots()
+        .map((snap) => snap.docs.map((d) => BookingModel.fromMap(d.data(), d.id)).toList());
+  }
+
+  Stream<List<BookingModel>> streamProfessionalBookings(String professionalId, {int limit = 20}) {
+    return _db.collection('bookings')
+        .where('professionalId', isEqualTo: professionalId)
+        .orderBy('createdAt', descending: true)
+        .limit(limit)
+        .snapshots()
+        .map((snap) => snap.docs.map((d) => BookingModel.fromMap(d.data(), d.id)).toList());
+  }
+
   Future<List<BookingModel>> getCustomerBookings(String customerId, {int limit = 20}) async {
     final snap = await _db.collection('bookings')
         .where('customerId', isEqualTo: customerId)

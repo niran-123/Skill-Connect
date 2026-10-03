@@ -237,7 +237,7 @@ class _EditCustomerProfileScreenState extends State<EditCustomerProfileScreen> {
                     _buildFieldLabel('Default Service Address *', onSurface),
                     const SizedBox(height: 8),
                     DropdownButtonFormField<String>(
-                      value: _selectedCity,
+                      initialValue: _selectedCity,
                       hint: Text('Select your city', style: TextStyle(color: outline, fontSize: 14)),
                       decoration: InputDecoration(
                         isDense: true,

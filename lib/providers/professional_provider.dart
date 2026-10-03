@@ -3,6 +3,7 @@ import '../../models/professional.dart';
 import '../../models/booking.dart';
 import '../../repositories/professional_repo.dart';
 import '../../repositories/booking_repo.dart';
+import 'dart:async';
 
 class ProfessionalProvider extends ChangeNotifier {
   final ProfessionalRepo _proRepo = ProfessionalRepo();
@@ -28,6 +29,8 @@ class ProfessionalProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  StreamSubscription? _professionalBookingsSub;
+
   Future<void> loadDashboard(String professionalId) async {
     _setLoading(true);
     try {
@@ -44,8 +47,12 @@ class ProfessionalProvider extends ChangeNotifier {
         await _proRepo.createProfessional(_professional!);
       }
       
-      // Load bookings
-      _bookings = await _bookingRepo.getProfessionalBookings(professionalId);
+      // Load bookings using stream for real-time updates
+      _professionalBookingsSub?.cancel();
+      _professionalBookingsSub = _bookingRepo.streamProfessionalBookings(professionalId).listen((bookings) {
+        _bookings = bookings;
+        notifyListeners();
+      });
     } catch (e) {
       _setError(e.toString());
     } finally {
@@ -69,10 +76,7 @@ class ProfessionalProvider extends ChangeNotifier {
     _setLoading(true);
     try {
       await _bookingRepo.updateBookingStatus(bookingId, status, byUid, extraData: extraData);
-      // Reload bookings
-      if (_professional != null) {
-        _bookings = await _bookingRepo.getProfessionalBookings(_professional!.uid);
-      }
+      // Removed manual reload since stream listener handles updates
       return true;
     } catch (e) {
       _setError(e.toString());
@@ -80,5 +84,11 @@ class ProfessionalProvider extends ChangeNotifier {
     } finally {
       _setLoading(false);
     }
+  }
+
+  @override
+  void dispose() {
+    _professionalBookingsSub?.cancel();
+    super.dispose();
   }
 }

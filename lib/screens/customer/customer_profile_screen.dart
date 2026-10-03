@@ -116,7 +116,7 @@ class CustomerProfileScreen extends StatelessWidget {
                         ElevatedButton(
                           onPressed: () => context.pushNamed('customer-booking-details', pathParameters: {'id': b.id}),
                           style: ElevatedButton.styleFrom(backgroundColor: primary, minimumSize: const Size(0, 32), padding: const EdgeInsets.symmetric(horizontal: 12), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
-                          child: Text('Track #${b.id.substring(0,6)} →', style: const TextStyle(fontSize: 10, color: Colors.white, fontWeight: FontWeight.bold)),
+                          child: const Text('Track →', style: TextStyle(fontSize: 10, color: Colors.white, fontWeight: FontWeight.bold)),
                         ),
                       ],
                     ),

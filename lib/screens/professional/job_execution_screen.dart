@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import '../../providers/professional_provider.dart';
 import '../../providers/session_provider.dart';
 import '../../models/booking.dart';
-import 'package:image_picker/image_picker.dart';
 
 class JobExecutionScreen extends StatefulWidget {
   final BookingModel booking;
@@ -15,7 +14,6 @@ class JobExecutionScreen extends StatefulWidget {
 }
 
 class _JobExecutionScreenState extends State<JobExecutionScreen> {
-  final _notesCtrl = TextEditingController();
   
   Future<void> _updateStatus(String newStatus, {Map<String, dynamic>? extraData}) async {
     final proProvider = context.read<ProfessionalProvider>();
@@ -24,21 +22,6 @@ class _JobExecutionScreenState extends State<JobExecutionScreen> {
     if (newStatus == 'completed' || newStatus == 'rejected' || newStatus == 'cancelled') {
       if (mounted) context.pop();
     }
-  }
-
-  void _completeJob() async {
-    // Simulated picture taking
-    final picker = ImagePicker();
-    final img = await picker.pickImage(source: ImageSource.camera);
-    
-    // Normally upload to ImageRepo here.
-    String? imageId = img != null ? 'simulated_image_id' : null;
-
-    final extra = <String, dynamic>{
-      'completionNotes': _notesCtrl.text,
-    };
-    if (imageId != null) extra['completionImageId'] = imageId;
-    _updateStatus('completed', extraData: extra);
   }
 
   @override
@@ -80,29 +63,20 @@ class _JobExecutionScreenState extends State<JobExecutionScreen> {
               )
             ] else if (b.status == 'accepted') ...[
               ElevatedButton(
-                onPressed: () => _updateStatus('onTheWay'),
-                child: const Text('Mark as On The Way'),
-              )
-            ] else if (b.status == 'onTheWay') ...[
-              ElevatedButton(
                 onPressed: () => _updateStatus('arrived'),
                 child: const Text('Mark as Arrived'),
               )
             ] else if (b.status == 'arrived') ...[
               ElevatedButton(
-                onPressed: () => _updateStatus('inProgress'),
+                onPressed: () => _updateStatus('in_progress'),
                 child: const Text('Start Work (In Progress)'),
               )
-            ] else if (b.status == 'inProgress') ...[
-              TextField(
-                controller: _notesCtrl,
-                decoration: const InputDecoration(labelText: 'Completion Notes (optional)'),
-              ),
-              const SizedBox(height: 16),
-              ElevatedButton.icon(
-                icon: const Icon(Icons.camera_alt),
-                label: const Text('Take Photo & Complete'),
-                onPressed: _completeJob,
+            ] else if (b.status == 'in_progress') ...[
+              const Center(
+                child: Text('Job is currently in progress.\nWaiting for the customer to mark the job as completed.', 
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.orange, fontWeight: FontWeight.bold)
+                )
               )
             ] else ...[
               const Center(child: Text('This job is closed or completed.', style: TextStyle(color: Colors.grey))),

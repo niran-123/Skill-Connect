@@ -5,6 +5,7 @@ class BookingModel {
   final String jobId;
   final String customerId;
   final String customerName;
+  final String? customerPhone;
   final String? customerThumb;
   final String professionalId;
   final String professionalName;
@@ -33,6 +34,7 @@ class BookingModel {
     required this.jobId,
     required this.customerId,
     required this.customerName,
+    this.customerPhone,
     this.customerThumb,
     required this.professionalId,
     required this.professionalName,
@@ -63,6 +65,7 @@ class BookingModel {
       jobId: data['jobId'] ?? '',
       customerId: data['customerId'] ?? '',
       customerName: data['customerName'] ?? '',
+      customerPhone: data['customerPhone'],
       customerThumb: data['customerThumb'],
       professionalId: data['professionalId'] ?? '',
       professionalName: data['professionalName'] ?? '',
@@ -93,6 +96,7 @@ class BookingModel {
       'jobId': jobId,
       'customerId': customerId,
       'customerName': customerName,
+      'customerPhone': customerPhone,
       'customerThumb': customerThumb,
       'professionalId': professionalId,
       'professionalName': professionalName,

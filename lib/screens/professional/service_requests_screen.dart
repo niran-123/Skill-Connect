@@ -39,7 +39,7 @@ class ServiceRequestsScreen extends StatelessWidget {
           builder: (context, proProvider, child) {
             final pending = proProvider.bookings.where((b) => b.status == 'pending').toList();
             final accepted = proProvider.bookings.where((b) => b.status == 'accepted').toList();
-            final active = proProvider.bookings.where((b) => b.status == 'in_progress' || b.status == 'arrived' || b.status == 'onTheWay').toList();
+            final active = proProvider.bookings.where((b) => b.status == 'in_progress' || b.status == 'arrived').toList();
             final completed = proProvider.bookings.where((b) => b.status == 'completed').toList();
 
             return TabBarView(
@@ -245,52 +245,102 @@ class ServiceRequestsScreen extends StatelessWidget {
             padding: const EdgeInsets.all(16).copyWith(top: 0),
             child: Column(
               children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: OutlinedButton(
-                        onPressed: () async {
-                          // Reject logic
-                          final provider = context.read<ProfessionalProvider>();
-                          final success = await provider.updateBookingStatus(b.id, 'rejected', b.professionalId);
-                          if (success && context.mounted) {
-                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Request Rejected')));
-                          }
-                        },
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: const Color(0xFF475569),
-                          side: const BorderSide(color: Color(0xFFCBD5E1)),
-                          minimumSize: const Size(0, 48),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                if (b.status == 'pending')
+                  Row(
+                    children: [
+                      Expanded(
+                        child: OutlinedButton(
+                          onPressed: () async {
+                            // Reject logic
+                            final provider = context.read<ProfessionalProvider>();
+                            final success = await provider.updateBookingStatus(b.id, 'rejected', b.professionalId);
+                            if (success && context.mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Request Rejected')));
+                            }
+                          },
+                          style: OutlinedButton.styleFrom(
+                            foregroundColor: const Color(0xFF475569),
+                            side: const BorderSide(color: Color(0xFFCBD5E1)),
+                            minimumSize: const Size(0, 48),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                          ),
+                          child: const Text('Reject', style: TextStyle(fontWeight: FontWeight.w600)),
                         ),
-                        child: const Text('Reject', style: TextStyle(fontWeight: FontWeight.w600)),
                       ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      flex: 2,
-                      child: ElevatedButton(
-                        onPressed: () async {
-                          // Accept logic
-                          final provider = context.read<ProfessionalProvider>();
-                          final success = await provider.updateBookingStatus(b.id, 'accepted', b.professionalId);
-                          if (success && context.mounted) {
-                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Request Accepted!')));
-                          }
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF1D4ED8),
-                          foregroundColor: Colors.white,
-                          minimumSize: const Size(0, 48),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                          elevation: 0,
+                      const SizedBox(width: 12),
+                      Expanded(
+                        flex: 2,
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            // Accept logic
+                            final provider = context.read<ProfessionalProvider>();
+                            final success = await provider.updateBookingStatus(b.id, 'accepted', b.professionalId);
+                            if (success && context.mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Request Accepted!')));
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFF1D4ED8),
+                            foregroundColor: Colors.white,
+                            minimumSize: const Size(0, 48),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                            elevation: 0,
+                          ),
+                          child: const Text('Accept Request', style: TextStyle(fontWeight: FontWeight.w600)),
                         ),
-                        child: const Text('Accept Request', style: TextStyle(fontWeight: FontWeight.w600)),
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 12),
+                    ],
+                  ),
+                if (b.status == 'accepted')
+                  Row(
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            final provider = context.read<ProfessionalProvider>();
+                            final success = await provider.updateBookingStatus(b.id, 'arrived', b.professionalId);
+                            if (success && context.mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Arrived on location!')));
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFF10B981),
+                            foregroundColor: Colors.white,
+                            minimumSize: const Size(0, 48),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                            elevation: 0,
+                          ),
+                          child: const Text('Arrived', style: TextStyle(fontWeight: FontWeight.w600)),
+                        ),
+                      ),
+                    ],
+                  ),
+                if (b.status == 'arrived')
+                  Row(
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            final provider = context.read<ProfessionalProvider>();
+                            final success = await provider.updateBookingStatus(b.id, 'in_progress', b.professionalId);
+                            if (success && context.mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Job Started!')));
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFFF59E0B),
+                            foregroundColor: Colors.white,
+                            minimumSize: const Size(0, 48),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                            elevation: 0,
+                          ),
+                          child: const Text('Job Started', style: TextStyle(fontWeight: FontWeight.w600)),
+                        ),
+                      ),
+                    ],
+                  ),
+                if (b.status == 'pending' || b.status == 'accepted' || b.status == 'arrived')
+                  const SizedBox(height: 12),
                 Center(
                   child: TextButton(
                     onPressed: () {},

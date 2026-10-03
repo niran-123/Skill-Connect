@@ -29,6 +29,7 @@ class ProfessionalRepo {
 
   Future<List<ProfessionalModel>> searchProfessionals({
     String? category,
+    String? city,
     bool verifiedOnly = true,
   }) async {
     Query query = _db.collection('professionals')
@@ -36,6 +37,10 @@ class ProfessionalRepo {
         
     if (category != null) {
       query = query.where('category', isEqualTo: category);
+    }
+    
+    if (city != null) {
+      query = query.where('city', isEqualTo: city);
     }
         
     if (verifiedOnly) {

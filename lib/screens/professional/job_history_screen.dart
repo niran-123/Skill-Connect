@@ -130,7 +130,7 @@ class _JobHistoryScreenState extends State<JobHistoryScreen> {
                   itemBuilder: (context, index) {
                     final b = filteredJobs[index];
                     return _buildJobCard(
-                      bookingId: b.id.substring(0, 8).toUpperCase(),
+                      bookingId: b.jobId.isNotEmpty ? b.jobId : 'Service Request',
                       dateTime: 'Completed',
                       customer: b.customerName,
                       location: 'Service Location',

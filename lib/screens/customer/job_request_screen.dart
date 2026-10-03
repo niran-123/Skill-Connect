@@ -66,8 +66,10 @@ class _JobRequestScreenState extends State<JobRequestScreen> {
     await jobProvider.processJobRequest(
       _descCtrl.text,
       user.uid,
-      lat: 10.8, // Mock location for demo
-      lng: 78.7,
+      lat: user.lat ?? 10.8, // Fallback if no location set
+      lng: user.lng ?? 78.7,
+      city: user.address, // We use 'address' for city in UserModel
+      explicitCategory: _selectedCategory,
     );
 
     if (mounted && jobProvider.errorMessage == null) {
@@ -188,8 +190,6 @@ class _JobRequestScreenState extends State<JobRequestScreen> {
     final analysis = jobProvider.currentJob?.analysis ?? {};
     
     final problemType = analysis['problemType'] ?? 'Detected Issue';
-    final severity = analysis['severity'] ?? 'Medium';
-    final estHours = analysis['estimatedDurationHours']?.toString() ?? '1';
     final reqSkills = List<String>.from(analysis['requiredSkills'] ?? []);
     final mappedCategory = analysis['category'] ?? _selectedCategory;
     

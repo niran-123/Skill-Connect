@@ -1,4 +1,4 @@
-﻿# 🔧 Skill Connect
+# 🔧 Skill Connect
 
 > **A Flutter-based on-demand home services marketplace** that connects customers with verified local professionals using AI-powered job analysis and intelligent matching.
 
@@ -42,6 +42,8 @@ The app supports three distinct user roles:
 - 🎯 **Smart Matching** – Multi-factor scoring algorithm ranks professionals by skill match, ratings, distance, and availability
 - 📍 **Location-Aware Search** – Uses GPS to find professionals within service radius
 - 📅 **Booking Management** – Schedule bookings, track real-time status, cancel if needed
+- ⏱️ **Real-Time Live Tracker** – Customer sees instant updates as the professional marks "Arrived" and "Job Started"
+- 🏁 **Customer Completion Control** – Job isn't finished until the customer clicks "Job Completed"
 - ⭐ **Reviews & Ratings** – Post-job review system that updates professional trust scores
 - 💾 **Save Professionals** – Bookmark favourite professionals for quick rebooking
 - 🔔 **Notifications** – Real-time booking status updates
@@ -49,8 +51,8 @@ The app supports three distinct user roles:
 
 ### For Professionals
 - 📊 **Dashboard** – Earnings overview, upcoming jobs, quick stats
-- 📥 **Service Requests** – View, accept, or reject incoming booking requests
-- 📍 **Live Status Updates** – Update job status (on the way → arrived → in progress → completed)
+- 📥 **Service Requests** – View, accept, or reject incoming booking requests (rejections disappear, acceptances move to Active tracking)
+- 📍 **Live Real-Time Sync** – Professional app instantly pushes status updates (Arrived, Job Started) directly to the customer's live tracker via Firestore Streams
 - 📷 **Job Completion** – Upload completion photos and work summaries
 - 🗓️ **Availability Calendar** – Set schedule and working hours
 - 🧾 **Skill & Rate Management** – Manage skills offered and pricing
@@ -281,12 +283,14 @@ The app uses **Provider** for state management with 4 `ChangeNotifier` providers
 #### `JobProvider` _(Core Orchestrator)_
 - Coordinates the entire customer booking flow:
   `GeminiService` → `MatchingService` → `ProfessionalRepo` → `BookingRepo`
+- Listens to **Firestore Streams** for real-time `customerBookings` tracking
 - State held: `currentJob`, `matches`, `customerBookings`, `professionalBookings`, `savedProfessionals`
 - Review submission uses atomic Firestore **batch writes** (review + booking update + professional stats update in one transaction)
 
 #### `ProfessionalProvider`
 - Manages professional profile loading and updates
 - Wraps `ProfessionalRepo` for CRUD on the professional's own data
+- Listens to **Firestore Streams** for real-time `professionalBookings` updates (e.g., jobs automatically move to the 'Completed' tab when the customer finishes them)
 
 ---
 
@@ -584,10 +588,12 @@ inProgress → completed  (by professional)
 
 7. TRACK
    ├── Customer Bookings → live status display
-   │   pending → accepted → onTheWay → arrived → inProgress → completed
-   └── Cancel (if pending/accepted)
+   │   pending → accepted → arrived → inProgress (Working)
+   ├── Real-Time Sync: Firestore stream instantly updates Timeline tracker
+   └── Cancel (if pending only)
 
-8. REVIEW (after completion)
+8. JOB COMPLETION & REVIEW
+   ├── Customer taps "Job Completed" (when inProgress)
    └── Rate 1–5 stars + written comment
        └── Atomic batch write:
            ├── Creates /reviews/{bookingId}
@@ -622,14 +628,11 @@ inProgress → completed  (by professional)
    └── REJECT → status: pending → rejected
 
 5. JOB EXECUTION
-   ├── On the Way → status: onTheWay
-   ├── Arrived → status: arrived
-   ├── Started → status: inProgress
+   ├── Arrived → Pro taps "Arrived" → Status: arrived
+   ├── Started → Pro taps "Job Started" → Status: inProgress
    └── Complete:
-       ├── Upload completion photo
-       ├── Write work summary
-       ├── Enter final charge
-       └── status: inProgress → completed
+       ├── Customer taps "Job Completed" on their end
+       └── Job automatically shifts to Professional's "Completed" tab via Real-Time Sync
 
 6. PROFILE
    └── Edit profile, manage skills/rates, set availability, upload docs
@@ -659,27 +662,24 @@ inProgress → completed  (by professional)
            ┌─────────────┼──────────────┐
            ▼             ▼              ▼
       ┌──────────┐  ┌──────────┐  ┌───────────┐
-      │ ACCEPTED │  │ REJECTED │  │ CANCELLED │ ← By Customer
+      │ ACCEPTED │  │ REJECTED │  │ CANCELLED │ ← By Customer Only
       └────┬─────┘  └──────────┘  └───────────┘
-           ├─────────────────────────────────────┐
-           ▼                                     ▼
-     ┌──────────┐                         ┌───────────┐
-     │ ON THE   │                         │ CANCELLED │ ← Customer/Pro
-     │   WAY    │                         └───────────┘
-     └────┬─────┘
-          ▼
-     ┌──────────┐
-     │ ARRIVED  │
-     └────┬─────┘
-          ▼
-     ┌────────────┐
-     │ IN PROGRESS│
-     └─────┬──────┘
+           │
            ▼
-     ┌───────────┐    ┌─────────────────────────────────┐
-     │ COMPLETED │───►│ Customer Review (atomic batch)   │
-     └───────────┘    │  → /reviews + /bookings + /stats │
-                      └─────────────────────────────────┘
+      ┌──────────┐
+      │ ARRIVED  │  ← By Professional
+      └────┬─────┘
+           ▼
+      ┌────────────┐
+      │ IN PROGRESS│  ← By Professional ("Job Started")
+      └─────┬──────┘
+            ▼
+      ┌───────────┐    ┌─────────────────────────────────┐
+      │ COMPLETED │───►│ Customer Review (atomic batch)   │
+      └───────────┘    │  → /reviews + /bookings + /stats │
+           ▲           └─────────────────────────────────┘
+           │
+     (By Customer)
 ```
 
 ---

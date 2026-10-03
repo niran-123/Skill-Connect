@@ -48,11 +48,10 @@ service cloud.firestore {
       return (old == 'pending' && newVal == 'accepted' && byRole == 'professional') ||
              (old == 'pending' && newVal == 'rejected' && byRole == 'professional') ||
              (old == 'pending' && newVal == 'cancelled' && byRole == 'customer') ||
-             (old == 'accepted' && newVal == 'onTheWay' && byRole == 'professional') ||
+             (old == 'accepted' && newVal == 'arrived' && byRole == 'professional') ||
              (old == 'accepted' && newVal == 'cancelled' && (byRole == 'customer' || byRole == 'professional')) ||
-             (old == 'onTheWay' && newVal == 'arrived' && byRole == 'professional') ||
-             (old == 'arrived' && newVal == 'inProgress' && byRole == 'professional') ||
-             (old == 'inProgress' && newVal == 'completed' && byRole == 'professional');
+             (old == 'arrived' && newVal == 'in_progress' && byRole == 'professional') ||
+             (old == 'in_progress' && newVal == 'completed' && byRole == 'customer');
     }
 
     match /bookings/{bookingId} {

@@ -52,7 +52,7 @@ class _PaymentFailedScreenState extends State<PaymentFailedScreen> {
                   const SizedBox(height: 16),
                   const Text('Payment Could Not Be Processed', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: Color(0xFF0F172A)), textAlign: TextAlign.center),
                   const SizedBox(height: 8),
-                  Text('Your UPI transaction of ₹350 for Job #${widget.booking?.id.substring(0, 8).toUpperCase() ?? '00000'} was declined by your issuing bank or timed out.', style: const TextStyle(fontSize: 14, color: Color(0xFF64748B), height: 1.4), textAlign: TextAlign.center),
+                  Text('Your UPI transaction of ₹350 for the requested service was declined by your issuing bank or timed out.', style: const TextStyle(fontSize: 14, color: Color(0xFF64748B), height: 1.4), textAlign: TextAlign.center),
                   const SizedBox(height: 16),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),

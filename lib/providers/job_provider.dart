@@ -10,6 +10,7 @@ import '../../models/professional.dart';
 import '../../models/review.dart' as import_review;
 import 'package:cloud_firestore/cloud_firestore.dart' as import_firestore;
 import 'package:uuid/uuid.dart';
+import 'dart:async';
 
 class JobProvider extends ChangeNotifier {
   final GeminiService _geminiService = GeminiService();
@@ -41,7 +42,7 @@ class JobProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> processJobRequest(String description, String customerId, {double? lat, double? lng}) async {
+  Future<void> processJobRequest(String description, String customerId, {double? lat, double? lng, String? city, String? explicitCategory}) async {
     _setLoading(true);
     _setError(null);
     _currentJob = null;
@@ -50,20 +51,7 @@ class JobProvider extends ChangeNotifier {
     try {
       final analysis = await _geminiService.analyzeJobDescription(description);
       
-      final category = analysis['category'] ?? 'Handyman';
-      final requiredSkills = List<String>.from(analysis['requiredSkills'] ?? []);
-      
-      _currentJob = JobProfile(
-        id: const Uuid().v4(),
-        customerId: customerId,
-        description: description,
-        categoryChosen: category,
-        analysis: analysis,
-        lat: lat,
-        lng: lng,
-      );
-
-      String _mapCategoryToFull(String cat) {
+      String mapCategoryToFull(String cat) {
         final lowerCat = cat.toLowerCase();
         if (lowerCat.contains('ac') || lowerCat.contains('appliance')) return '❄️ AC Technician / AC Mechanic';
         if (lowerCat.contains('plumb')) return '🔧 Plumber';
@@ -87,15 +75,26 @@ class JobProvider extends ChangeNotifier {
         return '🧰 Appliance Repair Technician'; // Default fallback
       }
 
-      final fullCategory = _mapCategoryToFull(category);
-
-      // Fetch professionals in category
-      List<ProfessionalModel> pros = await _proRepo.searchProfessionals(category: fullCategory, verifiedOnly: false);
+      final aiCategory = analysis['category'] ?? 'Handyman';
+      final fullCategory = explicitCategory ?? mapCategoryToFull(aiCategory);
       
-      if (pros.isEmpty) {
-        // Fallback: fetch ANY available professional if no direct match is found
-        pros = await _proRepo.searchProfessionals(category: null, verifiedOnly: false);
-      }
+      // Override the analysis category with the explicit one so the UI displays it correctly
+      analysis['category'] = fullCategory;
+      
+      final requiredSkills = List<String>.from(analysis['requiredSkills'] ?? []);
+      
+      _currentJob = JobProfile(
+        id: const Uuid().v4(),
+        customerId: customerId,
+        description: description,
+        categoryChosen: fullCategory,
+        analysis: analysis,
+        lat: lat,
+        lng: lng,
+      );
+
+      // Fetch professionals in category and city strictly
+      List<ProfessionalModel> pros = await _proRepo.searchProfessionals(category: fullCategory, city: city, verifiedOnly: false);
       
       // Rank them
       _matches = _matchingService.rankProfessionals(pros, _currentJob!, requiredSkills);
@@ -143,11 +142,16 @@ class JobProvider extends ChangeNotifier {
 
   List<BookingModel> _customerBookings = [];
   List<BookingModel> get customerBookings => _customerBookings;
+  StreamSubscription? _customerBookingsSub;
 
   Future<void> loadCustomerBookings(String customerId) async {
     _setLoading(true);
     try {
-      _customerBookings = await _bookingRepo.getCustomerBookings(customerId);
+      _customerBookingsSub?.cancel();
+      _customerBookingsSub = _bookingRepo.streamCustomerBookings(customerId).listen((bookings) {
+        _customerBookings = bookings;
+        notifyListeners();
+      });
     } catch (e) {
       _setError(e.toString());
     } finally {
@@ -176,11 +180,16 @@ class JobProvider extends ChangeNotifier {
 
   List<BookingModel> _professionalBookings = [];
   List<BookingModel> get professionalBookings => _professionalBookings;
+  StreamSubscription? _professionalBookingsSub;
 
   Future<void> loadProfessionalBookings(String professionalId) async {
     _setLoading(true);
     try {
-      _professionalBookings = await _bookingRepo.getProfessionalBookings(professionalId);
+      _professionalBookingsSub?.cancel();
+      _professionalBookingsSub = _bookingRepo.streamProfessionalBookings(professionalId).listen((bookings) {
+        _professionalBookings = bookings;
+        notifyListeners();
+      });
     } catch (e) {
       _setError(e.toString());
     } finally {
@@ -193,18 +202,22 @@ class JobProvider extends ChangeNotifier {
     _setError(null);
     try {
       await _bookingRepo.updateBookingStatus(bookingId, status, byUid);
-      // Reload the respective list
-      if (isCustomer) {
-        await loadCustomerBookings(byUid);
-      } else {
-        await loadProfessionalBookings(byUid);
-      }
+      // Removed manual reload since streams will automatically update the UI
       return true;
     } catch (e) {
       _setError(e.toString());
       _setLoading(false);
       return false;
+    } finally {
+      _setLoading(false);
     }
+  }
+
+  @override
+  void dispose() {
+    _customerBookingsSub?.cancel();
+    _professionalBookingsSub?.cancel();
+    super.dispose();
   }
 
   Future<bool> submitReview(import_review.ReviewModel review) async {

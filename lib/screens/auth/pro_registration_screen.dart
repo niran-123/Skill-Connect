@@ -279,7 +279,7 @@ class _ProRegistrationScreenState extends State<ProRegistrationScreen> {
         Text(label, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: onSurfaceVariant, fontFamily: 'Inter')),
         const SizedBox(height: 6),
         DropdownButtonFormField<String>(
-          value: value,
+          initialValue: value,
           hint: Text(hint, style: TextStyle(color: outline.withValues(alpha: 0.5), fontSize: 14)),
           decoration: InputDecoration(
             prefixIcon: Icon(icon, color: outline),

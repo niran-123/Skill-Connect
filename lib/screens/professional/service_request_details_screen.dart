@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../models/booking.dart';
 import '../../providers/professional_provider.dart';
 
@@ -20,16 +21,10 @@ class ServiceRequestDetailsScreen extends StatelessWidget {
           icon: const Icon(Icons.arrow_back, color: Color(0xFF0F172A)),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text(
-          'Request #\${booking.id.substring(0, 8)}',
-          style: const TextStyle(color: Color(0xFF0F172A), fontWeight: FontWeight.w600, fontSize: 18),
+        title: const Text(
+          'Request Details',
+          style: TextStyle(color: Color(0xFF0F172A), fontWeight: FontWeight.w600, fontSize: 18),
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(LucideIcons.phone, color: Color(0xFF1D4ED8)),
-            onPressed: () {},
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.only(bottom: 100),
@@ -77,13 +72,13 @@ class ServiceRequestDetailsScreen extends StatelessWidget {
                   const SizedBox(height: 16),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Icon(Icons.location_on_outlined, size: 16, color: Color(0xFF64748B)),
-                      SizedBox(width: 8),
+                    children: [
+                      const Icon(Icons.location_on_outlined, size: 16, color: Color(0xFF64748B)),
+                      const SizedBox(width: 8),
                       Expanded(
                         child: Text(
-                          'Flat 302, 42 West Boulevard Rd, Thillai Nagar, Trichy (2.4 km away)',
-                          style: TextStyle(color: Color(0xFF475569), fontSize: 13, height: 1.4),
+                          booking.address ?? 'Location not provided',
+                          style: const TextStyle(color: Color(0xFF475569), fontSize: 13, height: 1.4),
                         ),
                       ),
                     ],
@@ -93,12 +88,15 @@ class ServiceRequestDetailsScreen extends StatelessWidget {
                     children: [
                       Expanded(
                         child: ElevatedButton.icon(
-                          onPressed: null,
+                          onPressed: booking.status == 'accepted' ? () async {
+                            final Uri uri = Uri(scheme: 'tel', path: booking.customerPhone ?? '1234567890');
+                            if (await canLaunchUrl(uri)) await launchUrl(uri);
+                          } : null,
                           icon: const Icon(LucideIcons.phone, size: 16),
                           label: const Text('Call'),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFFF1F5F9),
-                            foregroundColor: const Color(0xFF94A3B8),
+                            backgroundColor: booking.status == 'accepted' ? const Color(0xFF1D4ED8) : const Color(0xFFF1F5F9),
+                            foregroundColor: booking.status == 'accepted' ? Colors.white : const Color(0xFF94A3B8),
                             disabledBackgroundColor: const Color(0xFFF1F5F9),
                             disabledForegroundColor: const Color(0xFF94A3B8),
                             elevation: 0,
@@ -108,12 +106,15 @@ class ServiceRequestDetailsScreen extends StatelessWidget {
                       const SizedBox(width: 12),
                       Expanded(
                         child: ElevatedButton.icon(
-                          onPressed: null,
+                          onPressed: booking.status == 'accepted' ? () async {
+                            final Uri uri = Uri(scheme: 'sms', path: booking.customerPhone ?? '1234567890');
+                            if (await canLaunchUrl(uri)) await launchUrl(uri);
+                          } : null,
                           icon: const Icon(Icons.chat_bubble_outline, size: 16),
                           label: const Text('Message'),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFFF1F5F9),
-                            foregroundColor: const Color(0xFF94A3B8),
+                            backgroundColor: booking.status == 'accepted' ? const Color(0xFF1D4ED8) : const Color(0xFFF1F5F9),
+                            foregroundColor: booking.status == 'accepted' ? Colors.white : const Color(0xFF94A3B8),
                             disabledBackgroundColor: const Color(0xFFF1F5F9),
                             disabledForegroundColor: const Color(0xFF94A3B8),
                             elevation: 0,
@@ -122,47 +123,10 @@ class ServiceRequestDetailsScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 8),
-                  const Text('Contact available upon acceptance', style: TextStyle(fontSize: 11, color: Color(0xFF94A3B8))),
-                ],
-              ),
-            ),
-            
-            // 2. AI Match Compatibility Panel
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 16),
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(colors: [Color(0xFF1E3A8A), Color(0xFF1D4ED8)]),
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(8),
-                        decoration: const BoxDecoration(color: Colors.white24, shape: BoxShape.circle),
-                        child: const Icon(LucideIcons.sparkles, color: Colors.white, size: 20),
-                      ),
-                      const SizedBox(width: 12),
-                      const Text('98% Compatibility Fit', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w700)),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  _buildMatchRow('Skill Match', '100%', 'Fan Repair, Switchboard Wiring'),
-                  _buildMatchRow('Experience Match', '96%', 'Requires 3+ yrs (You: 6+ yrs)'),
-                  _buildMatchRow('Distance Score', '98%', '2.4 km (Within 15 km radius)'),
-                  const SizedBox(height: 16),
-                  Container(
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(color: Colors.black12, borderRadius: BorderRadius.circular(8)),
-                    child: const Text(
-                      "Arun's verified trade credentials in domestic electrical wiring and 98 completed repair jobs make him the optimal match.",
-                      style: TextStyle(color: Colors.white70, fontSize: 13, height: 1.4),
-                    ),
-                  ),
+                  if (booking.status != 'accepted') ...[
+                    const SizedBox(height: 8),
+                    const Text('Contact available upon acceptance', style: TextStyle(fontSize: 11, color: Color(0xFF94A3B8))),
+                  ]
                 ],
               ),
             ),
@@ -175,11 +139,11 @@ class ServiceRequestDetailsScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Ceiling Fan Regulator Replacement', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Color(0xFF0F172A))),
+                  Text(booking.jobSnapshot['analysis']?['problemType'] ?? 'Service Request', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Color(0xFF0F172A))),
                   const SizedBox(height: 8),
-                  const Text(
-                    'Kitchen ceiling fan regulator is cracked and stuck at highest speed. Emits buzzing sound and slight spark when rotating. Looking for a clean replacement with standard 5-step anchor regulator.',
-                    style: TextStyle(color: Color(0xFF475569), fontSize: 14, height: 1.5),
+                  Text(
+                    booking.jobSnapshot['description'] ?? 'No description provided.',
+                    style: const TextStyle(color: Color(0xFF475569), fontSize: 14, height: 1.5),
                   ),
                   const SizedBox(height: 16),
                   const Text('Customer Photos (2)', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: Color(0xFF64748B))),
@@ -209,15 +173,15 @@ class ServiceRequestDetailsScreen extends StatelessWidget {
                 children: [
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Icon(Icons.edit_calendar, size: 18, color: Color(0xFF64748B)),
-                      SizedBox(width: 12),
+                    children: [
+                      const Icon(Icons.edit_calendar, size: 18, color: Color(0xFF64748B)),
+                      const SizedBox(width: 12),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Today, 24 Oct • 3:30 PM - 5:00 PM', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Color(0xFF0F172A))),
-                            Text('Window confirmed by customer', style: TextStyle(color: Color(0xFF10B981), fontSize: 12, fontWeight: FontWeight.w500)),
+                            Text("\${booking.scheduledDate ?? 'Date not set'} • \${booking.timeSlot ?? 'Time not set'}", style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Color(0xFF0F172A))),
+                            const Text('Window confirmed by customer', style: TextStyle(color: Color(0xFF10B981), fontSize: 12, fontWeight: FontWeight.w500)),
                           ],
                         ),
                       ),
@@ -226,17 +190,14 @@ class ServiceRequestDetailsScreen extends StatelessWidget {
                   const SizedBox(height: 16),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Icon(Icons.location_on_outlined, size: 18, color: Color(0xFF64748B)),
-                      SizedBox(width: 12),
+                    children: [
+                      const Icon(Icons.location_on_outlined, size: 18, color: Color(0xFF64748B)),
+                      const SizedBox(width: 12),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('42 West Boulevard Rd, Thillai Nagar\nTrichy - 620018', style: TextStyle(fontSize: 14, color: Color(0xFF0F172A), height: 1.4)),
-                            SizedBox(height: 4),
-                            Text('Landmark: Near Apollo Pharmacy', style: TextStyle(color: Color(0xFF64748B), fontSize: 13)),
-                            Text('Gate Code: Gate 2 Security', style: TextStyle(color: Color(0xFF64748B), fontSize: 13)),
+                            Text(booking.address ?? 'Location not provided', style: const TextStyle(fontSize: 14, color: Color(0xFF0F172A), height: 1.4)),
                           ],
                         ),
                       ),
@@ -250,7 +211,7 @@ class ServiceRequestDetailsScreen extends StatelessWidget {
               title: 'Estimate & Terms',
               child: Column(
                 children: [
-                  _buildTermRow('Estimated Fee', '₹300 - ₹450', isBold: true),
+                  _buildTermRow('Estimated Fee', "₹\${booking.estimatedCharge?.toStringAsFixed(0) ?? '300'}", isBold: true),
                   _buildTermRow('Platform Cut', '₹0 (Zero Commission)'),
                   _buildTermRow('Payment Mode', 'Cash on Completion'),
                 ],
@@ -261,7 +222,7 @@ class ServiceRequestDetailsScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomSheet: Container(
+      bottomSheet: booking.status == 'pending' ? Container(
         padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
         decoration: BoxDecoration(
           color: Colors.white,
@@ -313,33 +274,11 @@ class ServiceRequestDetailsScreen extends StatelessWidget {
             ),
           ],
         ),
-      ),
+      ) : null,
     );
   }
 
-  Widget _buildMatchRow(String title, String percentage, String subtitle) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: 48,
-            child: Text(percentage, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 15)),
-          ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(title, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w500, fontSize: 14)),
-                Text(subtitle, style: const TextStyle(color: Colors.white70, fontSize: 12)),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+
 
   Widget _buildSection({required String title, required Widget child}) {
     return Container(

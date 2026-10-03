@@ -68,7 +68,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
                         Text('Master ${widget.booking?.jobSnapshot['analysis']?['category'] ?? 'Craftsman'}', style: TextStyle(fontSize: 12, color: onSurfaceVariant)),
                         const SizedBox(height: 4),
                         Text('Completed: ${widget.booking?.jobSnapshot['analysis']?['problemType'] ?? 'Service'}', style: TextStyle(fontSize: 11, color: onSurfaceVariant)),
-                        Text('Job ID #${widget.booking?.id.substring(0, 8).toUpperCase() ?? '00000'}', style: TextStyle(fontSize: 11, color: onSurfaceVariant)),
+                        Text('Job Details', style: TextStyle(fontSize: 11, color: onSurfaceVariant)),
                       ],
                     ),
                   )

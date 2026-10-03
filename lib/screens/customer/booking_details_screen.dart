@@ -203,41 +203,39 @@ class BookingDetailsScreen extends StatelessWidget {
                   ),
                   child: const Text('Leave Review', style: TextStyle(fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold)),
                 ),
-              if (booking.status == 'pending' || booking.status == 'accepted')
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TextButton(
-                      onPressed: () async {
-                        // Update status to cancelled logic here
-                        try {
-                          await context.read<JobProvider>().updateBookingStatus(booking.id, 'cancelled', booking.customerId, isCustomer: true);
-                          if (context.mounted) {
-                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Booking Cancelled')));
-                            context.pop();
-                          }
-                        } catch (e) {
-                          if (context.mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Failed to cancel')));
-                        }
-                      },
-                      child: const Text('Cancel Request', style: TextStyle(color: Colors.red)),
-                    ),
-                    const SizedBox(width: 16),
-                    ElevatedButton(
-                      onPressed: () async {
-                        try {
-                          await context.read<JobProvider>().updateBookingStatus(booking.id, 'arrived', booking.customerId, isCustomer: true);
-                          if (context.mounted) {
-                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Professional Marked as Arrived')));
-                          }
-                        } catch (e) {
-                          if (context.mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Failed to update')));
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF10B981)),
-                      child: const Text('Arrived', style: TextStyle(color: Colors.white)),
-                    ),
-                  ],
+              if (booking.status == 'pending')
+                TextButton(
+                  onPressed: () async {
+                    try {
+                      await context.read<JobProvider>().updateBookingStatus(booking.id, 'cancelled', booking.customerId, isCustomer: true);
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Booking Cancelled')));
+                        context.pop();
+                      }
+                    } catch (e) {
+                      if (context.mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Failed to cancel')));
+                    }
+                  },
+                  child: const Text('Cancel Request', style: TextStyle(color: Colors.red)),
+                ),
+              if (booking.status == 'in_progress')
+                ElevatedButton(
+                  onPressed: () async {
+                    try {
+                      await context.read<JobProvider>().updateBookingStatus(booking.id, 'completed', booking.customerId, isCustomer: true);
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Job Completed Successfully')));
+                      }
+                    } catch (e) {
+                      if (context.mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Failed to complete job')));
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF10B981),
+                    minimumSize: const Size(double.infinity, 48),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  ),
+                  child: const Text('Job Completed', style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold)),
                 ),
             ],
           ),

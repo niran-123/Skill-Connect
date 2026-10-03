@@ -158,27 +158,5 @@ class CustomerHomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildServiceChip(BuildContext context, IconData icon, String label) {
-    return GestureDetector(
-      onTap: () => context.pushNamed('customer-request', extra: label),
-      child: Container(
-      margin: const EdgeInsets.only(right: 12),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey.shade200),
-      ),
-      child: Column(
-        children: [
-          Icon(icon, color: primary, size: 28),
-          const SizedBox(height: 8),
-          Text(label, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500)),
-        ],
-      ),
-    )
-    );
-  }
-
 }
 
