@@ -42,7 +42,8 @@ class _LoginScreenState extends State<LoginScreen> {
       return;
     }
     final auth = context.read<AuthProvider>();
-    await auth.signInWithEmail(email, pass);
+    final expectedRole = _isCustomer ? 'customer' : 'professional';
+    await auth.signInWithEmail(email, pass, expectedRole: expectedRole);
   }
 
   @override
@@ -263,6 +264,27 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
 
+              const SizedBox(height: 24),
+              
+              // Sign Up / Create Account Button
+              Center(
+                child: TextButton(
+                  onPressed: () => context.pushNamed('role-selection'),
+                  child: RichText(
+                    text: TextSpan(
+                      text: "Don't have an account? ",
+                      style: TextStyle(color: onSurfaceVariant, fontSize: 14),
+                      children: [
+                        TextSpan(
+                          text: 'Sign Up',
+                          style: TextStyle(color: primary, fontWeight: FontWeight.w600),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+
               const SizedBox(height: 32),
             ],
           ),
@@ -276,16 +298,12 @@ class _LoginScreenState extends State<LoginScreen> {
       backgroundColor: surface.withValues(alpha: 0.9),
       elevation: 0,
       centerTitle: true,
-      leading: IconButton(
+      leading: context.canPop() ? IconButton(
         icon: const Icon(Icons.arrow_back, color: Colors.black87),
         onPressed: () {
-          if (context.canPop()) {
-            context.pop();
-          } else {
-            context.goNamed('role-selection');
-          }
+          context.pop();
         },
-      ),
+      ) : null,
       title: const Text('Login', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black87)),
     );
   }

@@ -9,9 +9,11 @@ class ProfessionalDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final pro = match.professional;
+    final double rating = (pro.stats['averageRating'] as num?)?.toDouble() ?? 0.0;
+    final int reviewCount = (pro.stats['reviewCount'] as num?)?.toInt() ?? 0;
+    final int jobsCompleted = (pro.stats['jobsCompleted'] as num?)?.toInt() ?? 0;
     
 
-    
     final Color primary = const Color(0xFF1D4ED8);
     final Color surface = const Color(0xFFF7F9FB);
     final Color onSurface = const Color(0xFF0F172A);
@@ -54,7 +56,7 @@ class ProfessionalDetailScreen extends StatelessWidget {
                               color: Colors.grey.shade200,
                               borderRadius: BorderRadius.circular(16),
                               image: DecorationImage(
-                                image: NetworkImage(pro.avatarThumb ?? 'https://via.placeholder.com/150/cccccc/ffffff?text=\${pro.name[0]}'),
+                              image: NetworkImage(pro.avatarThumb ?? 'https://via.placeholder.com/150/cccccc/ffffff?text=${pro.name[0]}'),
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -83,7 +85,7 @@ class ProfessionalDetailScreen extends StatelessWidget {
                               children: [
                                 const Icon(Icons.location_on, size: 14, color: Color(0xFF1D4ED8)),
                                 const SizedBox(width: 4),
-                                Text('\${pro.area}, \${pro.city} • ~3 km away', style: TextStyle(fontSize: 12, color: onSurfaceVariant)),
+                                Text('${pro.area}, ${pro.city} • ~3 km away', style: TextStyle(fontSize: 12, color: onSurfaceVariant)),
                               ],
                             ),
                           ],
@@ -97,9 +99,9 @@ class ProfessionalDetailScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      _buildStatItem('Rating', '★ \$rating', "(\${pro.stats?['reviewCount'] ?? 0} reviews)"),
-                      _buildStatItem('Experience', '\${pro.experienceYears}+ Years', 'Verified'),
-                      _buildStatItem('Jobs', '\$jobs', 'Completed'),
+                      _buildStatItem('Rating', '★ ${rating.toStringAsFixed(1)}', "($reviewCount reviews)"),
+                      _buildStatItem('Experience', '${pro.experienceYears}+ Years', 'Verified'),
+                      _buildStatItem('Jobs', '$jobsCompleted', 'Completed'),
                       _buildStatItem('Response', '~15 Mins', 'Average'),
                     ],
                   ),
@@ -120,11 +122,11 @@ class ProfessionalDetailScreen extends StatelessWidget {
                     children: [
                       const Icon(Icons.thumb_up, color: Color(0xFFF59E0B), size: 20),
                       const SizedBox(width: 8),
-                      Text('Why we recommend \${pro.name.split(' ').first}', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: onSurface)),
+                      Text('Why we recommend ${pro.name.split(' ').first}', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: onSurface)),
                     ],
                   ),
                   const SizedBox(height: 16),
-                  _buildRecommendationRow('\${match.score}% AI match for your request'),
+                  _buildRecommendationRow('${match.totalScore.toInt()}% AI match for your request'),
                   if (match.reasons.isNotEmpty) const SizedBox(height: 8),
                   if (match.reasons.isNotEmpty) _buildRecommendationRow(match.reasons.first),
                   const SizedBox(height: 8),
@@ -147,7 +149,7 @@ class ProfessionalDetailScreen extends StatelessWidget {
                   Text('About', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: onSurface)),
                   const SizedBox(height: 8),
                   Text(
-                    pro.bio ?? 'Specialized in residential \${pro.category}. Committed to clean, punctual, and transparent service.',
+                    pro.bio ?? 'Specialized in residential ${pro.category}. Committed to clean, punctual, and transparent service.',
                     style: TextStyle(fontSize: 14, color: onSurfaceVariant, height: 1.5),
                   ),
                 ],
@@ -176,27 +178,6 @@ class ProfessionalDetailScreen extends StatelessWidget {
             ),
             
             const SizedBox(height: 8),
-            
-            // Services Offered
-            Container(
-              color: Colors.white,
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Services Offered', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: onSurface)),
-                  const SizedBox(height: 12),
-                  _buildServiceRow('Standard Visit & Diagnosis', '₹250'),
-                  const Divider(),
-                  _buildServiceRow('Small Fixes', '₹350 - ₹500'),
-                  const Divider(),
-                  _buildServiceRow('Major Work', 'Custom Quote'),
-                ],
-              ),
-            ),
-            
-            const SizedBox(height: 8),
-            
             // Trusted Badge
             Container(
               color: Colors.white,
@@ -233,15 +214,6 @@ class ProfessionalDetailScreen extends StatelessWidget {
         child: SafeArea(
           child: Row(
             children: [
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('₹250 / visit', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: onSurface)),
-                  Text('Standard Inspection', style: TextStyle(fontSize: 11, color: onSurfaceVariant)),
-                ],
-              ),
-              const SizedBox(width: 24),
               Expanded(
                 child: ElevatedButton(
                   onPressed: () {

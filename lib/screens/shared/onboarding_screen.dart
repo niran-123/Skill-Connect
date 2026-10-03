@@ -27,7 +27,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             Align(
               alignment: Alignment.topRight,
               child: TextButton(
-                onPressed: () => context.goNamed('role-selection'),
+                onPressed: () => context.goNamed('login'),
                 child: Text('Skip', style: TextStyle(color: onSurfaceVariant, fontSize: 14, fontWeight: FontWeight.w600, fontFamily: 'Inter')),
               ),
             ),
@@ -78,7 +78,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         if (_currentIndex < 2) {
                           _pageController.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
                         } else {
-                          context.goNamed('role-selection');
+                          context.goNamed('login');
                         }
                       },
                       style: ElevatedButton.styleFrom(

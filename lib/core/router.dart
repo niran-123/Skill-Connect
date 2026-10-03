@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import '../providers/session_provider.dart';
 
 import '../screens/shared/splash_screen.dart';
-import '../screens/shared/onboarding_screen.dart';
 import '../screens/shared/shared_screens.dart';
 
 import '../screens/auth/login_screen.dart';
@@ -62,14 +61,12 @@ class AppRouter {
                           state.matchedLocation == '/pro-registration' ||
                           state.matchedLocation == '/role-selection';
       final isSplash = state.matchedLocation == '/';
-      final isOnboarding = state.matchedLocation == '/onboarding';
       final isRoleSelection = state.matchedLocation == '/role-selection';
 
       if (session.isLoading) return isSplash ? null : '/';
       
       if (session.authUser == null) {
-        if (isSplash) return '/onboarding';
-        if (isOnboarding || isAuthRoute) return null;
+        if (isAuthRoute) return null;
         return '/login';
       }
 
@@ -78,7 +75,7 @@ class AppRouter {
       }
 
       final role = session.userModel!.role;
-      if (isAuthRoute || isSplash || isOnboarding || isRoleSelection) {
+      if (isAuthRoute || isSplash || isRoleSelection) {
         if (role == 'customer') return '/customer/home';
         if (role == 'professional') return '/professional/dashboard';
         if (role == 'admin') return '/admin';
@@ -95,11 +92,6 @@ class AppRouter {
         name: 'splash',
         path: '/',
         builder: (context, state) => const SplashScreen(),
-      ),
-      GoRoute(
-        name: 'onboarding',
-        path: '/onboarding',
-        builder: (context, state) => const OnboardingScreen(),
       ),
       GoRoute(
         name: 'login',

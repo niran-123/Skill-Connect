@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../repositories/auth_repo.dart';
+import '../repositories/user_repo.dart';
 
 class AuthProvider extends ChangeNotifier {
   final AuthRepo _authRepo = AuthRepo();
@@ -21,15 +22,34 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<UserCredential?> signInWithEmail(String email, String password) async {
+  Future<UserCredential?> signInWithEmail(String email, String password, {String? expectedRole}) async {
     _setLoading(true);
     _setError(null);
     try {
       final credential = await _authRepo.signInWithEmail(email, password);
+      
+      if (expectedRole != null && credential.user != null) {
+        final userRepo = UserRepo();
+        final userModel = await userRepo.getUser(credential.user!.uid);
+        
+        if (userModel != null && userModel.role != expectedRole) {
+          await _authRepo.signOut();
+          final String roleStr = userModel.role;
+          final String displayRole = roleStr.isNotEmpty ? '${roleStr[0].toUpperCase()}${roleStr.substring(1)}' : 'Unknown';
+          _setError('This account is registered as $displayRole. Please use $displayRole Login.');
+          _setLoading(false);
+          return null;
+        }
+      }
+      
       _setLoading(false);
       return credential;
     } on FirebaseAuthException catch (e) {
       _setError(e.message ?? 'An error occurred during sign in');
+      _setLoading(false);
+      return null;
+    } catch (e) {
+      _setError(e.toString());
       _setLoading(false);
       return null;
     }

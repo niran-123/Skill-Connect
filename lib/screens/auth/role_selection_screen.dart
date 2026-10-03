@@ -133,10 +133,10 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
       appBar: AppBar(
         backgroundColor: surface,
         elevation: 0,
-        leading: IconButton(
+        leading: context.canPop() ? IconButton(
           icon: Icon(Icons.arrow_back, color: onSurface),
-          onPressed: () {},
-        ),
+          onPressed: () => context.pop(),
+        ) : null,
         centerTitle: true,
         title: Icon(Icons.handyman_rounded, color: primary), // Mini logo placeholder
       ),
@@ -181,7 +181,13 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
               const SizedBox(height: 16),
               Center(
                 child: TextButton(
-                  onPressed: () => context.goNamed('login'),
+                  onPressed: () {
+                    if (context.canPop()) {
+                      context.pop();
+                    } else {
+                      context.goNamed('login');
+                    }
+                  },
                   child: RichText(
                     text: TextSpan(
                       text: 'Already have an account? ',
