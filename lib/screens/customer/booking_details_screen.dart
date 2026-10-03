@@ -204,6 +204,43 @@ class BookingDetailsScreen extends StatelessWidget {
                   ),
                   child: const Text('Leave Review', style: TextStyle(fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold)),
                 ),
+              if (booking.status == 'proposed')
+                Column(
+                  children: [
+                    ElevatedButton(
+                      onPressed: () async {
+                        try {
+                          await context.read<JobProvider>().updateBookingStatus(booking.id, 'accepted', booking.customerId, isCustomer: true);
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Proposal Accepted!')));
+                          }
+                        } catch (e) {
+                          if (context.mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Failed to accept')));
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: primary,
+                        minimumSize: const Size(double.infinity, 48),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      ),
+                      child: const Text('Accept Proposal', style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold)),
+                    ),
+                    TextButton(
+                      onPressed: () async {
+                        try {
+                          await context.read<JobProvider>().updateBookingStatus(booking.id, 'rejected', booking.customerId, isCustomer: true);
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Proposal Rejected')));
+                            context.pop();
+                          }
+                        } catch (e) {
+                          if (context.mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Failed to reject')));
+                        }
+                      },
+                      child: const Text('Reject Proposal', style: TextStyle(color: Colors.red)),
+                    ),
+                  ],
+                ),
               if (booking.status == 'pending')
                 TextButton(
                   onPressed: () async {

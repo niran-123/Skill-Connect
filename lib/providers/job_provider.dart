@@ -110,7 +110,6 @@ class JobProvider extends ChangeNotifier {
     required MatchResult match,
     required String customerId,
     required String customerName,
-    double? estimatedCharge,
   }) async {
     if (_currentJob == null) return false;
     _setLoading(true);
@@ -129,7 +128,6 @@ class JobProvider extends ChangeNotifier {
         match: match.toMap(),
         lat: _currentJob!.lat,
         lng: _currentJob!.lng,
-        estimatedCharge: estimatedCharge,
       );
 
       await _bookingRepo.createBooking(booking);

@@ -29,7 +29,7 @@ class _CustomerBookingsScreenState extends State<CustomerBookingsScreen> {
     final jobProvider = context.watch<JobProvider>();
     final bookings = jobProvider.customerBookings;
     
-    final activeBookings = bookings.where((b) => b.status == 'pending' || b.status == 'accepted' || b.status == 'arrived' || b.status == 'ready_to_start' || b.status == 'in_progress').toList();
+    final activeBookings = bookings.where((b) => b.status == 'pending' || b.status == 'proposed' || b.status == 'accepted' || b.status == 'arrived' || b.status == 'ready_to_start' || b.status == 'in_progress').toList();
     final upcomingBookings = bookings.where((b) => b.status == 'scheduled').toList();
     final completedBookings = bookings.where((b) => b.status == 'completed').toList();
     final cancelledBookings = bookings.where((b) => b.status == 'cancelled').toList();
@@ -112,7 +112,7 @@ class _CustomerBookingsScreenState extends State<CustomerBookingsScreen> {
     
     final isArrived = booking.status == 'arrived';
     final statusColor = (isArrived || booking.status == 'ready_to_start') ? const Color(0xFF10B981) : const Color(0xFF1D4ED8);
-    final statusText = isArrived ? 'Active • Pro Arrived' : (booking.status == 'ready_to_start' ? 'Active • Confirmed' : 'Active • \${booking.status.toUpperCase()}');
+    final statusText = isArrived ? 'Active • Pro Arrived' : (booking.status == 'ready_to_start' ? 'Active • Confirmed' : (booking.status == 'proposed' ? 'Action Required • Proposal Received' : 'Active • \${booking.status.toUpperCase()}'));
 
     return Container(
       decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16), border: Border.all(color: const Color(0xFFCBD5E1).withValues(alpha: 0.5)), boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.03), blurRadius: 8, offset: const Offset(0, 2))]),

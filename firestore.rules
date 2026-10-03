@@ -22,7 +22,7 @@ service cloud.firestore {
 
     match /users/{uid} {
       allow read: if isOwner(uid) || isAdmin();
-      allow create: if isOwner(uid) && request.resource.data.role in ['customer', 'professional', 'admin'];
+      allow create: if isOwner(uid) && request.resource.data.role in ['customer', 'professional'];
       allow update: if isOwner(uid) && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['role']);
       allow delete: if false;
     }
@@ -45,17 +45,22 @@ service cloud.firestore {
     }
 
     function validTransition(old, newVal, byRole) {
-      return (old == 'pending' && newVal == 'accepted' && byRole == 'professional') ||
+      return (old == 'pending' && newVal == 'proposed' && byRole == 'professional') ||
              (old == 'pending' && newVal == 'rejected' && byRole == 'professional') ||
+             (old == 'proposed' && newVal == 'accepted' && byRole == 'customer') ||
+             (old == 'proposed' && newVal == 'rejected' && byRole == 'customer') ||
+             (old == 'proposed' && newVal == 'cancelled' && byRole == 'customer') ||
              (old == 'pending' && newVal == 'cancelled' && byRole == 'customer') ||
              (old == 'accepted' && newVal == 'arrived' && byRole == 'professional') ||
              (old == 'accepted' && newVal == 'cancelled' && (byRole == 'customer' || byRole == 'professional')) ||
-             (old == 'arrived' && newVal == 'in_progress' && byRole == 'professional') ||
+             (old == 'arrived' && newVal == 'ready_to_start' && byRole == 'customer') ||
+             (old == 'ready_to_start' && newVal == 'in_progress' && byRole == 'professional') ||
              (old == 'in_progress' && newVal == 'completed' && byRole == 'customer');
     }
 
     match /bookings/{bookingId} {
-      allow create: if signedIn() && isOwner(request.resource.data.customerId) && request.resource.data.status == 'pending';
+      allow create: if signedIn() && isOwner(request.resource.data.customerId) && request.resource.data.status == 'pending' &&
+        (!('estimatedCharge' in request.resource.data) || request.resource.data.estimatedCharge == null || request.resource.data.estimatedCharge >= 0);
       allow read: if signedIn() && (isOwner(resource.data.customerId) || isOwner(resource.data.professionalId) || isAdmin());
       allow update: if signedIn() && (
         (isOwner(resource.data.customerId) && 
@@ -65,7 +70,8 @@ service cloud.firestore {
         ) ||
         (isOwner(resource.data.professionalId) &&
          // Professional can transition status and add completion details
-         request.resource.data.diff(resource.data).affectedKeys().hasAny(['status', 'updatedAt', 'statusHistory', 'workSummary', 'finalCharge', 'completionImageId', 'completionNotes']) &&
+         request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'updatedAt', 'statusHistory', 'workSummary', 'finalCharge', 'completionImageId', 'completionNotes', 'estimatedCharge', 'scheduledDate', 'timeSlot']) &&
+         (!('estimatedCharge' in request.resource.data) || request.resource.data.estimatedCharge == null || request.resource.data.estimatedCharge >= 0) &&
          validTransition(resource.data.status, request.resource.data.status, 'professional')
         )
       );

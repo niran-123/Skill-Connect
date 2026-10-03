@@ -255,12 +255,61 @@ class ServiceRequestDetailsScreen extends StatelessWidget {
               flex: 2,
               child: ElevatedButton(
                 onPressed: () async {
-                  final provider = context.read<ProfessionalProvider>();
-                  final success = await provider.updateBookingStatus(booking.id, 'accepted', booking.professionalId);
-                  if (success && context.mounted) {
-                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Request Accepted!')));
-                     context.goNamed('professional-dashboard');
-                  }
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext ctx) {
+                      final amountCtrl = TextEditingController();
+                      final dateCtrl = TextEditingController(text: 'Today');
+                      final timeCtrl = TextEditingController(text: 'As soon as possible');
+                      return AlertDialog(
+                        title: const Text('Submit Proposal'),
+                        content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            TextField(
+                              controller: amountCtrl,
+                              keyboardType: TextInputType.number,
+                              decoration: const InputDecoration(labelText: 'Estimated Amount (₹)'),
+                            ),
+                            TextField(
+                              controller: dateCtrl,
+                              decoration: const InputDecoration(labelText: 'Date'),
+                            ),
+                            TextField(
+                              controller: timeCtrl,
+                              decoration: const InputDecoration(labelText: 'Time Slot'),
+                            ),
+                          ],
+                        ),
+                        actions: [
+                          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+                          ElevatedButton(
+                            onPressed: () async {
+                              final amount = double.tryParse(amountCtrl.text);
+                              if (amount == null || amount < 0) return;
+                              Navigator.pop(ctx);
+                              final provider = context.read<ProfessionalProvider>();
+                              final success = await provider.updateBookingStatus(
+                                booking.id, 
+                                'proposed', 
+                                booking.professionalId,
+                                extraData: {
+                                  'estimatedCharge': amount,
+                                  'scheduledDate': dateCtrl.text,
+                                  'timeSlot': timeCtrl.text,
+                                }
+                              );
+                              if (success && context.mounted) {
+                                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Proposal Sent!')));
+                                context.goNamed('professional-dashboard');
+                              }
+                            },
+                            child: const Text('Submit'),
+                          ),
+                        ],
+                      );
+                    }
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF1D4ED8),
@@ -269,7 +318,7 @@ class ServiceRequestDetailsScreen extends StatelessWidget {
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                   elevation: 0,
                 ),
-                child: const Text('Accept Request', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16)),
+                child: const Text('Submit Proposal', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16)),
               ),
             ),
           ],

@@ -15,7 +15,6 @@ class BookingRequestScreen extends StatefulWidget {
 
 class _BookingRequestScreenState extends State<BookingRequestScreen> {
   final _descCtrl = TextEditingController();
-  final _amountCtrl = TextEditingController();
   
   @override
   void initState() {
@@ -29,24 +28,12 @@ class _BookingRequestScreenState extends State<BookingRequestScreen> {
     final user = context.read<SessionProvider>().userModel;
     if (user == null) return;
     
-    final amountText = _amountCtrl.text.trim();
-    if (amountText.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please enter a service amount')));
-      return;
-    }
-    final amount = double.tryParse(amountText);
-    if (amount == null || amount <= 0) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please enter a valid amount')));
-      return;
-    }
-    
     // In a real app, we'd also read the selected date/time from the UI state
     // But for this demo, we'll just process it directly
     final success = await jobProvider.bookProfessional(
       match: widget.match,
       customerId: user.uid,
       customerName: user.name,
-      estimatedCharge: amount,
     );
     
     if (success && mounted) {
@@ -195,18 +182,6 @@ class _BookingRequestScreenState extends State<BookingRequestScreen> {
                     controller: _descCtrl,
                     maxLines: 3,
                     decoration: InputDecoration(border: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide(color: outline))),
-                  const SizedBox(height: 24),
-
-                  Text('5. Service Amount', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: onSurface)),
-                  const SizedBox(height: 8),
-                  TextField(
-                    controller: _amountCtrl,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      hintText: 'Enter amount',
-                      prefixText: '₹ ',
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide(color: outline)),
-                    ),
                   ),
                 ],
               ),

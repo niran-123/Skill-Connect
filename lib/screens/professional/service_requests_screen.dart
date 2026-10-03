@@ -37,7 +37,7 @@ class ServiceRequestsScreen extends StatelessWidget {
         ),
         body: Consumer<ProfessionalProvider>(
           builder: (context, proProvider, child) {
-            final pending = proProvider.bookings.where((b) => b.status == 'pending').toList();
+            final pending = proProvider.bookings.where((b) => b.status == 'pending' || b.status == 'proposed').toList();
             final accepted = proProvider.bookings.where((b) => b.status == 'accepted').toList();
             final active = proProvider.bookings.where((b) => b.status == 'in_progress' || b.status == 'arrived' || b.status == 'ready_to_start').toList();
             final completed = proProvider.bookings.where((b) => b.status == 'completed').toList();
@@ -245,6 +245,12 @@ class ServiceRequestsScreen extends StatelessWidget {
             padding: const EdgeInsets.all(16).copyWith(top: 0),
             child: Column(
               children: [
+                if (b.status == 'proposed')
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    child: const Text('Waiting for customer to accept...', style: TextStyle(color: Colors.orange, fontWeight: FontWeight.bold, textAlign: TextAlign.center)),
+                  ),
                 if (b.status == 'pending')
                   Row(
                     children: [
@@ -272,12 +278,42 @@ class ServiceRequestsScreen extends StatelessWidget {
                         flex: 2,
                         child: ElevatedButton(
                           onPressed: () async {
-                            // Accept logic
-                            final provider = context.read<ProfessionalProvider>();
-                            final success = await provider.updateBookingStatus(b.id, 'accepted', b.professionalId);
-                            if (success && context.mounted) {
-                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Request Accepted!')));
-                            }
+                            showDialog(
+                              context: context,
+                              builder: (ctx) {
+                                final amountCtrl = TextEditingController();
+                                final dateCtrl = TextEditingController(text: 'Today');
+                                final timeCtrl = TextEditingController(text: 'As soon as possible');
+                                return AlertDialog(
+                                  title: const Text('Submit Proposal'),
+                                  content: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      TextField(controller: amountCtrl, keyboardType: TextInputType.number, decoration: const InputDecoration(labelText: 'Amount (₹)')),
+                                      TextField(controller: dateCtrl, decoration: const InputDecoration(labelText: 'Date')),
+                                      TextField(controller: timeCtrl, decoration: const InputDecoration(labelText: 'Time Slot')),
+                                    ],
+                                  ),
+                                  actions: [
+                                    TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+                                    ElevatedButton(
+                                      onPressed: () async {
+                                        final amount = double.tryParse(amountCtrl.text);
+                                        if (amount == null || amount < 0) return;
+                                        Navigator.pop(ctx);
+                                        final provider = context.read<ProfessionalProvider>();
+                                        final success = await provider.updateBookingStatus(
+                                          b.id, 'proposed', b.professionalId,
+                                          extraData: {'estimatedCharge': amount, 'scheduledDate': dateCtrl.text, 'timeSlot': timeCtrl.text}
+                                        );
+                                        if (success && mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Proposal Sent!')));
+                                      },
+                                      child: const Text('Submit'),
+                                    ),
+                                  ],
+                                );
+                              }
+                            );
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF1D4ED8),
@@ -286,7 +322,7 @@ class ServiceRequestsScreen extends StatelessWidget {
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                             elevation: 0,
                           ),
-                          child: const Text('Accept Request', style: TextStyle(fontWeight: FontWeight.w600)),
+                          child: const Text('Submit Proposal', style: TextStyle(fontWeight: FontWeight.w600)),
                         ),
                       ),
                     ],
@@ -319,7 +355,7 @@ class ServiceRequestsScreen extends StatelessWidget {
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    child: const Text('Waiting for customer confirmation...', style: TextStyle(color: Colors.orange, fontWeight: FontWeight.bold, textAlign: TextAlign.center)),
+                    child: const Text('Waiting for customer confirmation...', textAlign: TextAlign.center, style: TextStyle(color: Colors.orange, fontWeight: FontWeight.bold)),
                   ),
                 if (b.status == 'ready_to_start')
                   Row(
@@ -345,7 +381,7 @@ class ServiceRequestsScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                if (b.status == 'pending' || b.status == 'accepted' || b.status == 'arrived' || b.status == 'ready_to_start')
+                if (b.status == 'pending' || b.status == 'proposed' || b.status == 'accepted' || b.status == 'arrived' || b.status == 'ready_to_start')
                   const SizedBox(height: 12),
                 Center(
                   child: TextButton(
