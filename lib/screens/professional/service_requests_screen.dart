@@ -39,7 +39,7 @@ class ServiceRequestsScreen extends StatelessWidget {
           builder: (context, proProvider, child) {
             final pending = proProvider.bookings.where((b) => b.status == 'pending').toList();
             final accepted = proProvider.bookings.where((b) => b.status == 'accepted').toList();
-            final active = proProvider.bookings.where((b) => b.status == 'in_progress' || b.status == 'arrived').toList();
+            final active = proProvider.bookings.where((b) => b.status == 'in_progress' || b.status == 'arrived' || b.status == 'ready_to_start').toList();
             final completed = proProvider.bookings.where((b) => b.status == 'completed').toList();
 
             return TabBarView(
@@ -316,6 +316,12 @@ class ServiceRequestsScreen extends StatelessWidget {
                     ],
                   ),
                 if (b.status == 'arrived')
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    child: const Text('Waiting for customer confirmation...', style: TextStyle(color: Colors.orange, fontWeight: FontWeight.bold, textAlign: TextAlign.center)),
+                  ),
+                if (b.status == 'ready_to_start')
                   Row(
                     children: [
                       Expanded(
@@ -334,12 +340,12 @@ class ServiceRequestsScreen extends StatelessWidget {
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                             elevation: 0,
                           ),
-                          child: const Text('Job Started', style: TextStyle(fontWeight: FontWeight.w600)),
+                          child: const Text('Start Job', style: TextStyle(fontWeight: FontWeight.w600)),
                         ),
                       ),
                     ],
                   ),
-                if (b.status == 'pending' || b.status == 'accepted' || b.status == 'arrived')
+                if (b.status == 'pending' || b.status == 'accepted' || b.status == 'arrived' || b.status == 'ready_to_start')
                   const SizedBox(height: 12),
                 Center(
                   child: TextButton(

@@ -67,6 +67,8 @@ class _JobExecutionScreenState extends State<JobExecutionScreen> {
                 child: const Text('Mark as Arrived'),
               )
             ] else if (b.status == 'arrived') ...[
+              const Center(child: Text('Waiting for customer to confirm your arrival...', textAlign: TextAlign.center, style: TextStyle(color: Colors.orange, fontWeight: FontWeight.bold))),
+            ] else if (b.status == 'ready_to_start') ...[
               ElevatedButton(
                 onPressed: () => _updateStatus('in_progress'),
                 child: const Text('Start Work (In Progress)'),

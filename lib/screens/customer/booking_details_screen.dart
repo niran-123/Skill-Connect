@@ -130,7 +130,8 @@ class BookingDetailsScreen extends StatelessWidget {
                   const SizedBox(height: 16),
                   _buildTimelineStep(true, booking.status == 'pending', 'Request Created', 'Pending'),
                   _buildTimelineStep(booking.status != 'pending', booking.status == 'accepted', 'Professional Accepted', 'Accepted'),
-                  _buildTimelineStep(booking.status == 'arrived' || booking.status == 'in_progress' || booking.status == 'completed', booking.status == 'arrived', 'Professional Arrived', 'On-site'),
+                  _buildTimelineStep(booking.status == 'arrived' || booking.status == 'ready_to_start' || booking.status == 'in_progress' || booking.status == 'completed', booking.status == 'arrived', 'Professional Arrived', 'On-site'),
+                  _buildTimelineStep(booking.status == 'ready_to_start' || booking.status == 'in_progress' || booking.status == 'completed', booking.status == 'ready_to_start', 'Customer Confirmed', 'Ready'),
                   _buildTimelineStep(booking.status == 'in_progress' || booking.status == 'completed', booking.status == 'in_progress', 'Job Started', 'Working'),
                   _buildTimelineStep(booking.status == 'completed', booking.status == 'completed', 'Job Completed', 'Finished', isLast: true),
                 ],
@@ -168,7 +169,7 @@ class BookingDetailsScreen extends StatelessWidget {
                 children: [
                   Text('Payment & Estimate', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: onSurface)),
                   const SizedBox(height: 16),
-                  _buildInfoRow('Estimate', '₹250 - ₹500', onSurface, onSurfaceVariant),
+                  _buildInfoRow('Estimate', booking.estimatedCharge != null ? '₹\${booking.estimatedCharge!.toStringAsFixed(0)}' : 'TBD', onSurface, onSurfaceVariant),
                   const SizedBox(height: 8),
                   _buildInfoRow('Method', 'Cash on Completion', onSurface, onSurfaceVariant),
                   const SizedBox(height: 12),
@@ -217,6 +218,25 @@ class BookingDetailsScreen extends StatelessWidget {
                     }
                   },
                   child: const Text('Cancel Request', style: TextStyle(color: Colors.red)),
+                ),
+              if (booking.status == 'arrived')
+                ElevatedButton(
+                  onPressed: () async {
+                    try {
+                      await context.read<JobProvider>().updateBookingStatus(booking.id, 'ready_to_start', booking.customerId, isCustomer: true);
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Confirmed! Job can now start.')));
+                      }
+                    } catch (e) {
+                      if (context.mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Failed to confirm')));
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: primary,
+                    minimumSize: const Size(double.infinity, 48),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  ),
+                  child: const Text('Confirm to Start Job', style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold)),
                 ),
               if (booking.status == 'in_progress')
                 ElevatedButton(

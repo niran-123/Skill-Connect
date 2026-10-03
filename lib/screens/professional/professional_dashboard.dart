@@ -39,7 +39,7 @@ class _ProfessionalDashboardState extends State<ProfessionalDashboard> {
 
 
     final pendingCount = proProvider.bookings.where((b) => b.status == 'pending').length;
-    final activeCount = proProvider.bookings.where((b) => ['accepted', 'arrived', 'in_progress'].contains(b.status)).length;
+    final activeCount = proProvider.bookings.where((b) => ['accepted', 'arrived', 'ready_to_start', 'in_progress'].contains(b.status)).length;
     final completedCount = proProvider.bookings.where((b) => b.status == 'completed').length;
     
     double totalEarnings = 0.0;
@@ -48,7 +48,7 @@ class _ProfessionalDashboardState extends State<ProfessionalDashboard> {
     }
     
     final activeJob = proProvider.bookings.firstWhere(
-      (b) => ['accepted', 'arrived', 'in_progress'].contains(b.status),
+      (b) => ['accepted', 'arrived', 'ready_to_start', 'in_progress'].contains(b.status),
       orElse: () => BookingModel(id: '', jobId: '', customerId: '', professionalId: '', customerName: '', professionalName: '', jobSnapshot: {}, match: {}),
     );
 

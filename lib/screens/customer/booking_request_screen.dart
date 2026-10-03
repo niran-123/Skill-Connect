@@ -15,6 +15,7 @@ class BookingRequestScreen extends StatefulWidget {
 
 class _BookingRequestScreenState extends State<BookingRequestScreen> {
   final _descCtrl = TextEditingController();
+  final _amountCtrl = TextEditingController();
   
   @override
   void initState() {
@@ -28,12 +29,24 @@ class _BookingRequestScreenState extends State<BookingRequestScreen> {
     final user = context.read<SessionProvider>().userModel;
     if (user == null) return;
     
+    final amountText = _amountCtrl.text.trim();
+    if (amountText.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please enter a service amount')));
+      return;
+    }
+    final amount = double.tryParse(amountText);
+    if (amount == null || amount <= 0) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please enter a valid amount')));
+      return;
+    }
+    
     // In a real app, we'd also read the selected date/time from the UI state
     // But for this demo, we'll just process it directly
     final success = await jobProvider.bookProfessional(
       match: widget.match,
       customerId: user.uid,
       customerName: user.name,
+      estimatedCharge: amount,
     );
     
     if (success && mounted) {
@@ -182,6 +195,18 @@ class _BookingRequestScreenState extends State<BookingRequestScreen> {
                     controller: _descCtrl,
                     maxLines: 3,
                     decoration: InputDecoration(border: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide(color: outline))),
+                  const SizedBox(height: 24),
+
+                  Text('5. Service Amount', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: onSurface)),
+                  const SizedBox(height: 8),
+                  TextField(
+                    controller: _amountCtrl,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      hintText: 'Enter amount',
+                      prefixText: '₹ ',
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide(color: outline)),
+                    ),
                   ),
                 ],
               ),
@@ -192,33 +217,6 @@ class _BookingRequestScreenState extends State<BookingRequestScreen> {
                 padding: const EdgeInsets.all(16),
                 child: Text(jobProvider.errorMessage!, style: const TextStyle(color: Colors.red)),
               ),
-            // Price Estimation
-            Container(
-              color: Colors.white,
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Price Estimation', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: onSurface)),
-                  const SizedBox(height: 16),
-                  _buildPriceRow('Standard Inspection & Visit', '₹250'),
-                  const SizedBox(height: 8),
-                  _buildPriceRow('Estimated Labor', '₹350 - ₹500'),
-                  const SizedBox(height: 8),
-                  _buildPriceRow('Platform Safety Fee', '₹0', subtitle: 'Free for early users'),
-                  const Divider(height: 32),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Total Estimated', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: onSurface)),
-                      Text('₹350 - ₹500', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: primary)),
-                    ],
-                  ),
-                  const SizedBox(height: 4),
-                  Text('Pay directly to professional after job completion', style: TextStyle(fontSize: 11, color: onSurfaceVariant)),
-                ],
-              ),
-            ),
             const SizedBox(height: 100),
           ],
         ),
