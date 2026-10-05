@@ -149,66 +149,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
             const SizedBox(height: 8),
             Align(alignment: Alignment.centerRight, child: Text('184 / 500', style: TextStyle(fontSize: 11, color: onSurfaceVariant))),
             
-            const SizedBox(height: 24),
-            // Photos placeholder
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16), border: Border.all(color: outline.withValues(alpha: 0.5))),
-              child: Row(
-                children: [
-                  Container(
-                    width: 60, height: 60,
-                    decoration: BoxDecoration(color: Colors.grey.shade200, borderRadius: BorderRadius.circular(8)),
-                    child: Icon(Icons.image, color: onSurfaceVariant),
-                  ),
-                  const SizedBox(width: 12),
-                  Container(
-                    width: 60, height: 60,
-                    decoration: BoxDecoration(color: surface, borderRadius: BorderRadius.circular(8), border: Border.all(color: outline, style: BorderStyle.solid)),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.add_a_photo, color: onSurfaceVariant, size: 20),
-                        Text('Add Photo', style: TextStyle(fontSize: 9, color: onSurfaceVariant)),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-            
-            const SizedBox(height: 24),
-            // Tip Prompt
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(color: const Color(0xFFF1F5F9), borderRadius: BorderRadius.circular(16)),
-              child: Row(
-                children: [
-                  const Icon(Icons.card_giftcard, color: Color(0xFF1D4ED8)),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Tip Professional?', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: onSurface)),
-                        Text('Optional tip for great service', style: TextStyle(fontSize: 12, color: onSurfaceVariant)),
-                      ],
-                    ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      foregroundColor: primary,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      minimumSize: const Size(0, 32),
-                    ),
-                    child: const Text('Add Tip'),
-                  ),
-                ],
-              ),
-            ),
+
             const SizedBox(height: 100),
           ],
         ),

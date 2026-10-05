@@ -107,7 +107,7 @@ class JobProvider extends ChangeNotifier {
     }
   }
 
-  Future<bool> bookProfessional({
+  Future<BookingModel?> bookProfessional({
     required MatchResult match,
     required String customerId,
     required String customerName,
@@ -115,7 +115,7 @@ class JobProvider extends ChangeNotifier {
     String? timeSlot,
     String? address,
   }) async {
-    if (_currentJob == null) return false;
+    if (_currentJob == null) return null;
     _setLoading(true);
     _setError(null);
 
@@ -141,11 +141,11 @@ class JobProvider extends ChangeNotifier {
 
       await _bookingRepo.createBooking(booking);
       _setLoading(false);
-      return true;
+      return booking;
     } catch (e) {
       _setError(e.toString());
       _setLoading(false);
-      return false;
+      return null;
     }
   }
 

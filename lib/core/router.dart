@@ -22,10 +22,8 @@ import '../screens/customer/review_screen.dart';
 import '../screens/customer/booking_request_screen.dart';
 import '../screens/customer/booking_sent_screen.dart';
 import '../screens/customer/booking_details_screen.dart';
-import '../screens/customer/customer_notifications_screen.dart';
 import '../screens/customer/customer_profile_screen.dart';
 import '../screens/customer/edit_customer_profile_screen.dart';
-import '../screens/customer/saved_professionals_screen.dart';
 
 import '../screens/professional/professional_shell.dart';
 import '../screens/professional/professional_dashboard.dart';
@@ -35,7 +33,6 @@ import '../screens/professional/service_request_details_screen.dart';
 import '../screens/professional/service_requests_screen.dart';
 import '../models/professional.dart';
 import '../screens/professional/job_history_screen.dart';
-import '../screens/professional/pro_notifications_screen.dart';
 import '../screens/professional/pro_profile_view_screen.dart';
 import '../screens/professional/edit_pro_profile_screen.dart';
 import '../screens/professional/manage_skills_rates_screen.dart';
@@ -191,7 +188,10 @@ class AppRouter {
                   GoRoute(
                     name: 'customer-booking-sent',
                     path: 'booking-sent',
-                    builder: (context, state) => const BookingSentScreen(),
+                    builder: (context, state) {
+                      final booking = state.extra as BookingModel;
+                      return BookingSentScreen(booking: booking);
+                    },
                   ),
                 ]
               ),
@@ -224,15 +224,6 @@ class AppRouter {
           StatefulShellBranch(
             routes: [
               GoRoute(
-                name: 'customer-notifications',
-                path: '/customer/notifications',
-                builder: (context, state) => const CustomerNotificationsScreen(),
-              ),
-            ],
-          ),
-          StatefulShellBranch(
-            routes: [
-              GoRoute(
                 name: 'customer-profile',
                 path: '/customer/profile',
                 builder: (context, state) => const CustomerProfileScreen(),
@@ -242,11 +233,7 @@ class AppRouter {
                     path: 'edit',
                     builder: (context, state) => const EditCustomerProfileScreen(),
                   ),
-                  GoRoute(
-                    name: 'customer-saved-pros',
-                    path: 'saved-pros',
-                    builder: (context, state) => const SavedProfessionalsScreen(),
-                  ),
+
                 ]
               ),
             ],
@@ -302,15 +289,6 @@ class AppRouter {
                     },
                   ),
                 ]
-              ),
-            ],
-          ),
-          StatefulShellBranch(
-            routes: [
-              GoRoute(
-                name: 'professional-notifications',
-                path: '/professional/notifications',
-                builder: (context, state) => const ProNotificationsScreen(),
               ),
             ],
           ),

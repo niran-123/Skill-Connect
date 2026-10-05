@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../models/booking.dart';
+import '../../models/user_model.dart';
+import '../../repositories/user_repo.dart';
 import '../../providers/professional_provider.dart';
 import '../../core/booking_status.dart';
 
@@ -21,16 +23,28 @@ class ServiceRequestDetailsScreen extends StatefulWidget {
 class _ServiceRequestDetailsScreenState
     extends State<ServiceRequestDetailsScreen> {
   BookingModel? _liveBooking;
+  UserModel? _customer;
   bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
     _liveBooking = widget.booking;
+    _fetchCustomer();
     // Listen to real-time updates
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _subscribeToLiveUpdates();
     });
+  }
+
+  Future<void> _fetchCustomer() async {
+    final repo = UserRepo();
+    final user = await repo.getUser(widget.booking.customerId);
+    if (mounted) {
+      setState(() {
+        _customer = user;
+      });
+    }
   }
 
   Stream<BookingModel?>? _stream;
@@ -217,7 +231,17 @@ class _ServiceRequestDetailsScreenState
                   color: const Color(0xFFF1F5F9),
                   borderRadius: BorderRadius.circular(28),
                 ),
-                child: const Icon(LucideIcons.user, size: 28, color: Color(0xFF94A3B8)),
+                child: _customer?.avatarThumb != null
+                    ? ClipRRect(
+                        borderRadius: BorderRadius.circular(28),
+                        child: Image.network(
+                          _customer!.avatarThumb!,
+                          width: 56,
+                          height: 56,
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                    : const Icon(LucideIcons.user, size: 28, color: Color(0xFF94A3B8)),
               ),
               const SizedBox(width: 16),
               Expanded(
@@ -225,7 +249,7 @@ class _ServiceRequestDetailsScreenState
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      booking.customerName,
+                      _customer?.name ?? booking.customerName,
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
@@ -279,7 +303,7 @@ class _ServiceRequestDetailsScreenState
                       ? () async {
                           final Uri uri = Uri(
                             scheme: 'tel',
-                            path: booking.customerPhone ?? '1234567890',
+                            path: _customer?.phone ?? booking.customerPhone ?? '1234567890',
                           );
                           if (await canLaunchUrl(uri)) await launchUrl(uri);
                         }
@@ -302,7 +326,7 @@ class _ServiceRequestDetailsScreenState
                       ? () async {
                           final Uri uri = Uri(
                             scheme: 'sms',
-                            path: booking.customerPhone ?? '1234567890',
+                            path: _customer?.phone ?? booking.customerPhone ?? '1234567890',
                           );
                           if (await canLaunchUrl(uri)) await launchUrl(uri);
                         }
@@ -634,17 +658,41 @@ class _ServiceRequestDetailsScreenState
               const SizedBox(height: 12),
               TextField(
                 controller: dateCtrl,
+                readOnly: true,
+                onTap: () async {
+                  final date = await showDatePicker(
+                    context: ctx,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime.now(),
+                    lastDate: DateTime.now().add(const Duration(days: 30)),
+                  );
+                  if (date != null) {
+                    dateCtrl.text = "\${date.day}/\${date.month}/\${date.year}";
+                  }
+                },
                 decoration: const InputDecoration(
                   labelText: 'Date',
                   border: OutlineInputBorder(),
+                  suffixIcon: Icon(Icons.calendar_today),
                 ),
               ),
               const SizedBox(height: 12),
               TextField(
                 controller: timeCtrl,
+                readOnly: true,
+                onTap: () async {
+                  final time = await showTimePicker(
+                    context: ctx,
+                    initialTime: TimeOfDay.now(),
+                  );
+                  if (time != null && ctx.mounted) {
+                    timeCtrl.text = time.format(ctx);
+                  }
+                },
                 decoration: const InputDecoration(
                   labelText: 'Time Slot',
                   border: OutlineInputBorder(),
+                  suffixIcon: Icon(Icons.access_time),
                 ),
               ),
             ],

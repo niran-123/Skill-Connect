@@ -155,6 +155,11 @@ class ProProfileViewScreen extends StatelessWidget {
 
             const SizedBox(height: 12),
             TextButton(
+              onPressed: () => context.pushNamed('privacy'),
+              child: const Text('Privacy Policy', style: TextStyle(color: Color(0xFF64748B), fontWeight: FontWeight.w500, fontSize: 14)),
+            ),
+            const SizedBox(height: 12),
+            TextButton(
               onPressed: () async {
                 final authProvider = context.read<AuthProvider>();
                 await authProvider.signOut();

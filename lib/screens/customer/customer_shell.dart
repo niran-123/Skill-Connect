@@ -26,7 +26,6 @@ class CustomerShell extends StatelessWidget {
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.list_alt), label: 'Bookings'),
-          BottomNavigationBarItem(icon: Icon(Icons.notifications), label: 'Alerts'),
           BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: 'Profile'),
         ],
       ),

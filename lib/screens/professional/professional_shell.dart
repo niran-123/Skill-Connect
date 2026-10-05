@@ -27,7 +27,6 @@ class ProfessionalShell extends StatelessWidget {
           BottomNavigationBarItem(icon: Icon(Icons.dashboard), label: 'Dashboard'),
           BottomNavigationBarItem(icon: Icon(Icons.assignment), label: 'Requests'),
           BottomNavigationBarItem(icon: Icon(Icons.work), label: 'Jobs'),
-          BottomNavigationBarItem(icon: Icon(Icons.notifications), label: 'Alerts'),
           BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: 'Profile'),
         ],
       ),

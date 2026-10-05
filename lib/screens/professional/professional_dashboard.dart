@@ -41,11 +41,9 @@ class _ProfessionalDashboardState extends State<ProfessionalDashboard> {
     final pendingCount = proProvider.bookings.where((b) => b.status == 'pending').length;
     final activeCount = proProvider.bookings.where((b) => ['accepted', 'arrived', 'ready_to_start', 'in_progress'].contains(b.status)).length;
     final completedCount = proProvider.bookings.where((b) => b.status == 'completed').length;
+    final cancelledCount = proProvider.bookings.where((b) => b.status == 'cancelled').length;
     
-    double totalEarnings = 0.0;
-    for (var b in proProvider.bookings.where((b) => b.status == 'completed')) {
-      totalEarnings += b.finalCharge ?? b.estimatedCharge ?? 350.0; 
-    }
+
     
     final activeJob = proProvider.bookings.firstWhere(
       (b) => ['accepted', 'arrived', 'ready_to_start', 'in_progress'].contains(b.status),
@@ -157,20 +155,13 @@ class _ProfessionalDashboardState extends State<ProfessionalDashboard> {
                     ),
                     const SizedBox(height: 20),
 
-                    // Metrics Grid
                     Row(
                       children: [
-                        Expanded(child: _buildMetricCard('New Requests', '$pendingCount', badge: pendingCount > 0 ? '+\$pendingCount new' : 'No new', badgeColor: primary)),
+                        Expanded(child: _buildMetricCard('Active', '$activeCount', badge: activeCount > 0 ? 'In Progress' : 'Idle', badgeColor: Colors.orange)),
                         const SizedBox(width: 12),
-                        Expanded(child: _buildMetricCard('Active Jobs', '$activeCount', badge: activeCount > 0 ? 'In Progress' : 'Idle', badgeColor: Colors.orange)),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    Row(
-                      children: [
-                        Expanded(child: _buildMetricCard('Completed', '$completedCount', badge: '★ 4.9 Rating', badgeColor: Colors.amber.shade700)),
+                        Expanded(child: _buildMetricCard('Completed', '$completedCount', badge: 'Done', badgeColor: Colors.green)),
                         const SizedBox(width: 12),
-                        Expanded(child: _buildMetricCard('Earnings', '₹${totalEarnings.toInt()}', badge: 'This Month', badgeColor: Colors.green)),
+                        Expanded(child: _buildMetricCard('Cancelled', '$cancelledCount', badge: 'Cancelled', badgeColor: Colors.red)),
                       ],
                     ),
                     const SizedBox(height: 24),

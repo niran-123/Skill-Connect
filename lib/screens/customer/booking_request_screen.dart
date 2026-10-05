@@ -38,7 +38,7 @@ class _BookingRequestScreenState extends State<BookingRequestScreen> {
     final user = context.read<SessionProvider>().userModel;
     if (user == null) return;
     
-    final success = await jobProvider.bookProfessional(
+    final booking = await jobProvider.bookProfessional(
       match: widget.match,
       customerId: user.uid,
       customerName: user.name,
@@ -48,12 +48,12 @@ class _BookingRequestScreenState extends State<BookingRequestScreen> {
     );
     
     if (!mounted) return;
-    if (success) {
+    if (booking != null) {
       // Delay navigation to the next frame to prevent widget lifecycle crashes 
       // when navigating immediately after a Provider state change that marked this widget dirty.
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (mounted) {
-          context.goNamed('customer-booking-sent');
+          context.goNamed('customer-booking-sent', extra: booking);
         }
       });
     }

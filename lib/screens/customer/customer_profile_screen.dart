@@ -131,15 +131,7 @@ class CustomerProfileScreen extends StatelessWidget {
               ),
             const SizedBox(height: 24),
             
-            _buildSection(
-              'Manage Services',
-              [
-                _buildListTile(Icons.calendar_month, 'My Bookings', 'Active, upcoming, and past services', trailingWidget: _buildBadge('${jobProvider.customerBookings.where((b) => b.status == 'in_progress' || b.status == 'accepted').length} Active', const Color(0xFFDBEAFE), primary), onTap: () => context.goNamed('customer-bookings')),
-                _buildListTile(Icons.favorite, 'Saved Professionals', 'Your favorite certified tradespeople', trailingWidget: _buildBadge('${user?.savedProfessionalIds.length ?? 0} saved', const Color(0xFFF1F5F9), onSurfaceVariant), onTap: () => context.pushNamed('customer-saved-pros')),
-                _buildListTile(Icons.location_on, 'Service Addresses', 'Primary: ${user?.address ?? 'Not set'}', onTap: () {}),
-              ],
-            ),
-            const SizedBox(height: 24),
+
 
             
             _buildSection(
@@ -225,11 +217,5 @@ class CustomerProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildBadge(String label, Color bg, Color textCol) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-      decoration: BoxDecoration(color: bg, borderRadius: BorderRadius.circular(12)),
-      child: Text(label, style: TextStyle(fontSize: 10, color: textCol, fontWeight: FontWeight.bold)),
-    );
-  }
+
 }
