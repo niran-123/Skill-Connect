@@ -351,7 +351,7 @@ class _RequestCard extends StatelessWidget {
                 final provider = context.read<ProfessionalProvider>();
                 final success = await provider.updateBookingStatus(
                   b.id,
-                  BookingStatus.rejected,
+                  BookingStatus.cancelled,
                   b.professionalId,
                 );
                 if (success && context.mounted) {

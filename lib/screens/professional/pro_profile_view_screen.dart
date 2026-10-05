@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:skill_connect/core/booking_status.dart';
+
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:provider/provider.dart';
 import '../../providers/professional_provider.dart';
@@ -99,11 +101,11 @@ class ProProfileViewScreen extends StatelessWidget {
               decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16), border: Border.all(color: const Color(0xFFE2E8F0))),
               child: Row(
                 children: [
-                  _buildStatCol('★ 5.0', '${proProvider.bookings.where((b) => b.status == 'completed').length} reviews', const Color(0xFFF59E0B)),
+                  _buildStatCol('★ 5.0', '${proProvider.bookings.where((b) => b.status == BookingStatus.jobCompleted).length} reviews', const Color(0xFFF59E0B)),
                   _buildDivider(),
                   _buildStatCol('${pro?.experienceYears ?? '0'} Yrs', 'Experience', const Color(0xFF0F172A)),
                   _buildDivider(),
-                  _buildStatCol('${proProvider.bookings.where((b) => b.status == 'completed').length}', 'Jobs Done', const Color(0xFF0F172A)),
+                  _buildStatCol('${proProvider.bookings.where((b) => b.status == BookingStatus.jobCompleted).length}', 'Jobs Done', const Color(0xFF0F172A)),
                   _buildDivider(),
                   _buildStatCol('100%', 'On-Time', const Color(0xFF10B981)),
                 ],

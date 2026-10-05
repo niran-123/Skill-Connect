@@ -41,7 +41,7 @@ class _CustomerBookingsScreenState extends State<CustomerBookingsScreen> {
     final activeBookings = bookings.where((b) => activeStatuses.contains(b.status)).toList();
     final completedBookings = bookings.where((b) => b.status == BookingStatus.jobCompleted).toList();
     final cancelledBookings = bookings.where((b) =>
-        b.status == BookingStatus.cancelled || b.status == BookingStatus.rejected).toList();
+        b.status == BookingStatus.cancelled || b.status == BookingStatus.cancelled).toList();
 
     final Color primary = const Color(0xFF1D4ED8);
     final Color surface = const Color(0xFFF7F9FB);

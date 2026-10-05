@@ -382,7 +382,7 @@ class _ServiceRequestDetailsScreenState
                   final provider = context.read<ProfessionalProvider>();
                   final success = await provider.updateBookingStatus(
                     booking.id,
-                    BookingStatus.rejected,
+                    BookingStatus.cancelled,
                     booking.professionalId,
                   );
                   setState(() => _isLoading = false);

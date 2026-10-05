@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:skill_connect/core/booking_status.dart';
+
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:provider/provider.dart';
 import '../../providers/professional_provider.dart';
@@ -102,8 +104,8 @@ class _JobHistoryScreenState extends State<JobHistoryScreen> {
             child: Consumer<ProfessionalProvider>(
               builder: (context, proProvider, child) {
                 final filteredJobs = proProvider.bookings.where((b) {
-                  if (_currentTab == 'Completed') return b.status == 'completed';
-                  if (_currentTab == 'Cancelled') return b.status == 'cancelled';
+                  if (_currentTab == 'Completed') return b.status == BookingStatus.jobCompleted;
+                  if (_currentTab == 'Cancelled') return b.status == BookingStatus.cancelled;
                   if (_currentTab == 'Disputed') return b.status == 'disputed';
                   return false;
                 }).toList();

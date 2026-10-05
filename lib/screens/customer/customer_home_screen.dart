@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:skill_connect/core/booking_status.dart';
+
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../../providers/session_provider.dart';
@@ -89,7 +91,7 @@ class CustomerHomeScreen extends StatelessWidget {
 
               Consumer<JobProvider>(
                 builder: (context, jobProvider, child) {
-                  final active = jobProvider.customerBookings.where((b) => b.status == 'in_progress' || b.status == 'arrived' || b.status == 'accepted').toList();
+                  final active = jobProvider.customerBookings.where((b) => b.status == BookingStatus.jobStarted || b.status == BookingStatus.professionalArrived || b.status == BookingStatus.professionalAccepted).toList();
                   if (active.isEmpty) return const SizedBox.shrink();
                   final b = active.first;
                   return Column(

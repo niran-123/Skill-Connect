@@ -1,4 +1,4 @@
-﻿/// Canonical booking status constants — single source of truth.
+/// Canonical booking status constants — single source of truth.
 /// These match exactly the 6-step workflow defined in the business requirements.
 class BookingStatus {
   BookingStatus._();
@@ -12,8 +12,7 @@ class BookingStatus {
   static const String jobCompleted         = 'JOB_COMPLETED';
 
   // Extra non-workflow statuses
-  static const String cancelled = 'cancelled';
-  static const String rejected  = 'rejected';
+  static const String cancelled = 'CANCELLED';
 
   // Ordered workflow list
   static const List<String> workflowOrder = [
@@ -35,7 +34,6 @@ class BookingStatus {
       case jobStarted:           return 'Job Started';
       case jobCompleted:         return 'Job Completed';
       case cancelled:            return 'Cancelled';
-      case rejected:             return 'Rejected';
       default:                   return status;
     }
   }
@@ -45,5 +43,5 @@ class BookingStatus {
 
   // Returns true if status is terminal (no more transitions possible).
   static bool isTerminal(String status) =>
-      status == jobCompleted || status == cancelled || status == rejected;
+      status == jobCompleted || status == cancelled;
 }

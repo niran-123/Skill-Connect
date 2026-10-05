@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:skill_connect/core/booking_status.dart';
+
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 import '../../providers/professional_provider.dart';
@@ -19,7 +21,7 @@ class _JobExecutionScreenState extends State<JobExecutionScreen> {
     final proProvider = context.read<ProfessionalProvider>();
     final uid = context.read<SessionProvider>().userModel!.uid;
     await proProvider.updateBookingStatus(widget.booking.id, newStatus, uid, extraData: extraData);
-    if (newStatus == 'completed' || newStatus == 'rejected' || newStatus == 'cancelled') {
+    if (newStatus == BookingStatus.jobCompleted || newStatus == BookingStatus.cancelled || newStatus == BookingStatus.cancelled) {
       if (mounted) context.pop();
     }
   }
@@ -45,35 +47,35 @@ class _JobExecutionScreenState extends State<JobExecutionScreen> {
             Text(b.jobSnapshot['description'] ?? ''),
             const SizedBox(height: 24),
             
-            if (b.status == 'pending') ...[
+            if (b.status == BookingStatus.requestCreated) ...[
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-                    onPressed: () => _updateStatus('rejected'),
+                    onPressed: () => _updateStatus(BookingStatus.cancelled),
                     child: const Text('Reject', style: TextStyle(color: Colors.white)),
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
-                    onPressed: () => _updateStatus('accepted'),
+                    onPressed: () => _updateStatus(BookingStatus.professionalAccepted),
                     child: const Text('Accept', style: TextStyle(color: Colors.white)),
                   ),
                 ],
               )
-            ] else if (b.status == 'accepted') ...[
+            ] else if (b.status == BookingStatus.professionalAccepted) ...[
               ElevatedButton(
-                onPressed: () => _updateStatus('arrived'),
+                onPressed: () => _updateStatus(BookingStatus.professionalArrived),
                 child: const Text('Mark as Arrived'),
               )
-            ] else if (b.status == 'arrived') ...[
+            ] else if (b.status == BookingStatus.professionalArrived) ...[
               const Center(child: Text('Waiting for customer to confirm your arrival...', textAlign: TextAlign.center, style: TextStyle(color: Colors.orange, fontWeight: FontWeight.bold))),
             ] else if (b.status == 'ready_to_start') ...[
               ElevatedButton(
                 onPressed: () => _updateStatus('in_progress'),
                 child: const Text('Start Work (In Progress)'),
               )
-            ] else if (b.status == 'in_progress') ...[
+            ] else if (b.status == BookingStatus.jobStarted) ...[
               const Center(
                 child: Text('Job is currently in progress.\nWaiting for the customer to mark the job as completed.', 
                   textAlign: TextAlign.center,

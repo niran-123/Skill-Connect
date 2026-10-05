@@ -151,7 +151,7 @@ class _BookingDetailsContent extends StatelessWidget {
     final bool canContact = status != BookingStatus.requestCreated &&
         status != BookingStatus.jobCompleted &&
         status != BookingStatus.cancelled &&
-        status != BookingStatus.rejected;
+        status != BookingStatus.cancelled;
 
     return Container(
       margin: const EdgeInsets.all(16),
@@ -280,7 +280,7 @@ class _BookingDetailsContent extends StatelessWidget {
               isLast:    isLast,
             );
           }),
-          if (status == BookingStatus.cancelled || status == BookingStatus.rejected) ...[
+          if (status == BookingStatus.cancelled || status == BookingStatus.cancelled) ...[
             const SizedBox(height: 8),
             Container(
               width: double.infinity,
@@ -471,7 +471,7 @@ class _BookingDetailsContent extends StatelessWidget {
   Widget? _buildBottomActions(BuildContext context, String status) {
     // No bottom bar for terminal states with no action needed
     if (status == BookingStatus.cancelled ||
-        status == BookingStatus.rejected ||
+        status == BookingStatus.cancelled ||
         status == BookingStatus.requestCreated ||
         (status == BookingStatus.jobCompleted && booking.reviewed == true)) {
       if (status == BookingStatus.requestCreated) {

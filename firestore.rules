@@ -47,10 +47,10 @@ service cloud.firestore {
     function validTransition(old, newVal, byRole) {
       // 6-step canonical workflow
       return (old == 'REQUEST_CREATED'       && newVal == 'PROFESSIONAL_ACCEPTED' && byRole == 'professional') ||
-             (old == 'REQUEST_CREATED'       && newVal == 'rejected'              && byRole == 'professional') ||
-             (old == 'REQUEST_CREATED'       && newVal == 'cancelled'             && byRole == 'customer')     ||
+             (old == 'REQUEST_CREATED'       && newVal == 'CANCELLED'             && byRole == 'professional') ||
+             (old == 'REQUEST_CREATED'       && newVal == 'CANCELLED'             && byRole == 'customer')     ||
              (old == 'PROFESSIONAL_ACCEPTED' && newVal == 'CUSTOMER_CONFIRMED'    && byRole == 'customer')     ||
-             (old == 'PROFESSIONAL_ACCEPTED' && newVal == 'cancelled'             && byRole == 'customer')     ||
+             (old == 'PROFESSIONAL_ACCEPTED' && newVal == 'CANCELLED'             && byRole == 'customer')     ||
              (old == 'CUSTOMER_CONFIRMED'    && newVal == 'PROFESSIONAL_ARRIVED'  && byRole == 'professional') ||
              (old == 'PROFESSIONAL_ARRIVED'  && newVal == 'JOB_STARTED'           && byRole == 'professional') ||
              (old == 'JOB_STARTED'           && newVal == 'JOB_COMPLETED'         && byRole == 'customer');
@@ -72,7 +72,7 @@ service cloud.firestore {
            request.resource.data.diff(resource.data).affectedKeys().hasOnly(
              ['status', 'updatedAt', 'statusHistory', 'customerConfirmedAt', 'jobCompletedAt'])) ||
           // Customer cancels
-          (request.resource.data.status == 'cancelled' &&
+          (request.resource.data.status == 'CANCELLED' &&
            request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'updatedAt', 'statusHistory'])) ||
           // Customer marks reviewed after completion
           (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['reviewed', 'updatedAt']) &&
