@@ -22,6 +22,7 @@ class ProfessionalModel {
   final Map<String, dynamic> stats;
   final Map<String, dynamic> skillStats;
   final List<String> searchTokens;
+  final String? fcmToken;
   final DateTime? createdAt;
   final DateTime? updatedAt;
 
@@ -47,6 +48,7 @@ class ProfessionalModel {
     this.stats = const {},
     this.skillStats = const {},
     this.searchTokens = const [],
+    this.fcmToken,
     this.createdAt,
     this.updatedAt,
   });
@@ -74,6 +76,7 @@ class ProfessionalModel {
       stats: Map<String, dynamic>.from(data['stats'] ?? {}),
       skillStats: Map<String, dynamic>.from(data['skillStats'] ?? {}),
       searchTokens: List<String>.from(data['searchTokens'] ?? []),
+      fcmToken: data['fcmToken'],
       createdAt: (data['createdAt'] as Timestamp?)?.toDate(),
       updatedAt: (data['updatedAt'] as Timestamp?)?.toDate(),
     );
@@ -101,6 +104,7 @@ class ProfessionalModel {
       'stats': stats,
       'skillStats': skillStats,
       'searchTokens': searchTokens,
+      'fcmToken': fcmToken,
       'createdAt': createdAt != null ? Timestamp.fromDate(createdAt!) : FieldValue.serverTimestamp(),
       'updatedAt': FieldValue.serverTimestamp(),
     };

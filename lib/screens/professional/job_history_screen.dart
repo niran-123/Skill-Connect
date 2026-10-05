@@ -135,10 +135,10 @@ class _JobHistoryScreenState extends State<JobHistoryScreen> {
                       customer: b.customerName,
                       location: 'Service Location',
                       service: b.jobSnapshot['analysis']?['category'] ?? 'Service',
-                      payout: '₹350', // placeholder
+                      payout: '₹${b.finalCharge?.toInt() ?? b.estimatedCharge?.toInt() ?? 350}', 
                       paymentMethod: 'Paid on Completion',
                       rating: '★ 5.0',
-                      ratingReview: b.match['completionNotes'] ?? '',
+                      ratingReview: b.completionNotes ?? '',
                       statusText: 'Completed ✓',
                       statusColor: const Color(0xFF10B981),
                       statusBg: const Color(0xFFDCFCE7),

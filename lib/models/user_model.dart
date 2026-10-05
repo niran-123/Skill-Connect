@@ -13,6 +13,7 @@ class UserModel {
   final String? avatarImageId;
   final String? fullAddress;
   final List<String> savedProfessionalIds;
+  final String? fcmToken;
   final DateTime? createdAt;
   final DateTime? updatedAt;
 
@@ -29,6 +30,7 @@ class UserModel {
     this.avatarImageId,
     this.fullAddress,
     this.savedProfessionalIds = const [],
+    this.fcmToken,
     this.createdAt,
     this.updatedAt,
   });
@@ -47,6 +49,7 @@ class UserModel {
       avatarImageId: data['avatarImageId'],
       fullAddress: data['fullAddress'],
       savedProfessionalIds: List<String>.from(data['savedProfessionalIds'] ?? []),
+      fcmToken: data['fcmToken'],
       createdAt: (data['createdAt'] as Timestamp?)?.toDate(),
       updatedAt: (data['updatedAt'] as Timestamp?)?.toDate(),
     );
@@ -65,6 +68,7 @@ class UserModel {
       'avatarImageId': avatarImageId,
       'fullAddress': fullAddress,
       'savedProfessionalIds': savedProfessionalIds,
+      'fcmToken': fcmToken,
       'createdAt': createdAt != null ? Timestamp.fromDate(createdAt!) : FieldValue.serverTimestamp(),
       'updatedAt': FieldValue.serverTimestamp(),
     };

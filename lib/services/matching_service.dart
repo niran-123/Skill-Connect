@@ -65,7 +65,8 @@ class MatchingService {
       totalScore += locationScore;
 
       // 4. Availability / Success rate (0-10 points)
-      double successRateScore = 10.0; // Placeholder
+      double successRate = (pro.stats['successRate'] as num?)?.toDouble() ?? 100.0;
+      double successRateScore = (successRate / 100.0) * 10.0;
       totalScore += successRateScore;
 
       if (reasons.isEmpty) {

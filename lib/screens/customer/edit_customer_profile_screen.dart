@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import '../../providers/session_provider.dart';
 import '../../repositories/user_repo.dart';
+import '../../services/storage_service.dart';
 
 class EditCustomerProfileScreen extends StatefulWidget {
   const EditCustomerProfileScreen({super.key});
@@ -30,6 +30,7 @@ class _EditCustomerProfileScreenState extends State<EditCustomerProfileScreen> {
   bool _isLoading = false;
   File? _imageFile;
   final UserRepo _userRepo = UserRepo();
+  final StorageService _storageService = StorageService();
 
   @override
   void initState() {
@@ -55,11 +56,10 @@ class _EditCustomerProfileScreenState extends State<EditCustomerProfileScreen> {
   }
 
   Future<void> _pickImage() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    final pickedFile = await _storageService.pickImage();
     if (pickedFile != null) {
       setState(() {
-        _imageFile = File(pickedFile.path);
+        _imageFile = pickedFile;
       });
     }
   }
@@ -75,9 +75,7 @@ class _EditCustomerProfileScreenState extends State<EditCustomerProfileScreen> {
       String? avatarUrl = user.avatarThumb;
       
       if (_imageFile != null) {
-        final storageRef = FirebaseStorage.instance.ref().child('avatars/${user.uid}.jpg');
-        await storageRef.putFile(_imageFile!);
-        avatarUrl = await storageRef.getDownloadURL();
+        avatarUrl = await _storageService.uploadImage(_imageFile!, 'avatars');
       }
 
       final updateData = <String, dynamic>{

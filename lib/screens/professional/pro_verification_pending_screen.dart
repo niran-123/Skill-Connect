@@ -92,12 +92,7 @@ class ProVerificationPendingScreen extends StatelessWidget {
                     'Pre-configure your calendar, hourly rates, and coverage radius so you hit the ground running.',
                     null,
                   ),
-                  _buildEngagementCard(
-                    LucideIcons.smartphone,
-                    'Test Mock Booking Demo',
-                    'Practice accepting a simulated emergency call.',
-                    null,
-                  ),
+
                 ],
               ),
             ),

@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../repositories/auth_repo.dart';
 import '../repositories/user_repo.dart';
 import '../models/user_model.dart';
+import '../services/push_notification_service.dart';
 
 class SessionProvider extends ChangeNotifier {
   final AuthRepo _authRepo = AuthRepo();
@@ -27,6 +28,7 @@ class SessionProvider extends ChangeNotifier {
       _authUser = user;
       if (user != null) {
         _userModel = await _userRepo.getUser(user.uid);
+        await _updateFcmToken(user.uid);
       } else {
         _userModel = null;
       }
@@ -35,9 +37,21 @@ class SessionProvider extends ChangeNotifier {
     });
   }
 
+  Future<void> _updateFcmToken(String uid) async {
+    try {
+      final token = await PushNotificationService().getToken();
+      if (token != null) {
+        await _userRepo.updateUser(uid, {'fcmToken': token});
+      }
+    } catch (e) {
+      debugPrint("Error updating FCM token: $e");
+    }
+  }
+
   Future<void> refreshUserModel() async {
     if (_authUser != null) {
       _userModel = await _userRepo.getUser(_authUser!.uid);
+      await _updateFcmToken(_authUser!.uid);
       notifyListeners();
     }
   }

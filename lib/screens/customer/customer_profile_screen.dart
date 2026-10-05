@@ -41,7 +41,13 @@ class CustomerProfileScreen extends StatelessWidget {
                 children: [
                   Stack(
                     children: [
-                      CircleAvatar(backgroundColor: Colors.grey.shade200, radius: 40, backgroundImage: const NetworkImage('https://via.placeholder.com/150')),
+                      CircleAvatar(
+                        backgroundColor: Colors.grey.shade200, 
+                        radius: 40, 
+                        backgroundImage: user?.avatarThumb != null 
+                            ? NetworkImage(user!.avatarThumb!) as ImageProvider
+                            : const NetworkImage('https://via.placeholder.com/150'),
+                      ),
                       Positioned(bottom: 0, right: 0, child: Container(padding: const EdgeInsets.all(4), decoration: BoxDecoration(color: Colors.white, shape: BoxShape.circle, border: Border.all(color: outline)), child: Icon(Icons.edit, color: primary, size: 14))),
                     ],
                   ),
@@ -139,8 +145,10 @@ class CustomerProfileScreen extends StatelessWidget {
             _buildSection(
               'Trust & Legal',
               [
-                _buildListTile(Icons.help_outline, 'Help & Support', 'support@skillconnect.com | +91 9876543210', onTap: () {}),
-                _buildListTile(Icons.description, 'Terms of Service & Privacy Policy', 'Read our detailed policies and terms of usage', onTap: () {}),
+                _buildListTile(Icons.help_outline, 'Help & Support', 'support@skillconnect.com | +91 9876543210', onTap: () => context.pushNamed('help')),
+                _buildListTile(Icons.description, 'Terms of Service', 'Read our detailed terms of usage', onTap: () => context.pushNamed('terms')),
+                _buildListTile(Icons.privacy_tip_outlined, 'Privacy Policy', 'How we protect your data', onTap: () => context.pushNamed('privacy')),
+                _buildListTile(Icons.question_answer_outlined, 'FAQ', 'Frequently asked questions', onTap: () => context.pushNamed('faq')),
               ],
             ),
             const SizedBox(height: 24),

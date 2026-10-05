@@ -43,8 +43,8 @@ class _ProfessionalDashboardState extends State<ProfessionalDashboard> {
     final completedCount = proProvider.bookings.where((b) => b.status == 'completed').length;
     
     double totalEarnings = 0.0;
-    for (var _ in proProvider.bookings.where((b) => b.status == 'completed')) {
-      totalEarnings += 350.0; 
+    for (var b in proProvider.bookings.where((b) => b.status == 'completed')) {
+      totalEarnings += b.finalCharge ?? b.estimatedCharge ?? 350.0; 
     }
     
     final activeJob = proProvider.bookings.firstWhere(
@@ -271,9 +271,9 @@ class _ProfessionalDashboardState extends State<ProfessionalDashboard> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              _buildStatItem('98%', 'Acceptance'),
-                              _buildStatItem('100%', 'On-Time'),
-                              _buildStatItem('Verified', 'Partner'),
+                              _buildStatItem('${proProvider.professional?.stats['acceptanceRate'] ?? 98}%', 'Acceptance'),
+                              _buildStatItem('${proProvider.professional?.stats['onTimeRate'] ?? 100}%', 'On-Time'),
+                              _buildStatItem(proProvider.professional?.verificationStatus == 'verified' ? 'Verified' : 'Pending', 'Partner'),
                             ],
                           ),
                         ],

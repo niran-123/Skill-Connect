@@ -16,6 +16,10 @@ class BookingRequestScreen extends StatefulWidget {
 class _BookingRequestScreenState extends State<BookingRequestScreen> {
   final _descCtrl = TextEditingController();
   
+  String _selectedDate = 'Today';
+  String _selectedTime = 'Anytime Today';
+  String _selectedAddress = 'Current Location';
+  
   @override
   void initState() {
     super.initState();
@@ -23,21 +27,35 @@ class _BookingRequestScreenState extends State<BookingRequestScreen> {
     _descCtrl.text = jobProvider.currentJob?.description ?? '';
   }
 
+  @override
+  void dispose() {
+    _descCtrl.dispose();
+    super.dispose();
+  }
+
   void _sendRequest() async {
     final jobProvider = context.read<JobProvider>();
     final user = context.read<SessionProvider>().userModel;
     if (user == null) return;
     
-    // In a real app, we'd also read the selected date/time from the UI state
-    // But for this demo, we'll just process it directly
     final success = await jobProvider.bookProfessional(
       match: widget.match,
       customerId: user.uid,
       customerName: user.name,
+      scheduledDate: _selectedDate,
+      timeSlot: _selectedTime,
+      address: _selectedAddress,
     );
     
-    if (success && mounted) {
-      context.goNamed('customer-booking-sent');
+    if (!mounted) return;
+    if (success) {
+      // Delay navigation to the next frame to prevent widget lifecycle crashes 
+      // when navigating immediately after a Provider state change that marked this widget dirty.
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          context.goNamed('customer-booking-sent');
+        }
+      });
     }
   }
 
@@ -137,11 +155,11 @@ class _BookingRequestScreenState extends State<BookingRequestScreen> {
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       children: [
-                        _buildChip('Today', true),
+                        _buildChip('Today', _selectedDate == 'Today', () => setState(() => _selectedDate = 'Today')),
                         const SizedBox(width: 8),
-                        _buildChip('Tomorrow', false),
+                        _buildChip('Tomorrow', _selectedDate == 'Tomorrow', () => setState(() => _selectedDate = 'Tomorrow')),
                         const SizedBox(width: 8),
-                        _buildChip('Pick Date', false),
+                        _buildChip('Pick Date', _selectedDate == 'Pick Date', () => setState(() => _selectedDate = 'Pick Date')),
                       ],
                     ),
                   ),
@@ -150,11 +168,11 @@ class _BookingRequestScreenState extends State<BookingRequestScreen> {
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       children: [
-                        _buildChip('Immediate (Within 1 hr)', false),
+                        _buildChip('Immediate (Within 1 hr)', _selectedTime == 'Immediate (Within 1 hr)', () => setState(() => _selectedTime = 'Immediate (Within 1 hr)')),
                         const SizedBox(width: 8),
-                        _buildChip('Anytime Today', true),
+                        _buildChip('Anytime Today', _selectedTime == 'Anytime Today', () => setState(() => _selectedTime = 'Anytime Today')),
                         const SizedBox(width: 8),
-                        _buildChip('Evening', false),
+                        _buildChip('Evening', _selectedTime == 'Evening', () => setState(() => _selectedTime = 'Evening')),
                       ],
                     ),
                   ),
@@ -169,7 +187,7 @@ class _BookingRequestScreenState extends State<BookingRequestScreen> {
                       children: [
                         const Icon(Icons.location_on, color: Color(0xFF1D4ED8)),
                         const SizedBox(width: 8),
-                        Expanded(child: Text('Current Location', style: TextStyle(fontSize: 12, color: onSurface))),
+                        Expanded(child: Text(_selectedAddress, style: TextStyle(fontSize: 12, color: onSurface))),
                         Text('Change', style: TextStyle(fontSize: 12, color: primary, fontWeight: FontWeight.bold)),
                       ],
                     ),
@@ -223,17 +241,18 @@ class _BookingRequestScreenState extends State<BookingRequestScreen> {
     );
   }
 
-  Widget _buildChip(String label, bool isSelected) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      decoration: BoxDecoration(
-        color: isSelected ? const Color(0xFFDBEAFE) : Colors.white,
-        border: Border.all(color: isSelected ? const Color(0xFF1D4ED8) : const Color(0xFFCBD5E1)),
-        borderRadius: BorderRadius.circular(20),
+  Widget _buildChip(String label, bool isSelected, VoidCallback onTap) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        decoration: BoxDecoration(
+          color: isSelected ? const Color(0xFFDBEAFE) : Colors.white,
+          border: Border.all(color: isSelected ? const Color(0xFF1D4ED8) : const Color(0xFFCBD5E1)),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Text(label, style: TextStyle(fontSize: 12, color: isSelected ? const Color(0xFF1D4ED8) : const Color(0xFF64748B), fontWeight: isSelected ? FontWeight.bold : FontWeight.normal)),
       ),
-      child: Text(label, style: TextStyle(fontSize: 12, color: isSelected ? const Color(0xFF1D4ED8) : const Color(0xFF64748B), fontWeight: isSelected ? FontWeight.bold : FontWeight.normal)),
     );
   }
-
-
 }
