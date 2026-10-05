@@ -682,44 +682,105 @@ class _ProposalConfirmWidget extends StatelessWidget {
             ],
           ),
         ),
-        ElevatedButton(
-          onPressed: () async {
-            try {
-              await context.read<JobProvider>().updateBookingStatus(
-                booking.id,
-                BookingStatus.customerConfirmed,
-                booking.customerId,
-                isCustomer: true,
-              );
-              if (context.mounted) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Confirmed! The professional will now proceed to your location.'),
-                    backgroundColor: Color(0xFF10B981),
-                  ),
-                );
-              }
-            } catch (e) {
-              if (context.mounted) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Failed to confirm. Please try again.')),
-                );
-              }
-            }
-          },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: _primary,
-            minimumSize: const Size(double.infinity, 48),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-          ),
-          child: const Text(
-            'Confirm to Start Job',
-            style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold),
-          ),
+        Row(
+          children: [
+            Expanded(
+              child: OutlinedButton(
+                onPressed: () async {
+                  final confirm = await showDialog<bool>(
+                    context: context,
+                    builder: (ctx) => AlertDialog(
+                      title: const Text('Reject Proposal?'),
+                      content: const Text('Are you sure you want to reject this proposal?'),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(ctx, false),
+                          child: const Text('Cancel'),
+                        ),
+                        ElevatedButton(
+                          onPressed: () => Navigator.pop(ctx, true),
+                          style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                          child: const Text('Reject', style: TextStyle(color: Colors.white)),
+                        ),
+                      ],
+                    ),
+                  );
+                  if (confirm == true && context.mounted) {
+                    try {
+                      await context.read<JobProvider>().updateBookingStatus(
+                        booking.id,
+                        BookingStatus.cancelled,
+                        booking.customerId,
+                        isCustomer: true,
+                      );
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Proposal rejected.')),
+                        );
+                      }
+                    } catch (e) {
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Failed to reject. Please try again.')),
+                        );
+                      }
+                    }
+                  }
+                },
+                style: OutlinedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  side: const BorderSide(color: Colors.red),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                ),
+                child: const Text(
+                  'Reject',
+                  style: TextStyle(fontSize: 16, color: Colors.red, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: ElevatedButton(
+                onPressed: () async {
+                  try {
+                    await context.read<JobProvider>().updateBookingStatus(
+                      booking.id,
+                      BookingStatus.customerConfirmed,
+                      booking.customerId,
+                      isCustomer: true,
+                    );
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Confirmed! The professional will now proceed to your location.'),
+                          backgroundColor: Color(0xFF10B981),
+                        ),
+                      );
+                    }
+                  } catch (e) {
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Failed to confirm. Please try again.')),
+                      );
+                    }
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: _primary,
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                ),
+                child: const Text(
+                  'Accept',
+                  style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+          ],
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 12),
         const Text(
-          'By confirming, you accept the amount, date and time set by the Professional.',
+          'By accepting, you confirm the amount, date, and time set by the Professional.',
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 11, color: Color(0xFF64748B)),
         ),

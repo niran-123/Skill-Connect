@@ -5,6 +5,7 @@ import '../../models/booking.dart';
 import '../../models/professional.dart';
 import '../../providers/professional_provider.dart';
 import '../../providers/session_provider.dart';
+import '../../core/booking_status.dart';
 
 class ProfessionalDashboard extends StatefulWidget {
   const ProfessionalDashboard({super.key});
@@ -38,15 +39,15 @@ class _ProfessionalDashboardState extends State<ProfessionalDashboard> {
     final proProvider = context.watch<ProfessionalProvider>();
 
 
-    final pendingCount = proProvider.bookings.where((b) => b.status == 'pending').length;
-    final activeCount = proProvider.bookings.where((b) => ['accepted', 'arrived', 'ready_to_start', 'in_progress'].contains(b.status)).length;
-    final completedCount = proProvider.bookings.where((b) => b.status == 'completed').length;
-    final cancelledCount = proProvider.bookings.where((b) => b.status == 'cancelled').length;
+    final pendingCount = proProvider.bookings.where((b) => b.status == BookingStatus.requestCreated).length;
+    final activeCount = proProvider.bookings.where((b) => [BookingStatus.customerConfirmed, BookingStatus.professionalArrived, BookingStatus.jobStarted].contains(b.status)).length;
+    final completedCount = proProvider.bookings.where((b) => b.status == BookingStatus.jobCompleted).length;
+    final cancelledCount = proProvider.bookings.where((b) => b.status == BookingStatus.cancelled).length;
     
 
     
     final activeJob = proProvider.bookings.firstWhere(
-      (b) => ['accepted', 'arrived', 'ready_to_start', 'in_progress'].contains(b.status),
+      (b) => [BookingStatus.customerConfirmed, BookingStatus.professionalArrived, BookingStatus.jobStarted].contains(b.status),
       orElse: () => BookingModel(id: '', jobId: '', customerId: '', professionalId: '', customerName: '', professionalName: '', jobSnapshot: {}, match: {}),
     );
 
@@ -222,7 +223,7 @@ class _ProfessionalDashboardState extends State<ProfessionalDashboard> {
                       ],
                     ),
                     const SizedBox(height: 16),
-                    ...proProvider.bookings.where((b) => b.status == 'pending').take(3).map((b) => Padding(
+                    ...proProvider.bookings.where((b) => b.status == BookingStatus.requestCreated).take(3).map((b) => Padding(
                       padding: const EdgeInsets.only(bottom: 16),
                       child: _buildRequestCard(
                         b.customerName,
