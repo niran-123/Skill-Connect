@@ -45,36 +45,53 @@ service cloud.firestore {
     }
 
     function validTransition(old, newVal, byRole) {
-      return (old == 'pending' && newVal == 'proposed' && byRole == 'professional') ||
-             (old == 'pending' && newVal == 'rejected' && byRole == 'professional') ||
-             (old == 'proposed' && newVal == 'accepted' && byRole == 'customer') ||
-             (old == 'proposed' && newVal == 'rejected' && byRole == 'customer') ||
-             (old == 'proposed' && newVal == 'cancelled' && byRole == 'customer') ||
-             (old == 'pending' && newVal == 'cancelled' && byRole == 'customer') ||
-             (old == 'accepted' && newVal == 'arrived' && byRole == 'professional') ||
-             (old == 'accepted' && newVal == 'cancelled' && (byRole == 'customer' || byRole == 'professional')) ||
-             (old == 'arrived' && newVal == 'ready_to_start' && byRole == 'customer') ||
-             (old == 'ready_to_start' && newVal == 'in_progress' && byRole == 'professional') ||
-             (old == 'in_progress' && newVal == 'completed' && byRole == 'customer');
+      // 6-step canonical workflow
+      return (old == 'REQUEST_CREATED'       && newVal == 'PROFESSIONAL_ACCEPTED' && byRole == 'professional') ||
+             (old == 'REQUEST_CREATED'       && newVal == 'rejected'              && byRole == 'professional') ||
+             (old == 'REQUEST_CREATED'       && newVal == 'cancelled'             && byRole == 'customer')     ||
+             (old == 'PROFESSIONAL_ACCEPTED' && newVal == 'CUSTOMER_CONFIRMED'    && byRole == 'customer')     ||
+             (old == 'PROFESSIONAL_ACCEPTED' && newVal == 'cancelled'             && byRole == 'customer')     ||
+             (old == 'CUSTOMER_CONFIRMED'    && newVal == 'PROFESSIONAL_ARRIVED'  && byRole == 'professional') ||
+             (old == 'PROFESSIONAL_ARRIVED'  && newVal == 'JOB_STARTED'           && byRole == 'professional') ||
+             (old == 'JOB_STARTED'           && newVal == 'JOB_COMPLETED'         && byRole == 'customer');
     }
 
     match /bookings/{bookingId} {
-      allow create: if signedIn() && isOwner(request.resource.data.customerId) && request.resource.data.status == 'pending' &&
-        (!('estimatedCharge' in request.resource.data) || request.resource.data.estimatedCharge == null || request.resource.data.estimatedCharge >= 0);
+      // Customer creates request — status must be REQUEST_CREATED, amount must NOT be set by customer
+      allow create: if signedIn() && isOwner(request.resource.data.customerId) &&
+        request.resource.data.status == 'REQUEST_CREATED' &&
+        !('estimatedCharge' in request.resource.data);
+
       allow read: if signedIn() && (isOwner(resource.data.customerId) || isOwner(resource.data.professionalId) || isAdmin());
+
       allow update: if signedIn() && (
-        (isOwner(resource.data.customerId) && 
-         // Customer can cancel or review
-         ((request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'updatedAt', 'statusHistory']) && validTransition(resource.data.status, request.resource.data.status, 'customer')) ||
-          (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['reviewed', 'updatedAt']) && request.resource.data.reviewed == true && resource.data.status == 'completed'))
-        ) ||
-        (isOwner(resource.data.professionalId) &&
-         // Professional can transition status and add completion details
-         request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'updatedAt', 'statusHistory', 'workSummary', 'finalCharge', 'completionImageId', 'completionNotes', 'estimatedCharge', 'scheduledDate', 'timeSlot']) &&
-         (!('estimatedCharge' in request.resource.data) || request.resource.data.estimatedCharge == null || request.resource.data.estimatedCharge >= 0) &&
-         validTransition(resource.data.status, request.resource.data.status, 'professional')
-        )
+        // ── CUSTOMER actions ──
+        (isOwner(resource.data.customerId) && (
+          // Customer confirms (PROFESSIONAL_ACCEPTED → CUSTOMER_CONFIRMED) + timestamp
+          (validTransition(resource.data.status, request.resource.data.status, 'customer') &&
+           request.resource.data.diff(resource.data).affectedKeys().hasOnly(
+             ['status', 'updatedAt', 'statusHistory', 'customerConfirmedAt', 'jobCompletedAt'])) ||
+          // Customer cancels
+          (request.resource.data.status == 'cancelled' &&
+           request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'updatedAt', 'statusHistory'])) ||
+          // Customer marks reviewed after completion
+          (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['reviewed', 'updatedAt']) &&
+           request.resource.data.reviewed == true && resource.data.status == 'JOB_COMPLETED')
+        )) ||
+        // ── PROFESSIONAL actions ──
+        (isOwner(resource.data.professionalId) && (
+          // Professional accepts + sets amount/date/time (REQUEST_CREATED → PROFESSIONAL_ACCEPTED)
+          (validTransition(resource.data.status, request.resource.data.status, 'professional') &&
+           request.resource.data.diff(resource.data).affectedKeys().hasOnly(
+             ['status', 'updatedAt', 'statusHistory',
+              'estimatedCharge', 'scheduledDate', 'timeSlot',
+              'professionalArrivedAt', 'jobStartedAt']) &&
+           (!('estimatedCharge' in request.resource.data) ||
+            request.resource.data.estimatedCharge == null ||
+            request.resource.data.estimatedCharge >= 0))
+        ))
       );
+
       allow delete: if false;
     }
 

@@ -11,6 +11,7 @@ import '../../models/review.dart' as import_review;
 import 'package:cloud_firestore/cloud_firestore.dart' as import_firestore;
 import 'package:uuid/uuid.dart';
 import 'dart:async';
+import '../../core/booking_status.dart';
 
 class JobProvider extends ChangeNotifier {
   final GeminiService _geminiService = GeminiService();
@@ -128,6 +129,8 @@ class JobProvider extends ChangeNotifier {
         match: match.toMap(),
         lat: _currentJob!.lat,
         lng: _currentJob!.lng,
+        // Status is forced to REQUEST_CREATED by BookingRepo.createBooking()
+        status: BookingStatus.requestCreated,
       );
 
       await _bookingRepo.createBooking(booking);
@@ -143,6 +146,9 @@ class JobProvider extends ChangeNotifier {
   List<BookingModel> _customerBookings = [];
   List<BookingModel> get customerBookings => _customerBookings;
   StreamSubscription? _customerBookingsSub;
+  StreamSubscription? _singleBookingSub;
+  BookingModel? _liveBooking;
+  BookingModel? get liveBooking => _liveBooking;
 
   Future<void> loadCustomerBookings(String customerId) async {
     _setLoading(true);
@@ -157,6 +163,28 @@ class JobProvider extends ChangeNotifier {
     } finally {
       _setLoading(false);
     }
+  }
+
+  /// Subscribe to a single booking for the Live Tracker.
+  void subscribeToBooking(String bookingId) {
+    _singleBookingSub?.cancel();
+    _singleBookingSub = _bookingRepo.streamBooking(bookingId).listen((booking) {
+      _liveBooking = booking;
+      // Also update the booking in the main list if it exists
+      if (booking != null) {
+        final idx = _customerBookings.indexWhere((b) => b.id == bookingId);
+        if (idx >= 0) {
+          _customerBookings[idx] = booking;
+        }
+      }
+      notifyListeners();
+    });
+  }
+
+  void unsubscribeFromBooking() {
+    _singleBookingSub?.cancel();
+    _singleBookingSub = null;
+    _liveBooking = null;
   }
 
   List<ProfessionalModel> _savedProfessionals = [];
@@ -217,6 +245,7 @@ class JobProvider extends ChangeNotifier {
   void dispose() {
     _customerBookingsSub?.cancel();
     _professionalBookingsSub?.cancel();
+    _singleBookingSub?.cancel();
     super.dispose();
   }
 

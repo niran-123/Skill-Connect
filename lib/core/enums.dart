@@ -17,13 +17,15 @@ enum JobStatus {
   closed,
 }
 
-enum BookingStatus {
-  pending,
-  accepted,
-  onTheWay,
-  arrived,
-  inProgress,
-  completed,
+// NOTE: String constants are defined in core/booking_status.dart
+// This enum is kept for type safety in the legacy code paths.
+enum BookingStatusEnum {
+  requestCreated,
+  professionalAccepted,
+  customerConfirmed,
+  professionalArrived,
+  jobStarted,
+  jobCompleted,
   cancelled,
   rejected,
 }

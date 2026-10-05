@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../providers/job_provider.dart';
 import '../../providers/session_provider.dart';
 import '../../models/booking.dart';
+import '../../core/booking_status.dart';
 
 class CustomerBookingsScreen extends StatefulWidget {
   const CustomerBookingsScreen({super.key});
@@ -29,10 +30,18 @@ class _CustomerBookingsScreenState extends State<CustomerBookingsScreen> {
     final jobProvider = context.watch<JobProvider>();
     final bookings = jobProvider.customerBookings;
     
-    final activeBookings = bookings.where((b) => b.status == 'pending' || b.status == 'proposed' || b.status == 'accepted' || b.status == 'arrived' || b.status == 'ready_to_start' || b.status == 'in_progress').toList();
-    final upcomingBookings = bookings.where((b) => b.status == 'scheduled').toList();
-    final completedBookings = bookings.where((b) => b.status == 'completed').toList();
-    final cancelledBookings = bookings.where((b) => b.status == 'cancelled').toList();
+    // Active = all statuses from REQUEST_CREATED to JOB_STARTED (in progress)
+    final activeStatuses = [
+      BookingStatus.requestCreated,
+      BookingStatus.professionalAccepted,
+      BookingStatus.customerConfirmed,
+      BookingStatus.professionalArrived,
+      BookingStatus.jobStarted,
+    ];
+    final activeBookings = bookings.where((b) => activeStatuses.contains(b.status)).toList();
+    final completedBookings = bookings.where((b) => b.status == BookingStatus.jobCompleted).toList();
+    final cancelledBookings = bookings.where((b) =>
+        b.status == BookingStatus.cancelled || b.status == BookingStatus.rejected).toList();
 
     final Color primary = const Color(0xFF1D4ED8);
     final Color surface = const Color(0xFFF7F9FB);
@@ -41,7 +50,7 @@ class _CustomerBookingsScreenState extends State<CustomerBookingsScreen> {
     
 
     return DefaultTabController(
-      length: 4,
+      length: 3,
       child: Scaffold(
         backgroundColor: surface,
         appBar: AppBar(
@@ -58,7 +67,6 @@ class _CustomerBookingsScreenState extends State<CustomerBookingsScreen> {
             labelStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
             tabs: const [
               Tab(text: 'Active'),
-              Tab(text: 'Upcoming'),
               Tab(text: 'Completed'),
               Tab(text: 'Cancelled'),
             ],
@@ -69,7 +77,6 @@ class _CustomerBookingsScreenState extends State<CustomerBookingsScreen> {
             : TabBarView(
                 children: [
                   _buildList(activeBookings, _buildActiveCard, onSurfaceVariant),
-                  _buildList(upcomingBookings, _buildUpcomingCard, onSurfaceVariant),
                   _buildList(completedBookings, _buildCompletedCard, onSurfaceVariant),
                   _buildList(cancelledBookings, _buildCancelledCard, onSurfaceVariant),
                 ],
@@ -110,9 +117,26 @@ class _CustomerBookingsScreenState extends State<CustomerBookingsScreen> {
     final Color onSurfaceVariant = const Color(0xFF64748B);
     
     
-    final isArrived = booking.status == 'arrived';
-    final statusColor = (isArrived || booking.status == 'ready_to_start') ? const Color(0xFF10B981) : const Color(0xFF1D4ED8);
-    final statusText = isArrived ? 'Active • Pro Arrived' : (booking.status == 'ready_to_start' ? 'Active • Confirmed' : (booking.status == 'proposed' ? 'Action Required • Proposal Received' : 'Active • \${booking.status.toUpperCase()}'));
+    final isProArrived = booking.status == BookingStatus.professionalArrived;
+    final isJobStarted  = booking.status == BookingStatus.jobStarted;
+    final isProAccepted = booking.status == BookingStatus.professionalAccepted;
+    final isConfirmed   = booking.status == BookingStatus.customerConfirmed;
+
+    Color statusColor;
+    String statusText;
+    if (isProArrived || isJobStarted) {
+      statusColor = const Color(0xFF10B981);
+      statusText = isJobStarted ? 'Active • Job In Progress' : 'Active • Pro Arrived';
+    } else if (isProAccepted) {
+      statusColor = const Color(0xFFF59E0B);
+      statusText = 'Action Required • Review Proposal';
+    } else if (isConfirmed) {
+      statusColor = const Color(0xFF10B981);
+      statusText = 'Active • Confirmed';
+    } else {
+      statusColor = const Color(0xFF1D4ED8);
+      statusText = 'Active • ${BookingStatus.label(booking.status)}';
+    }
 
     return Container(
       decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16), border: Border.all(color: const Color(0xFFCBD5E1).withValues(alpha: 0.5)), boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.03), blurRadius: 8, offset: const Offset(0, 2))]),
@@ -182,11 +206,6 @@ class _CustomerBookingsScreenState extends State<CustomerBookingsScreen> {
         ],
       ),
     );
-  }
-
-  Widget _buildUpcomingCard(BuildContext context, BookingModel booking) {
-    // Very similar to active for now
-    return _buildActiveCard(context, booking);
   }
 
   Widget _buildCompletedCard(BuildContext context, BookingModel booking) {

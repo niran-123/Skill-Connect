@@ -72,11 +72,11 @@ class ProfessionalProvider extends ChangeNotifier {
     }
   }
 
-  Future<bool> updateBookingStatus(String bookingId, String status, String byUid, {Map<String, dynamic>? extraData}) async {
+  Future<bool> updateBookingStatus(String bookingId, String newStatus, String byUid, {Map<String, dynamic>? extraData}) async {
     _setLoading(true);
     try {
-      await _bookingRepo.updateBookingStatus(bookingId, status, byUid, extraData: extraData);
-      // Removed manual reload since stream listener handles updates
+      await _bookingRepo.updateBookingStatus(bookingId, newStatus, byUid, extraData: extraData);
+      // Stream listener will automatically update _bookings — no manual reload needed
       return true;
     } catch (e) {
       _setError(e.toString());
@@ -84,6 +84,12 @@ class ProfessionalProvider extends ChangeNotifier {
     } finally {
       _setLoading(false);
     }
+  }
+
+  /// Real-time stream for a single booking document.
+  /// Used by the Professional details screen to listen for customer confirmation.
+  Stream<BookingModel?> streamBooking(String bookingId) {
+    return _bookingRepo.streamBooking(bookingId);
   }
 
   @override

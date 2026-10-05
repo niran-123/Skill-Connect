@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../core/booking_status.dart';
 
 class BookingModel {
   final String id;
@@ -29,6 +30,12 @@ class BookingModel {
   final DateTime? createdAt;
   final DateTime? updatedAt;
 
+  // New timestamp fields for each step
+  final DateTime? customerConfirmedAt;
+  final DateTime? professionalArrivedAt;
+  final DateTime? jobStartedAt;
+  final DateTime? jobCompletedAt;
+
   BookingModel({
     required this.id,
     required this.jobId,
@@ -49,7 +56,7 @@ class BookingModel {
     this.estimatedCharge,
     this.finalCharge,
     this.match = const {},
-    this.status = 'pending',
+    this.status = BookingStatus.requestCreated,
     this.statusHistory = const [],
     this.workSummary,
     this.completionImageId,
@@ -57,6 +64,10 @@ class BookingModel {
     this.reviewed = false,
     this.createdAt,
     this.updatedAt,
+    this.customerConfirmedAt,
+    this.professionalArrivedAt,
+    this.jobStartedAt,
+    this.jobCompletedAt,
   });
 
   factory BookingModel.fromMap(Map<String, dynamic> data, String id) {
@@ -80,7 +91,7 @@ class BookingModel {
       estimatedCharge: (data['estimatedCharge'] as num?)?.toDouble(),
       finalCharge: (data['finalCharge'] as num?)?.toDouble(),
       match: Map<String, dynamic>.from(data['match'] ?? {}),
-      status: data['status'] ?? 'pending',
+      status: data['status'] ?? BookingStatus.requestCreated,
       statusHistory: List<dynamic>.from(data['statusHistory'] ?? []),
       workSummary: data['workSummary'],
       completionImageId: data['completionImageId'],
@@ -88,6 +99,10 @@ class BookingModel {
       reviewed: data['reviewed'] ?? false,
       createdAt: (data['createdAt'] as Timestamp?)?.toDate(),
       updatedAt: (data['updatedAt'] as Timestamp?)?.toDate(),
+      customerConfirmedAt: (data['customerConfirmedAt'] as Timestamp?)?.toDate(),
+      professionalArrivedAt: (data['professionalArrivedAt'] as Timestamp?)?.toDate(),
+      jobStartedAt: (data['jobStartedAt'] as Timestamp?)?.toDate(),
+      jobCompletedAt: (data['jobCompletedAt'] as Timestamp?)?.toDate(),
     );
   }
 
