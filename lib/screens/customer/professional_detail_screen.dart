@@ -271,18 +271,6 @@ class ProfessionalDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildServiceRow(String name, String price) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(name, style: const TextStyle(fontSize: 14, color: Color(0xFF0F172A))),
-          Text(price, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Color(0xFF0F172A))),
-        ],
-      ),
-    );
-  }
 
   Widget _buildTrustBadge(String label) {
     return Container(

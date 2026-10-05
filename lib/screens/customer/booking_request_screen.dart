@@ -235,19 +235,5 @@ class _BookingRequestScreenState extends State<BookingRequestScreen> {
     );
   }
 
-  Widget _buildPriceRow(String title, String price, {String? subtitle}) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(title, style: const TextStyle(fontSize: 14, color: Color(0xFF0F172A))),
-            if (subtitle != null) Text(subtitle, style: const TextStyle(fontSize: 11, color: Color(0xFF10B981))),
-          ],
-        ),
-        Text(price, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Color(0xFF0F172A))),
-      ],
-    );
-  }
+
 }
