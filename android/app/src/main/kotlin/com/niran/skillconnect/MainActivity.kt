@@ -1,4 +1,4 @@
-package com.skillconnect.app
+package com.niran.skillconnect
 
 import io.flutter.embedding.android.FlutterActivity
 

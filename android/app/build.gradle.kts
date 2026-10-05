@@ -17,7 +17,7 @@ plugins {
 }
 
 android {
-    namespace = "com.skillconnect.app"
+    namespace = "com.niran.skillconnect"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -37,7 +37,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.skillconnect.app"
+        applicationId = "com.niran.skillconnect"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion

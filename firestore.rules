@@ -60,7 +60,7 @@ service cloud.firestore {
       // Customer creates request — status must be REQUEST_CREATED, amount must NOT be set by customer
       allow create: if signedIn() && isOwner(request.resource.data.customerId) &&
         request.resource.data.status == 'REQUEST_CREATED' &&
-        !('estimatedCharge' in request.resource.data);
+        (!('estimatedCharge' in request.resource.data) || request.resource.data.estimatedCharge == null);
 
       allow read: if signedIn() && (isOwner(resource.data.customerId) || isOwner(resource.data.professionalId) || isAdmin());
 
