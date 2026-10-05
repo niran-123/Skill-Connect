@@ -1,8 +1,9 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // Handle background message
-  print("Handling a background message: ${message.messageId}");
+  debugPrint("Handling a background message: ${message.messageId}");
 }
 
 class PushNotificationService {
@@ -17,9 +18,9 @@ class PushNotificationService {
     );
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-      print('User granted permission for push notifications');
+      debugPrint('User granted permission for push notifications');
     } else {
-      print('User declined or has not accepted permission');
+      debugPrint('User declined or has not accepted permission');
     }
 
     // Set the background messaging handler early on, as a named top-level function
@@ -27,11 +28,11 @@ class PushNotificationService {
 
     // Handle messages while the app is in the foreground
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print('Got a message whilst in the foreground!');
-      print('Message data: ${message.data}');
+      debugPrint('Got a message whilst in the foreground!');
+      debugPrint('Message data: ${message.data}');
 
       if (message.notification != null) {
-        print('Message also contained a notification: ${message.notification}');
+        debugPrint('Message also contained a notification: ${message.notification}');
       }
     });
   }

@@ -71,9 +71,9 @@ class DescribeProblemScreen extends StatelessWidget {
               child: DropdownButtonHideUnderline(
                 child: DropdownButton<String>(
                   isExpanded: true,
-                  value: 'Plumbing & Pipe Repair',
+                  value: 'Select your category',
                   icon: const Icon(LucideIcons.chevron_down, color: Color(0xFF64748B)),
-                  items: ['Plumbing & Pipe Repair', 'Electrician', 'Carpentry']
+                  items: ['Select your category', 'Auto Detect', 'Plumbing & Pipe Repair', 'Electrician', 'Carpentry']
                       .map((e) => DropdownMenuItem(value: e, child: Text(e, style: const TextStyle(fontSize: 15))))
                       .toList(),
                   onChanged: (v) {},

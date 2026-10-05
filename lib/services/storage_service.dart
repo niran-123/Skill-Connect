@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
 
@@ -18,7 +19,7 @@ class StorageService {
         return File(pickedFile.path);
       }
     } catch (e) {
-      print('Error picking image: $e');
+      debugPrint('Error picking image: $e');
     }
     return null;
   }
@@ -36,7 +37,7 @@ class StorageService {
       final String downloadUrl = await snapshot.ref.getDownloadURL();
       return downloadUrl;
     } catch (e) {
-      print('Error uploading image: $e');
+      debugPrint('Error uploading image: $e');
       return null;
     }
   }

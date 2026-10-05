@@ -18,7 +18,7 @@ class _BookingRequestScreenState extends State<BookingRequestScreen> {
   
   String _selectedDate = 'Today';
   String _selectedTime = 'Anytime Today';
-  String _selectedAddress = 'Current Location';
+  final String _selectedAddress = 'Current Location';
   
   @override
   void initState() {

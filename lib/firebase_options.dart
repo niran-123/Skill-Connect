@@ -50,7 +50,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyCqom8DPYhKH0bANtqV67r6Xgn0EnlojAk',
-    appId: '1:235951078021:android:3359da782f01df70acc7ec',
+    appId: '1:235951078021:android:7c7903f9adca385dacc7ec',
     messagingSenderId: '235951078021',
     projectId: 'skillconnect-a7c70',
     storageBucket: 'skillconnect-a7c70.firebasestorage.app',

@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:235951078021:android:0557921576a8fdeaacc7ec",
+        "mobilesdk_app_id": "1:235951078021:android:7c7903f9adca385dacc7ec",
         "android_client_info": {
-          "package_name": "com.example.skill_connect"
+          "package_name": "com.niran.skillconnect"
         }
       },
       "oauth_client": [
@@ -29,6 +29,13 @@
             {
               "client_id": "235951078021-0cqigmsa10jusdm2fmgqlv2l8c3smi5n.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "235951078021-oakrt769hu8re99ig2jlgakg1l67bm16.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.skillconnect.app"
+              }
             }
           ]
         }
@@ -43,6 +50,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "235951078021-tgi807qgfch2759crfec95f5is3eq19o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.skillconnect.app",
+            "certificate_hash": "b5e8f81ca768e745fedac81a7612b973d53930a0"
+          }
+        },
+        {
           "client_id": "235951078021-0cqigmsa10jusdm2fmgqlv2l8c3smi5n.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -58,6 +73,13 @@
             {
               "client_id": "235951078021-0cqigmsa10jusdm2fmgqlv2l8c3smi5n.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "235951078021-oakrt769hu8re99ig2jlgakg1l67bm16.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.skillconnect.app"
+              }
             }
           ]
         }

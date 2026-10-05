@@ -20,87 +20,72 @@ class CustomerHomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: surface,
       body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Header Elements
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+              Text('Hello, $firstName 👋', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: onSurface, fontFamily: 'Inter')),
+              const SizedBox(height: 24),
+
+              Expanded(
+                child: Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(24),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(24),
+                    border: Border.all(color: primary.withValues(alpha: 0.1)),
+                    boxShadow: [
+                      BoxShadow(color: primary.withValues(alpha: 0.05), blurRadius: 20, offset: const Offset(0, 8)),
+                    ],
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text('Hello, $firstName 👋', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: onSurface, fontFamily: 'Inter')),
-                      const SizedBox(height: 4),
-                      Row(
-                        children: [
-                          Icon(Icons.location_on, size: 14, color: onSurfaceVariant),
-                          const SizedBox(width: 4),
-                          Text('Trichy, Tamil Nadu', style: TextStyle(fontSize: 12, color: onSurfaceVariant, fontFamily: 'Inter')),
-                          const SizedBox(width: 4),
-                          Icon(Icons.edit, size: 12, color: primary),
-                        ],
+                      Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: badgeBlue.withValues(alpha: 0.5),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(Icons.auto_awesome, color: primary, size: 48),
+                      ),
+                      const SizedBox(height: 32),
+                      Text('Describe Your Problem', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: onSurface, fontFamily: 'Inter'), textAlign: TextAlign.center),
+                      const SizedBox(height: 16),
+                      Text(
+                        'Tell us in your own words — our AI diagnoses your issue and matches verified specialists instantly.',
+                        style: TextStyle(fontSize: 15, color: onSurfaceVariant, height: 1.5, fontFamily: 'Inter'),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 48),
+                      SizedBox(
+                        width: double.infinity,
+                        height: 56,
+                        child: ElevatedButton(
+                          onPressed: () => context.pushNamed('customer-request'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: primary,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                            elevation: 0,
+                          ),
+                          child: const Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text('Describe Problem', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white)),
+                              SizedBox(width: 8),
+                              Icon(Icons.arrow_forward, size: 20, color: Colors.white),
+                            ],
+                          ),
+                        ),
                       ),
                     ],
                   ),
-
-                ],
+                ),
               ),
               const SizedBox(height: 24),
-
-              // Prominent CTA Card
-              Container(
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: primary.withValues(alpha: 0.1)),
-                  boxShadow: [
-                    BoxShadow(color: primary.withValues(alpha: 0.05), blurRadius: 12, offset: const Offset(0, 4)),
-                  ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(Icons.auto_awesome, color: primary, size: 20),
-                        const SizedBox(width: 8),
-                        Text('Describe Your Problem', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: onSurface, fontFamily: 'Inter')),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      'Tell us in your own words — our AI diagnoses your issue and matches verified specialists',
-                      style: TextStyle(fontSize: 13, color: onSurfaceVariant, height: 1.4, fontFamily: 'Inter'),
-                    ),
-                    const SizedBox(height: 16),
-                    SizedBox(
-                      width: double.infinity,
-                      height: 48,
-                      child: ElevatedButton(
-                        onPressed: () => context.pushNamed('customer-request'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: primary,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                          elevation: 0,
-                        ),
-                        child: const Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text('Describe Problem', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: Colors.white)),
-                            SizedBox(width: 8),
-                            Icon(Icons.arrow_forward, size: 16, color: Colors.white),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 28),
 
               Consumer<JobProvider>(
                 builder: (context, jobProvider, child) {
@@ -145,18 +130,16 @@ class CustomerHomeScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                      const SizedBox(height: 28),
                     ],
                   );
                 },
               ),
-
             ],
           ),
         ),
       ),
     );
   }
-
 }
+
 
