@@ -6,841 +6,401 @@
 
 ## 📋 Table of Contents
 
-1. [Project Overview](#-project-overview)
-2. [Key Features](#-key-features)
-3. [Tech Stack](#-tech-stack)
-4. [Architecture Overview](#-architecture-overview)
-5. [Project Structure](#-project-structure)
-6. [Frontend (Flutter)](#-frontend-flutter)
-7. [Backend & Services](#-backend--services)
-8. [Database (Cloud Firestore)](#-database-cloud-firestore)
-9. [Data Models](#-data-models)
-10. [Complete Workflow](#-complete-workflow)
-11. [Booking Lifecycle](#-booking-lifecycle)
-12. [Packages & Dependencies](#-packages--dependencies)
-13. [Setup & Installation](#-setup--installation)
-14. [Service Categories & Skills](#-service-categories--skills)
+1. [Project Overview](#1-project-overview)
+2. [Technology Stack](#2-technology-stack)
+3. [Architecture and System Design](#3-architecture-and-system-design)
+4. [Complete Folder Structure](#4-complete-folder-structure)
+5. [Customer App — Complete Features](#5-customer-app--complete-features)
+6. [Professional App — Complete Features](#6-professional-app--complete-features)
+7. [Complete Service Request Workflow](#7-complete-service-request-workflow)
+8. [Status Management and Business Rules](#8-status-management-and-business-rules)
+9. [Database Schema and Data Relationships](#9-database-schema-and-data-relationships)
+10. [Backend and API Documentation](#10-backend-and-api-documentation)
+11. [Firebase Documentation](#11-firebase-documentation)
+12. [Real-Time Synchronization](#12-real-time-synchronization)
+13. [Authentication and Security](#13-authentication-and-security)
+14. [Installation and Local Setup](#14-installation-and-local-setup)
+15. [Environment Variables and Configuration](#15-environment-variables-and-configuration)
+16. [Testing and Quality Assurance](#16-testing-and-quality-assurance)
+17. [Deployment Documentation](#17-deployment-documentation)
+18. [Google Play Store Readiness](#18-google-play-store-readiness)
+19. [Known Issues and Future Improvements](#19-known-issues-and-future-improvements)
+20. [Contribution and Maintenance](#20-contribution-and-maintenance)
 
 ---
 
-## 🌟 Project Overview
+## 1. Project Overview
 
-**Skill Connect** is a mobile application built with **Flutter** that acts as a two-sided marketplace for home services. Customers can describe their problem in natural language (or even by voice), and the app uses **Google Gemini AI** to analyze the request, identify the right service category and required skills, then ranks and suggests the best-matched local professionals.
+**Skill Connect** is a mobile application built with **Flutter** that acts as an AI-powered fair cooperative workforce and intelligent service-matching platform. It connects customers who need local home services with professionals who provide them. 
 
-The app supports three distinct user roles:
-- **Customer** – Searches, books, tracks, and reviews professionals
-- **Professional** – Manages service requests, availability, profile, and job completion
-- **Admin** – Platform oversight and professional verification management
+Customers can describe their problem in natural language (or even by voice), and the app uses **Google Gemini AI** to analyze the request, identify the right service category and required skills, then ranks and suggests the best-matched local professionals.
 
----
+**Problem Solved:** Finding reliable, skilled home service professionals is often manual, time-consuming, and lacks transparency.
+**Proposed Solution:** A seamless two-sided marketplace where AI bridges the gap between a customer's problem description and a professional's verified skill set.
+**Target Users:**
+- **Customers** – Seeking reliable home services (e.g., plumbing, electrical, carpentry).
+- **Professionals** – Skilled workers looking for service requests nearby.
+- **Admins** – Platform oversight and professional verification.
 
-## ✨ Key Features
-
-### For Customers
-- 🗣️ **Natural Language / Voice Job Description** – Describe your problem in plain text or use speech-to-text
-- 🤖 **AI-Powered Analysis** – Google Gemini 1.5 Flash analyzes the problem and extracts category, skills, severity, and estimated duration
-- 🎯 **Smart Matching** – Multi-factor scoring algorithm ranks professionals by skill match, ratings, distance, and availability
-- 📍 **Location-Aware Search** – Uses GPS to find professionals within service radius
-- 📅 **Booking Management** – Schedule bookings, track real-time status, cancel if needed
-- ⏱️ **Real-Time Live Tracker** – Customer sees instant updates as the professional marks "Arrived" and "Job Started"
-- 🏁 **Customer Completion Control** – Job isn't finished until the customer clicks "Job Completed"
-- ⭐ **Reviews & Ratings** – Post-job review system that updates professional trust scores
-- 💾 **Save Professionals** – Bookmark favourite professionals for quick rebooking
-- 🔔 **Notifications** – Real-time booking status updates
-- 🔍 **Browse & Filter** – Explore professionals by category, rating, and location
-
-### For Professionals
-- 📊 **Dashboard** – Earnings overview, upcoming jobs, quick stats
-- 📥 **Service Requests** – View, accept, or reject incoming booking requests (rejections disappear, acceptances move to Active tracking)
-- 📍 **Live Real-Time Sync** – Professional app instantly pushes status updates (Arrived, Job Started) directly to the customer's live tracker via Firestore Streams
-- 📷 **Job Completion** – Upload completion photos and work summaries
-- 🗓️ **Availability Calendar** – Set schedule and working hours
-- 🧾 **Skill & Rate Management** – Manage skills offered and pricing
-- 📜 **Document Verification** – Upload certificates for platform verification
-- 📈 **Job History** – Full record of past completed and cancelled jobs
-- 🔔 **Notifications** – Alerts for new requests and updates
-
-### For Admin
-- ✅ **Professional Verification** – Review and approve/reject professional registration
-- 🛡️ **Platform Oversight** – Admin dashboard with full access controls
+**Supported Categories:** AC Repair, Plumbing, Electrical, Carpentry, Appliance Repair, Cleaning, Painting. (Verified in codebase).
 
 ---
 
-## 🛠 Tech Stack
+## 2. Technology Stack
 
-| Layer | Technology | Version |
-|-------|-----------|---------|
-| **Framework** | Flutter | SDK ^3.12.2 |
-| **Language** | Dart | ^3.12.2 |
-| **Authentication** | Firebase Auth | ^6.7.0 |
-| **Database** | Cloud Firestore | ^6.10.0 |
-| **Storage** | Firebase Storage | ^13.6.0 |
-| **AI / NLP** | Google Gemini 1.5 Flash API | REST |
-| **State Management** | Provider | ^6.1.5 |
-| **Navigation** | GoRouter | ^18.0.2 |
-| **Location** | Geolocator + Geocoding | ^14.1.1 / ^5.0.0 |
-| **Image Handling** | image_picker + flutter_image_compress | ^1.2.3 / ^2.5.1 |
-| **Voice Input** | speech_to_text | ^7.5.0 |
-| **HTTP Client** | http | ^1.6.0 |
-| **Caching** | cached_network_image | ^4.0.3 |
-| **Loading UI** | shimmer | ^4.0.0 |
-| **Icons** | flutter_lucide | ^1.49.0 |
-| **Date/Time** | intl | ^0.20.2 |
-| **UUID** | uuid | ^4.6.0 |
+### Frontend & Mobile Application
+- **Framework:** Flutter (Dart `^3.12.2`)
+- **UI Styling:** Material 3 (`theme.dart`)
+- **State Management:** Provider (`^6.1.5+1`)
+- **Navigation:** GoRouter (`^18.0.2`)
+- **Forms and Validation:** Flutter built-in validation
+- **Location:** `geolocator` (`^14.1.1`), `geocoding` (`^5.0.0`)
+- **Media:** `image_picker`, `flutter_image_compress`, `speech_to_text`, `cached_network_image`
+- **Application ID:** `com.niran.skillconnect` (Android)
+- **Target SDK:** 34
+
+### Backend & Database (Serverless)
+- **Database:** Firebase Cloud Firestore (`^6.10.0`)
+- **Authentication:** Firebase Auth (`^6.7.0`) + Google Sign-In (`^6.2.1`)
+- **Storage:** Firebase Storage (`^13.6.0`)
+- **Notifications:** Firebase Cloud Messaging (`^16.7.0`)
+- **API Architecture:** Direct client-to-Firestore with rigorous Security Rules. No standalone Node/Python server is used.
+
+### Integrations
+- **AI/NLP:** Google Gemini 1.5 Flash API (REST via `http` package)
 
 ---
 
-## 🏗 Architecture Overview
+## 3. Architecture and System Design
 
-Skill Connect follows a **layered clean architecture** pattern:
+Skill Connect follows a **layered clean architecture** pattern with direct integration to Firebase.
 
-```
-┌─────────────────────────────────────────────────────┐
-│                     UI Layer                        │
-│  (Screens: auth / customer / professional / admin)  │
-└────────────────────┬────────────────────────────────┘
-                     │ reads from / calls
-┌────────────────────▼────────────────────────────────┐
-│                 Provider Layer                      │
-│  (AuthProvider, JobProvider, ProfessionalProvider,  │
-│   SessionProvider)                                  │
-└────────────────────┬────────────────────────────────┘
-                     │ delegates to
-┌────────────────────▼────────────────────────────────┐
-│              Repository Layer                       │
-│  (AuthRepo, BookingRepo, ProfessionalRepo,          │
-│   UserRepo, ReviewRepo, NotificationRepo,           │
-│   ImageRepo)                                        │
-└───────────┬──────────────────────┬──────────────────┘
-            │                      │
-┌───────────▼──────┐    ┌──────────▼───────────────────┐
-│  Service Layer   │    │      External Services        │
-│  (GeminiService, │    │  (Firebase Auth, Firestore,   │
-│  MatchingService)│    │   Firebase Storage, Gemini AI)│
-└──────────────────┘    └──────────────────────────────┘
+```mermaid
+graph TD
+    subgraph "Client Applications"
+        C[Customer App]
+        P[Professional App]
+        A[Admin App]
+    end
+
+    subgraph "Firebase Cloud (Backend)"
+        Auth[Firebase Auth]
+        DB[(Cloud Firestore)]
+        Storage[Firebase Storage]
+    end
+
+    subgraph "External Services"
+        Gemini[Google Gemini API]
+    end
+
+    C -->|Authenticate| Auth
+    P -->|Authenticate| Auth
+    A -->|Authenticate| Auth
+
+    C <-->|Listen/Write Data| DB
+    P <-->|Listen/Write Data| DB
+    A <-->|Manage Data| DB
+    
+    C -->|Upload Photos| Storage
+    P -->|Upload Docs/Photos| Storage
+
+    C -->|Analyze Problem Description| Gemini
 ```
 
+**Responsibilities:**
+- **Client Apps:** UI, Navigation, State Management (Provider), Location fetching, Direct API calls to Gemini.
+- **Firebase Auth:** Handles Email/Password and Google OAuth.
+- **Cloud Firestore:** Serves as the real-time database. Streams are used for live updates.
+- **Firebase Storage:** Stores avatars, job photos, and professional certificates.
+
 ---
 
-## 📁 Project Structure
+## 4. Complete Folder Structure
 
-```
+```text
 skill_connect/
-├── lib/
-│   ├── main.dart                      # App entry point, Firebase init
-│   ├── app.dart                       # Root widget, Provider setup
-│   ├── firebase_options.dart          # Firebase platform config (auto-generated)
-│   │
-│   ├── core/
-│   │   ├── constants.dart             # Matching weights, service categories, skill catalog
-│   │   ├── enums.dart                 # App-wide enumerations
-│   │   ├── router.dart                # GoRouter config, route guards, all routes
-│   │   └── theme.dart                 # Material 3 design tokens, AppTheme
-│   │
-│   ├── models/
-│   │   ├── user_model.dart            # Customer user data model
-│   │   ├── professional.dart          # Professional profile data model
-│   │   ├── booking.dart               # Booking lifecycle data model
-│   │   ├── job_profile.dart           # AI-analyzed job request model
-│   │   ├── match_result.dart          # Scoring result from matching algorithm
-│   │   ├── review.dart                # Customer review/rating model
-│   │   └── app_notification.dart      # In-app notification model
-│   │
-│   ├── providers/
-│   │   ├── auth_provider.dart         # Email/Password & Google Sign-In logic
-│   │   ├── session_provider.dart      # Global session state (logged-in user)
-│   │   ├── job_provider.dart          # Job flow: AI analysis → matching → booking
-│   │   └── professional_provider.dart # Professional data & management state
-│   │
-│   ├── repositories/
-│   │   ├── auth_repo.dart             # Firebase Auth CRUD wrapper
-│   │   ├── user_repo.dart             # Firestore users collection
-│   │   ├── professional_repo.dart     # Firestore professionals collection
-│   │   ├── booking_repo.dart          # Firestore bookings collection
-│   │   ├── review_repo.dart           # Firestore reviews collection
-│   │   ├── notification_repo.dart     # Firestore notifications collection
-│   │   └── image_repo.dart            # Firestore images + Firebase Storage
-│   │
-│   ├── services/
-│   │   ├── gemini_service.dart        # Google Gemini 1.5 Flash REST API client
-│   │   └── matching_service.dart      # Multi-factor professional ranking algorithm
-│   │
-│   └── screens/
-│       ├── auth/                      # Login, Signup, Role Selection, Pro Registration
-│       ├── customer/                  # 23 screens for the customer flow
-│       ├── professional/              # 16 screens for the professional flow
-│       ├── admin/                     # Admin oversight screen
-│       └── shared/                    # Splash, Onboarding, Help, FAQ, Terms, Privacy
-│
-├── firestore.rules                    # Firestore security rules
-├── firestore.indexes.json             # Composite index definitions
-├── firebase.json                      # Firebase project config
-├── env.json                           # API keys (gitignored)
-├── env.example.json                   # Example env template
-└── pubspec.yaml                       # Flutter dependencies
+├── android/                   # Android native build configurations
+│   ├── app/
+│   │   ├── build.gradle.kts   # Android app-level build config
+│   │   └── upload-keystore.jks# Release Keystore
+├── assets/                    # Static assets
+├── lib/                       # Main Flutter source code
+│   ├── core/                  # Constants, Enums, Router, Theme
+│   ├── models/                # Data models (Booking, User, JobProfile)
+│   ├── providers/             # State Management (JobProvider, AuthProvider)
+│   ├── repositories/          # Firestore Data Access layer
+│   ├── screens/               # UI Screens grouped by role (auth, customer, professional, admin)
+│   ├── services/              # External APIs (GeminiService, MatchingService)
+│   ├── app.dart               # Root widget
+│   └── main.dart              # Entry point
+├── test/                      # Testing directory
+│   └── widget_test.dart       # Default widget test
+├── .firebaserc                # Firebase project alias
+├── env.example.json           # Example environment variables
+├── firebase.json              # Firebase configuration
+├── firestore.indexes.json     # Firestore composite indexes
+├── firestore.rules            # Firestore security rules
+└── pubspec.yaml               # Flutter package dependencies
 ```
 
 ---
 
-## 📱 Frontend (Flutter)
+## 5. Customer App — Complete Features
 
-### Screens & Modules
-
-#### 🔐 Auth Module (`/screens/auth/`)
-
-| Screen | Purpose |
-|--------|---------|
-| `SplashScreen` | App launch, Firebase init check, auto-redirects based on session |
-| `OnboardingScreen` | First-launch walkthrough for new users |
-| `LoginScreen` | Email/password login + Google Sign-In |
-| `SignupScreen` | New user registration |
-| `RoleSelectionScreen` | After auth, user picks Customer or Professional role |
-| `ForgotPasswordScreen` | Firebase password reset via email |
-| `ProRegistrationScreen` | Multi-step professional profile setup |
-
-#### 👤 Customer Module (`/screens/customer/`) — 23 screens
-
-| Screen | Purpose |
-|--------|---------|
-| `CustomerHomeScreen` | Home dashboard with category quick-access tiles |
-| `JobRequestScreen` | Text input / voice input for job description |
-| `DescribeProblemScreen` | Detailed problem description with photo upload |
-| `AiAnalysisScreen` | Shows Gemini AI analysis result (category, severity, skills) |
-| `ProfessionalListScreen` | Ranked list of matched professionals with match scores |
-| `ProfessionalDetailScreen` | Full professional profile, reviews, skills, ratings |
-| `BookingRequestScreen` | Confirm booking: schedule date, time slot, address |
-| `BookingSentScreen` | Booking confirmation + tracking info |
-| `CustomerBookingsScreen` | All bookings (pending / active / completed / cancelled) |
-| `BookingDetailsScreen` | Full booking details with live status tracking |
-| `CancelBookingScreen` | Cancel a pending/accepted booking with reason |
-| `ReviewScreen` | Rate (1-5 stars) and write a review after job completion |
-| `SearchProfessionalsScreen` | Free-text search with category filters |
-| `FiltersScreen` | Advanced filter panel (category, rating, distance) |
-| `CustomerProfileScreen` | View own profile, saved professionals, settings |
-| `EditCustomerProfileScreen` | Edit name, phone, address, avatar |
-| `SavedProfessionalsScreen` | Bookmarked professionals |
-| `CustomerNotificationsScreen` | Booking update notifications |
-| `NoProsAvailableScreen` | Shown when no match found |
-| `OfflineModeScreen` | No connectivity fallback |
-| `PaymentFailedScreen` | Payment error fallback |
-| `MediaUploadRetryScreen` | Retry failed media uploads |
-
-#### 🔨 Professional Module (`/screens/professional/`) — 16 screens
-
-| Screen | Purpose |
-|--------|---------|
-| `ProfessionalDashboard` | Earnings stats, job summary, active job cards |
-| `ServiceRequestsScreen` | List of incoming booking requests |
-| `ServiceRequestDetailsScreen` | Full booking request — Accept / Reject |
-| `AcceptRequestConfirmationScreen` | Confirm acceptance with expected arrival time |
-| `JobExecutionScreen` | Live job status update control panel |
-| `JobHistoryScreen` | Full history of all past jobs |
-| `ProProfileViewScreen` | Own professional profile (public view) |
-| `EditProProfileScreen` | Edit bio, service description, location |
-| `ManageSkillsRatesScreen` | Add/remove skills, set hourly rates |
-| `DocumentVerificationScreen` | Upload certificates for admin review |
-| `ProAvailabilityCalendarScreen` | Set weekly working schedule |
-| `ProNotificationsScreen` | New requests and booking status alerts |
-| `ProVerificationPendingScreen` | Shown while verification is in-review |
-| `DemoEarningsScreen` | Earnings breakdown and payment history |
-| `ProfessionalSettingsScreen` | Account settings and logout |
-
-#### 🛡️ Admin Module — 1 screen
-
-| Screen | Purpose |
-|--------|---------|
-| `AdminScreen` | Professional verification panel + platform oversight |
-
-#### 🌐 Shared Screens
-
-| Screen | Purpose |
-|--------|---------|
-| `SplashScreen` | Loading & auth state check |
-| `OnboardingScreen` | App intro slides |
-| `HelpSupportScreen` | Help & support info |
-| `FaqScreen` | Frequently asked questions |
-| `TermsScreen` | Terms of service |
-| `PrivacyScreen` | Privacy policy |
-| `NotificationDetailsScreen` | Individual notification detail |
+| Feature | Purpose | Backend / DB Interaction |
+|---------|---------|--------------------------|
+| **Account Creation & Login** | Register, Login via Email or Google | Firebase Auth, Creates `/users/{uid}` |
+| **Service Discovery** | Browse services and categories | Local categorization (`JobRequestScreen`) |
+| **AI Request Creation** | Describe problem (text/voice). AI extracts skills. | Calls Gemini API, Saves to `/jobs` |
+| **Matches & Proposals** | Rank pros based on skills, location, rating | Reads `/professionals`, matches algorithmically |
+| **Booking Request** | Select date, time, and confirm address | Writes `/bookings` (Status: `REQUEST_CREATED`) |
+| **Live Tracking** | Monitor job status in real-time | Firestore Stream listener on `/bookings/{id}` |
+| **Job Completion & Review** | Mark job completed and submit 1-5 star review | Updates `/bookings`, Writes `/reviews`, Updates Pro Stats |
+| **Profile Management** | Edit name, avatar, address, view saved pros | Updates `/users/{uid}`, Uploads to Storage |
 
 ---
 
-### State Management
+## 6. Professional App — Complete Features
 
-The app uses **Provider** for state management with 4 `ChangeNotifier` providers:
-
-#### `SessionProvider`
-- Listens to `FirebaseAuth.authStateChanges()` stream
-- Holds the current `UserModel` from Firestore
-- **Single source of truth** for authentication state
-- Drives GoRouter redirect logic for route guarding
-
-#### `AuthProvider`
-- Wraps `AuthRepo` for email/password and Google sign-in
-- Handles loading/error states for auth operations
-- Methods: `signInWithEmail`, `signUpWithEmail`, `signInWithGoogle`, `sendPasswordReset`, `signOut`
-
-#### `JobProvider` _(Core Orchestrator)_
-- Coordinates the entire customer booking flow:
-  `GeminiService` → `MatchingService` → `ProfessionalRepo` → `BookingRepo`
-- Listens to **Firestore Streams** for real-time `customerBookings` tracking
-- State held: `currentJob`, `matches`, `customerBookings`, `professionalBookings`, `savedProfessionals`
-- Review submission uses atomic Firestore **batch writes** (review + booking update + professional stats update in one transaction)
-
-#### `ProfessionalProvider`
-- Manages professional profile loading and updates
-- Wraps `ProfessionalRepo` for CRUD on the professional's own data
-- Listens to **Firestore Streams** for real-time `professionalBookings` updates (e.g., jobs automatically move to the 'Completed' tab when the customer finishes them)
+| Feature | Purpose | Backend / DB Interaction |
+|---------|---------|--------------------------|
+| **Registration & Verification** | Create pro profile, upload certificates | Writes `/professionals`, Uploads `/images` |
+| **Dashboard** | View active jobs and statistics | Reads `/professionals` & `/bookings` |
+| **Incoming Requests** | View, Accept, or Reject new jobs | Reads `/bookings` (Status: `REQUEST_CREATED`) |
+| **Accept Proposal** | Accept request, set estimated amount/time | Updates `/bookings` (Status: `PROFESSIONAL_ACCEPTED`) |
+| **Job Execution** | Mark Arrived, Start Job | Updates `/bookings` (Status updates) |
+| **Job History** | View completed and cancelled services | Reads `/bookings` |
+| **Profile & Skills** | Manage skills, rates, and availability | Updates `/professionals/{uid}` |
 
 ---
 
-### Navigation & Routing
+## 7. Complete Service Request Workflow
 
-Navigation is handled by **GoRouter** with declarative URL-based routing.
-
-#### Route Guard Logic
-
+```mermaid
+stateDiagram-v2
+    [*] --> REQUEST_CREATED : Customer Creates Request
+    REQUEST_CREATED --> PROFESSIONAL_ACCEPTED : Professional Accepts & Sets Amount
+    REQUEST_CREATED --> CANCELLED : Customer/Pro Cancels
+    
+    PROFESSIONAL_ACCEPTED --> CUSTOMER_CONFIRMED : Customer Confirms Amount/Time
+    PROFESSIONAL_ACCEPTED --> CANCELLED : Customer Cancels
+    
+    CUSTOMER_CONFIRMED --> PROFESSIONAL_ARRIVED : Professional Arrives
+    
+    PROFESSIONAL_ARRIVED --> JOB_STARTED : Professional Starts Job
+    
+    JOB_STARTED --> JOB_COMPLETED : Customer Marks Completed
+    
+    JOB_COMPLETED --> [*] : Customer Submits Review
+    CANCELLED --> [*]
 ```
-App Start
-  └── Session loading? → Stay on Splash (/)
-  └── Not authenticated?
-        └── On Splash → redirect to /onboarding
-        └── On auth routes → allow through
-        └── Anywhere else → redirect to /login
-  └── Authenticated but no UserModel (role not set)?
-        → redirect to /role-selection
-  └── Authenticated with role?
-        ├── customer      → /customer/home
-        ├── professional  → /professional/dashboard
-        └── admin         → /admin
-```
 
-#### Shell Navigation
-Both Customer and Professional use **`StatefulShellRoute.indexedStack`** for persistent bottom navigation:
-- **Customer Shell** – 5 tabs: Home | Search | Bookings | Notifications | Profile
-- **Professional Shell** – 5 tabs: Dashboard | Requests | Jobs | Notifications | Profile
-
-#### Route Table
-
-| Route | Path | Role |
-|-------|------|------|
-| Splash | `/` | All |
-| Onboarding | `/onboarding` | Guest |
-| Login | `/login` | Guest |
-| Signup | `/signup` | Guest |
-| Role Selection | `/role-selection` | Auth (no role) |
-| Forgot Password | `/forgot-password` | Guest |
-| Pro Registration | `/pro-registration` | Auth |
-| Customer Home | `/customer/home` | Customer |
-| Job Request | `/customer/home/request` | Customer |
-| Matches | `/customer/home/matches` | Customer |
-| Pro Detail | `/customer/home/matches/:id` | Customer |
-| Booking Request | `/customer/home/booking-request` | Customer |
-| Booking Sent | `/customer/home/booking-sent` | Customer |
-| Customer Search | `/customer/search` | Customer |
-| Customer Bookings | `/customer/bookings` | Customer |
-| Booking Details | `/customer/bookings/:id` | Customer |
-| Review | `/customer/bookings/review/:id` | Customer |
-| Notifications | `/customer/notifications` | Customer |
-| Customer Profile | `/customer/profile` | Customer |
-| Edit Profile | `/customer/profile/edit` | Customer |
-| Saved Pros | `/customer/profile/saved-pros` | Customer |
-| Pro Dashboard | `/professional/dashboard` | Professional |
-| Service Requests | `/professional/requests` | Professional |
-| Request Details | `/professional/requests/details` | Professional |
-| Job History | `/professional/jobs` | Professional |
-| Job Execution | `/professional/jobs/:id` | Professional |
-| Pro Notifications | `/professional/notifications` | Professional |
-| Pro Profile | `/professional/profile` | Professional |
-| Pro Settings | `/professional/profile/settings` | Professional |
-| Edit Pro Profile | `/professional/profile/edit` | Professional |
-| Manage Skills | `/professional/profile/skills` | Professional |
-| Doc Verification | `/professional/profile/verification` | Professional |
-| Admin | `/admin` | Admin |
-| Help | `/help` | All |
-| FAQ | `/faq` | All |
-| Terms | `/terms` | All |
-| Privacy | `/privacy` | All |
+**Discrepancy Note:** The codebase rigidly follows this exact 6-step flow enforced by `firestore.rules`. There is no separate "Proposal creation" step where multiple pros bid; the customer selects a specific pro, creates a request, and that pro accepts it by setting the amount and time. The customer then confirms.
 
 ---
 
-### Theme & Design System
+## 8. Status Management and Business Rules
 
-Defined in `lib/core/theme.dart` using **Material 3** (`useMaterial3: true`):
+Defined in `lib/core/booking_status.dart` and strictly enforced by `firestore.rules`.
 
-| Token | Value |
-|-------|-------|
-| **Primary Color** | `#1D4ED8` (Indigo Blue) |
-| **Background** | `#F7F9FB` (Off-white) |
-| **Surface** | `#FFFFFF` |
-| **Error** | `#BA1A1A` |
-| **Font Family** | `Inter` |
-| **Border Radius** | `8px` |
-
-Consistent styles for: `ElevatedButton`, `OutlinedButton`, `InputDecoration`, `CardTheme`, `AppBarTheme`.
-
----
-
-## ⚙️ Backend & Services
-
-Skill Connect uses **Firebase** as its entire backend infrastructure — no custom server required.
-
-### Firebase Authentication
-
-Supports three methods:
-1. **Email & Password** – Standard Firebase Auth
-2. **Google Sign-In** – via `google_sign_in` package
-3. **Password Reset** – Firebase email-based reset
-
-After auth, the app checks Firestore for a user document. New users are redirected to role selection.
-
-### Gemini AI Service
-
-**File:** `lib/services/gemini_service.dart`
-
-Communicates with **Google Gemini 1.5 Flash** via REST API using the `http` package.
-
-**Endpoint:**
-```
-POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=<API_KEY>
-```
-
-**Input:** Natural language problem description (text or transcribed voice).
-
-**Output JSON:**
-```json
-{
-  "category": "Plumbing",
-  "problemType": "Pipe Leak",
-  "requiredSkills": ["pipe_repair", "leak_fixing"],
-  "severity": "High",
-  "estimatedDurationHours": 2
-}
-```
-
-**Fallback:** Keyword-based rule engine activates when API key is missing/invalid.
-
-**Config:** API key loaded from `env.json` at runtime as a Flutter asset.
-
-### Matching Algorithm
-
-**File:** `lib/services/matching_service.dart`
-
-Ranks verified professionals using a **multi-factor weighted scoring system**:
-
-| Factor | Max Score | Logic |
-|--------|-----------|-------|
-| **Skill Match** | 40 pts | `(matched / required) × 40` |
-| **Trust Score** | 30 pts | `(rating/5 × 20) + min(jobs/10 × 10, 10)` |
-| **Location/Distance** | 20 pts | `max(0, 20 − km)` if within radius; `−20` penalty if outside |
-| **Availability** | 10 pts | Reserved for future implementation |
-
-**Distance:** Uses the **Haversine formula** for great-circle GPS distance.
+| Status | Meaning | Transition Performed By | Conditions / Validations |
+|--------|---------|------------------------|---------------------------|
+| `REQUEST_CREATED` | Initial request sent to Pro | Customer | Customer cannot set `estimatedCharge` |
+| `PROFESSIONAL_ACCEPTED`| Pro accepts, sets amount & schedule | Professional | Pro must set `estimatedCharge`, `scheduledDate`, `timeSlot` |
+| `CUSTOMER_CONFIRMED` | Customer agrees to Pro's terms | Customer | |
+| `PROFESSIONAL_ARRIVED` | Pro reached location | Professional | |
+| `JOB_STARTED` | Pro begins work | Professional | |
+| `JOB_COMPLETED` | Job is done | Customer | |
+| `CANCELLED` | Job aborted | Customer / Pro | Allowed only early in the workflow |
 
 ---
 
-## 🗄 Database (Cloud Firestore)
+## 9. Database Schema and Data Relationships
 
-### Collections & Schema
+Uses Cloud Firestore.
 
-#### `/users/{uid}` — Customer profile
-```
-uid, role, name, email, phone, address,
-lat, lng, avatarThumb, avatarImageId,
-savedProfessionalIds[], createdAt, updatedAt
-```
-
-#### `/professionals/{uid}` — Professional profile
-```
-uid, name, category, city, area, lat, lng,
-bio, serviceDescription, experienceYears,
-serviceRadiusKm, skills[], available, schedule{},
-verificationStatus, verificationNote, certificates[],
-avatarThumb, stats{averageRating, reviewCount, jobsCompleted},
-skillStats{}, searchTokens[], createdAt, updatedAt
-```
-
-#### `/bookings/{bookingId}` — Full booking record
-```
-id, jobId, customerId, customerName, customerThumb,
-professionalId, professionalName, professionalThumb,
-jobSnapshot{}, scheduledDate, timeSlot, address,
-lat, lng, distanceKm, estimatedCharge, finalCharge,
-match{}, status, statusHistory[], workSummary,
-completionImageId, completionNotes, reviewed,
-createdAt, updatedAt
-```
-
-#### `/reviews/{bookingId}` — Post-job review (1:1 with booking)
-```
-bookingId, customerId, professionalId,
-rating (1–5), comment, createdAt
+```mermaid
+erDiagram
+    USERS ||--o{ BOOKINGS : "creates"
+    USERS {
+        string uid
+        string role
+        string name
+        string[] savedProfessionalIds
+    }
+    PROFESSIONALS ||--o{ BOOKINGS : "receives"
+    PROFESSIONALS {
+        string uid
+        string category
+        string[] skills
+        map stats
+    }
+    BOOKINGS ||--o| REVIEWS : "has"
+    BOOKINGS {
+        string id
+        string customerId
+        string professionalId
+        string status
+        float estimatedCharge
+    }
+    REVIEWS {
+        string bookingId
+        string customerId
+        string professionalId
+        float rating
+    }
 ```
 
-#### `/notifications/{notificationId}` — In-app notification
-```
-toUid, fromUid, title, body, type,
-bookingId (optional), read, createdAt
-```
-
-#### `/images/{imageId}` — Base64 image store (≤200KB)
-```
-ownerId, base64, purpose [avatar|certificate|jobPhoto|completion],
-bookingId (optional), createdAt
-```
-
-#### `/jobs/{jobId}` — AI-analyzed job request
-```
-id, customerId, description, categoryChosen,
-analysis{}, lat, lng, createdAt
-```
+*Note: No real customer data, tokens, or PII is exposed here.*
 
 ---
 
-### Security Rules
+## 10. Backend and API Documentation
 
-| Collection | Read Access | Write Access | Special Rules |
-|------------|-------------|--------------|---------------|
-| `users` | Owner or Admin | Owner only | Cannot self-change `role` |
-| `professionals` | Any signed-in user | Owner (restricted) or Admin | Admin controls `verificationStatus`; customers can update `stats` during review |
-| `jobs` | Owner only | Owner only | — |
-| `bookings` | Customer, Professional, or Admin | Customer creates (pending only); transitions follow state machine | Strictly enforced state machine |
-| `reviews` | Any signed-in user | Customer only, post-completion | Immutable after creation |
-| `notifications` | Recipient only | Sender only | Only `read` field can be updated |
-| `images` | Role-context based | Owner only, ≤200KB | Immutable after creation |
+**There is no traditional REST API (Node.js/Python).** The app interacts directly with Firebase services via the Flutter SDK.
 
-**Booking Status State Machine (enforced by rules):**
-
-```
-pending  →  accepted    (by professional)
-pending  →  rejected    (by professional)
-pending  →  cancelled   (by customer)
-accepted →  onTheWay    (by professional)
-accepted →  cancelled   (by customer or professional)
-onTheWay →  arrived     (by professional)
-arrived  →  inProgress  (by professional)
-inProgress → completed  (by professional)
-```
+The only external API is Google Gemini AI:
+- **HTTP Method:** `POST`
+- **Route:** `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={API_KEY}`
+- **Purpose:** Analyze natural language problem descriptions.
+- **Request Body:** JSON containing the prompt.
+- **Response:** JSON containing `category`, `problemType`, `requiredSkills`, `severity`, `estimatedDurationHours`.
 
 ---
 
-### Composite Indexes
+## 11. Firebase Documentation
 
-| Collection | Index Fields | Purpose |
-|------------|-------------|---------|
-| `bookings` | `customerId ASC` + `createdAt DESC` | Customer bookings list |
-| `bookings` | `professionalId ASC` + `createdAt DESC` | Professional bookings list |
-| `notifications` | `toUid ASC` + `read ASC` + `createdAt DESC` | Unread notifications |
-| `reviews` | `professionalId ASC` + `createdAt DESC` | Professional review history |
-
----
-
-## 📦 Data Models
-
-| Model | File | Mapped Collection | Purpose |
-|-------|------|------------------|---------|
-| `UserModel` | `models/user_model.dart` | `/users` | Customer profile |
-| `ProfessionalModel` | `models/professional.dart` | `/professionals` | Professional profile |
-| `BookingModel` | `models/booking.dart` | `/bookings` | Full booking lifecycle |
-| `JobProfile` | `models/job_profile.dart` | `/jobs` | AI-analyzed job request |
-| `MatchResult` | `models/match_result.dart` | — (in-memory) | Scored professional match |
-| `ReviewModel` | `models/review.dart` | `/reviews` | Post-job rating |
-| `AppNotification` | `models/app_notification.dart` | `/notifications` | In-app notification |
+- **Firebase Authentication:** Handles Email/Password and Google OAuth.
+- **Cloud Firestore:** Collections: `users`, `professionals`, `bookings`, `jobs`, `reviews`, `notifications`, `images`.
+- **Firebase Storage:** Used via base64 uploads into the `images` Firestore collection (limit ~200KB per image) rather than the standard Storage bucket, based on the codebase rules.
+- **Security Rules:** Extremely tight. Validates the status state machine transitions to prevent unauthorized role actions (e.g., Customers cannot mark jobs as `JOB_STARTED`).
+- **Real-Time Sync:** Uses `StreamSubscription` to provide live updates for Job Tracking.
 
 ---
 
-## 🔄 Complete Workflow
+## 12. Real-Time Synchronization
 
-### Customer Workflow
-
-```
-1. ONBOARDING
-   └── Open app → Splash → Onboarding slides → Login / Signup
-
-2. AUTHENTICATION
-   ├── Email/Password or Google Sign-In
-   ├── New user → Role Selection → [Customer]
-   └── Creates /users/{uid} with role = 'customer'
-
-3. HOME
-   └── Category tiles: AC Repair, Plumbing, Electrical, Carpentry, etc.
-
-4. AI JOB REQUEST FLOW
-   ├── Tap category OR describe custom problem
-   ├── Type OR speak problem description (speech_to_text)
-   ├── Add problem photos (optional)
-   ├── Submit → JobProvider.processJobRequest()
-   │   ├── GeminiService → Gemini 1.5 Flash API
-   │   │   └── Returns: category, skills, severity, duration
-   │   ├── ProfessionalRepo → Fetch all verified pros in category
-   │   └── MatchingService.rankProfessionals() → sorted MatchResult[]
-   └── AI Analysis Screen → shows analysis to customer
-
-5. BROWSE MATCHES
-   ├── Ranked professional list with scores
-   ├── Filter / sort
-   └── Tap → Full professional profile (bio, skills, ratings, reviews)
-
-6. BOOK
-   ├── Booking Request Screen: select date, time slot, confirm address
-   ├── Confirm → creates /bookings/{id} with status = 'pending'
-   └── Booking Sent Screen → confirmation
-
-7. TRACK
-   ├── Customer Bookings → live status display
-   │   pending → accepted → arrived → inProgress (Working)
-   ├── Real-Time Sync: Firestore stream instantly updates Timeline tracker
-   └── Cancel (if pending only)
-
-8. JOB COMPLETION & REVIEW
-   ├── Customer taps "Job Completed" (when inProgress)
-   └── Rate 1–5 stars + written comment
-       └── Atomic batch write:
-           ├── Creates /reviews/{bookingId}
-           ├── Updates /bookings/{id}.reviewed = true
-           └── Recalculates /professionals/{id}.stats
-```
+**How it works:**
+The app relies entirely on Firestore Snapshots (Streams).
+- In `JobProvider.dart`, `streamCustomerBookings()` listens to the `/bookings` collection where `customerId == uid`.
+- When a Professional taps "Arrived" or "Job Started", the Firestore document is updated.
+- The stream instantly pushes the new `BookingModel` to the Customer App, updating the Live Tracker UI immediately without polling.
 
 ---
 
-### Professional Workflow
+## 13. Authentication and Security
 
-```
-1. REGISTRATION (multi-step form)
-   ├── Basic Info: name, category, bio
-   ├── Location: city, area, GPS, service radius
-   ├── Skills & Experience (from skill catalog)
-   └── Creates /professionals/{uid} + /users/{uid}
-
-2. VERIFICATION
-   ├── Upload certificates → verificationStatus = 'pending'
-   ├── Locked on Pro Verification Pending Screen
-   └── Admin approves → verificationStatus = 'verified'
-       └── Professional appears in search results
-
-3. DASHBOARD
-   └── Earnings, active job, quick stats, notifications
-
-4. MANAGE REQUESTS
-   ├── View incoming pending bookings
-   ├── View full customer + job details
-   ├── ACCEPT → status: pending → accepted
-   └── REJECT → status: pending → rejected
-
-5. JOB EXECUTION
-   ├── Arrived → Pro taps "Arrived" → Status: arrived
-   ├── Started → Pro taps "Job Started" → Status: inProgress
-   └── Complete:
-       ├── Customer taps "Job Completed" on their end
-       └── Job automatically shifts to Professional's "Completed" tab via Real-Time Sync
-
-6. PROFILE
-   └── Edit profile, manage skills/rates, set availability, upload docs
-```
+- **Authentication:** Managed by Firebase Auth.
+- **Route Protection:** GoRouter redirect intercepts navigation. Unauthenticated users are sent to `/login`. Users with a role mismatch (Customer trying to view Pro pages) are redirected.
+- **Database Security:** `firestore.rules` enforces:
+  - Role-based restrictions (only Pros can edit Pro profiles, unless leaving a review).
+  - Workflow validations (strictly enforces the `BookingStatus` transition matrix).
+  - Data integrity (prevents spoofing `customerId` or `professionalId`).
 
 ---
 
-### Admin Workflow
+## 14. Installation and Local Setup
 
-```
-1. Login with admin account (role = 'admin')
-2. Admin Screen:
-   ├── View professionals with verificationStatus = 'pending'
-   ├── Review uploaded certificates
-   ├── Approve → verificationStatus = 'verified'
-   └── Reject → verificationStatus = 'rejected' (with note)
-```
+**Prerequisites:** Flutter SDK `^3.12.2`, Android Studio, Firebase Project.
 
----
-
-## 📊 Booking Lifecycle
-
-```
-                    ┌─────────┐
-                    │ PENDING │  ← Customer creates
-                    └────┬────┘
-           ┌─────────────┼──────────────┐
-           ▼             ▼              ▼
-      ┌──────────┐  ┌──────────┐  ┌───────────┐
-      │ ACCEPTED │  │ REJECTED │  │ CANCELLED │ ← By Customer Only
-      └────┬─────┘  └──────────┘  └───────────┘
-           │
-           ▼
-      ┌──────────┐
-      │ ARRIVED  │  ← By Professional
-      └────┬─────┘
-           ▼
-      ┌────────────┐
-      │ IN PROGRESS│  ← By Professional ("Job Started")
-      └─────┬──────┘
-            ▼
-      ┌───────────┐    ┌─────────────────────────────────┐
-      │ COMPLETED │───►│ Customer Review (atomic batch)   │
-      └───────────┘    │  → /reviews + /bookings + /stats │
-           ▲           └─────────────────────────────────┘
-           │
-     (By Customer)
-```
+1. **Clone Repository:**
+   ```bash
+   git clone <repo_url>
+   cd skill_connect
+   ```
+2. **Install Dependencies:**
+   ```bash
+   flutter pub get
+   ```
+3. **Environment Setup:**
+   Copy the example environment file:
+   ```bash
+   cp env.example.json env.json
+   ```
+   Add your Gemini API key inside `env.json`.
+4. **Firebase Setup:**
+   Run `flutterfire configure` to connect to your Firebase project.
+   Deploy Firestore rules:
+   ```bash
+   firebase deploy --only firestore:rules,firestore:indexes
+   ```
+5. **Run Locally:**
+   ```bash
+   flutter run
+   ```
 
 ---
 
-## 📦 Packages & Dependencies
+## 15. Environment Variables and Configuration
 
-### Core
-| Package | Version | Purpose |
-|---------|---------|---------|
-| `provider` | ^6.1.5 | State management (ChangeNotifier pattern) |
-| `go_router` | ^18.0.2 | Declarative URL routing with guards |
+Configuration is managed via `env.json` (gitignored).
 
-### Firebase
-| Package | Version | Purpose |
-|---------|---------|---------|
-| `firebase_core` | ^4.15.0 | Firebase SDK init |
-| `firebase_auth` | ^6.7.0 | User authentication |
-| `cloud_firestore` | ^6.10.0 | NoSQL real-time database |
-| `firebase_storage` | ^13.6.0 | File and image storage |
-| `google_sign_in` | ^6.2.1 | Google OAuth |
+| Variable Name | Purpose | Required/Optional | Used By | Example Placeholder |
+|--------------|---------|------------------|---------|---------------------|
+| `GEMINI_API_KEY` | Authenticates with Google Gemini API | Required | Frontend (GeminiService) | `YOUR_GEMINI_API_KEY_HERE` |
 
-### AI & Network
-| Package | Version | Purpose |
-|---------|---------|---------|
-| `http` | ^1.6.0 | REST calls to Gemini AI |
-
-### Location
-| Package | Version | Purpose |
-|---------|---------|---------|
-| `geolocator` | ^14.1.1 | GPS position |
-| `geocoding` | ^5.0.0 | Address ↔ coordinates |
-
-### Media
-| Package | Version | Purpose |
-|---------|---------|---------|
-| `image_picker` | ^1.2.3 | Camera / gallery |
-| `flutter_image_compress` | ^2.5.1 | Image compression |
-| `speech_to_text` | ^7.5.0 | Voice-to-text |
-
-### UI & Utilities
-| Package | Version | Purpose |
-|---------|---------|---------|
-| `shimmer` | ^4.0.0 | Loading skeleton animations |
-| `cached_network_image` | ^4.0.3 | Image caching |
-| `flutter_lucide` | ^1.49.0 | Lucide icon set |
-| `intl` | ^0.20.2 | Date/time formatting |
-| `uuid` | ^4.6.0 | UUID v4 for document IDs |
-| `cupertino_icons` | ^1.0.8 | iOS-style icons |
-
-### Dev
-| Package | Version | Purpose |
-|---------|---------|---------|
-| `flutter_lints` | ^6.0.0 | Code quality linting |
-| `flutter_launcher_icons` | ^0.14.4 | App icon generation |
-| `flutter_native_splash` | ^2.4.8 | Native splash screen |
+*Do not commit `env.json` with real API keys.*
 
 ---
 
-## 🚀 Setup & Installation
+## 16. Testing and Quality Assurance
 
-### Prerequisites
-- Flutter SDK `>=3.12.2`
-- Android Studio / VS Code with Flutter extension
-- A Firebase project (Firestore, Auth, Storage enabled)
-- Google Gemini API key
+- **Unit/Widget Tests:** Currently, there is only a default `test/widget_test.dart`.
+- **Integration Tests:** Not implemented.
+- **Missing Tests:** The project currently lacks comprehensive unit tests for `JobProvider`, `MatchingService`, and widget tests for the core booking flow.
+- **Recommendation:** Implement tests for `MatchingService` logic and Firebase rules using the Firebase Emulator Suite.
 
-### Steps
+---
 
-**1. Clone and install dependencies**
-```bash
-git clone <repository-url>
-cd skill_connect
-flutter pub get
-```
+## 17. Deployment Documentation
 
-**2. Configure Firebase**
-```bash
-# Install FlutterFire CLI
-dart pub global activate flutterfire_cli
+### Android Deployment
+1. Ensure the Keystore is placed in `android/app/upload-keystore.jks`.
+2. Ensure `key.properties` exists in the root directory with the signing credentials.
+3. Build the Android App Bundle:
+   ```bash
+   flutter build appbundle --release
+   ```
+4. Upload the generated `.aab` file (located in `build/app/outputs/bundle/release/`) to the Google Play Console.
 
-# Configure Firebase (select your project)
-flutterfire configure
-```
-Enable in Firebase Console: Authentication (Email + Google), Cloud Firestore, Firebase Storage.
-
-**3. Set environment variables**
-```bash
-cp env.example.json env.json
-```
-Edit `env.json`:
-```json
-{
-  "GEMINI_API_KEY": "your-gemini-api-key-here"
-}
-```
-
-**4. Deploy Firestore rules and indexes**
+### Backend Deployment
+Backend updates only require deploying the updated Firestore rules and indexes:
 ```bash
 firebase deploy --only firestore:rules,firestore:indexes
 ```
 
-**5. Run the app**
-```bash
-flutter run
-```
+---
+
+## 18. Google Play Store Readiness
+
+- [x] **Application ID:** `com.niran.skillconnect`
+- [x] **Release Build Configured:** Yes (`build.gradle.kts` signing configuration is present).
+- [x] **App Signing:** Managed via `upload-keystore.jks`.
+- [x] **Store Assets:** `play_store_icon.jpg`, `play_store_feature.jpg`, screenshots exist in the root folder.
+- [ ] **Privacy Policy URL:** A folder `skillconnect-privacy-policy` exists, but needs hosting.
+- [ ] **Data Safety Declaration:** Must be completed manually in the Play Console.
+- [ ] **Crash/Error Reporting:** No Crashlytics implementation was found in the codebase.
 
 ---
 
-## 🔐 Environment Configuration
+## 19. Known Issues and Future Improvements
 
-| File | Purpose | Committed to Git? |
-|------|---------|-------------------|
-| `env.json` | Runtime API keys | ❌ No (gitignored) |
-| `env.example.json` | Template | ✅ Yes |
-| `lib/firebase_options.dart` | Firebase SDK config | ✅ Yes (auto-generated) |
-| `.firebaserc` | Firebase project alias | ✅ Yes |
-| `firebase.json` | Firebase hosting/rules config | ✅ Yes |
+**Known Issues:**
+- **Lack of Tests:** Significant test coverage is missing.
+- **Image Storage Limits:** Images are stored as base64 in Firestore documents with a 200KB limit instead of directly in Firebase Storage buckets.
+- **Gemini Fallback:** If the Gemini API fails, it falls back to a hardcoded response instead of a robust offline NLP approach.
 
----
-
-## 🔧 Service Categories & Skills
-
-The app supports **7 service categories** with a predefined skill catalog:
-
-| Category | Available Skills |
-|----------|-----------------|
-| **AC Repair** | AC repair, gas refilling, compressor repair, PCB repair, deep cleaning |
-| **Plumbing** | Pipe repair, leak fixing, water heater, faucet installation, drain cleaning |
-| **Electrical** | Wiring, fan installation, switch repair, inverter setup, MCB replacement |
-| **Carpentry** | Furniture repair, door installation, lock repair, wood polishing |
-| **Appliance Repair** | Washing machine, refrigerator, microwave, TV repair, water purifier |
-| **Cleaning** | Deep cleaning, sofa cleaning, bathroom cleaning, pest control |
-| **Painting** | Wall painting, waterproofing, texture painting |
+**Future Improvements:**
+- Implement Firebase App Check for enhanced security.
+- Migrate base64 image storage completely to Firebase Storage URLs to reduce Firestore document size limits.
+- Implement Firebase Crashlytics.
+- Add an in-app chat feature between Customer and Professional.
 
 ---
 
-## 📐 Matching Score Weights
+## 20. Contribution and Maintenance
 
-| Factor | Weight |
-|--------|--------|
-| Skill Match | 35% |
-| Trust Score | 20% |
-| Similar Jobs Experience | 20% |
-| Success Rate | 10% |
-| Availability | 5% |
-| Location Proximity | 5% |
-| Review Recency | 5% |
-
-**Trust Score Sub-weights:**
-
-| Factor | Weight |
-|--------|--------|
-| Verified Status | 20% |
-| Successful Jobs | 20% |
-| Similar Job Types | 20% |
-| Average Rating | 15% |
-| Complaints (inverse) | 10% |
-| Cancellation Rate (inverse) | 5% |
-| Activity Recency | 5% |
-| Certifications | 5% |
-
----
-
-*Built with Flutter & Firebase — Powered by Google Gemini AI*
+1. **Branching:** Use feature branches (`feature/add-payment`) and submit Pull Requests to `main`.
+2. **Code Formatting:** Run `flutter format .` before committing.
+3. **Linting:** Resolve all warnings from `flutter analyze` (enforced by `flutter_lints`).
+4. **Issue Reporting:** Provide detailed steps to reproduce when filing bugs.
